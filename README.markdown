@@ -10,7 +10,7 @@ Sky Ninja (`/skˈaɪ ˈnɪn.dʒə/`) is a [Skype](http://www.skype.com) history 
 * Verify that output directory is set to `..\Release` (`..\Debug`).
 * Verify that **Code Analysis is turned on for all configurations**.
 * Verify that **SkyNinja Ruleset** is chosen **for all configurations**.
-* Verify that the assembly is **signed with the `SkypeNinja.pfx`**.
-* Verify that **`SkypeNinja.pfx` is added as a link (not a copy)**.
+* Verify that the assembly is **signed with the `SkyNinja.pfx`**.
+* Verify that **`SkyNinja.pfx` is added as a link (not a copy)**.
 * Verify that **unused references are removed**.
 * Verify **`AssemblyInfo.cs`**.
