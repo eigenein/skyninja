@@ -4,7 +4,7 @@ Sky Ninja (`/skˈaɪ ˈnɪn.dʒə/`) is a [Skype](http://www.skype.com) history 
 
 #### Visual Studio Project Checklist
 
-* Verify that the project requires **.NET Framework 4 Client Profile**.
+* Verify that the project requires **.NET Framework 4.5 Client Profile**.
 * Verify that **the namespace starts with `SkyNinja`**.
 * Verify that **all warnings are treated as errors**.
 * Verify that output directory is set to `..\Release` (`..\Debug`).
