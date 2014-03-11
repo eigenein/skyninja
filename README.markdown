@@ -16,3 +16,12 @@ SkyNinja (`/skˈaɪ ˈnɪn.dʒə/`) is a [Skype](http://www.skype.com) history e
 * Verify **`AssemblyInfo.cs`**.
 
 #### Connector Specification
+
+##### Input Connectors
+
+* `skypeid://username`
+* `skypedb://C:\Users\User\AppData\Roaming\Skype\user\main.db`
+
+##### Output Connectors
+
+* `plain://C:\Users\User\Downloads\Output`
