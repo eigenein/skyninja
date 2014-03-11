@@ -2,7 +2,7 @@
 
 namespace SkyNinja.Core.Classes
 {
-    internal abstract class Input: Connector
+    public abstract class Input: Connector
     {
         
     }

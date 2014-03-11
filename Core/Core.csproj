@@ -56,6 +56,8 @@
     <Compile Include="Classes\Message.cs" />
     <Compile Include="ConnectorManager.cs" />
     <Compile Include="Enums\ConnectorType.cs" />
+    <Compile Include="Exceptions\InternalException.cs" />
+    <Compile Include="Exceptions\ConnectorUriException.cs" />
     <Compile Include="FileSystems\UsualFileSystem.cs" />
     <Compile Include="FileSystems\ZipArchiveFileSystem.cs" />
     <Compile Include="Helpers\AssemblyVersion.cs" />
@@ -77,6 +79,7 @@
   <ItemGroup>
     <Folder Include="Attributes\" />
     <Folder Include="GroupGetters\" />
+    <Folder Include="Messages\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

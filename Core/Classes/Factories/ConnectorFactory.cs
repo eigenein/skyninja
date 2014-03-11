@@ -8,5 +8,7 @@ namespace SkyNinja.Core.Classes.Factories
         {
             get;
         }
+
+        public abstract Connector CreateConnector(Uri uri);
     }
 }

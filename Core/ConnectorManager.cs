@@ -28,6 +28,13 @@ namespace SkyNinja.Core
             }
         };
 
+        public static bool TryGetFactory(
+            ConnectorType connectorType, String key, out ConnectorFactory factory)
+        {
+            KeyConnectorDictionary dictionary = All[connectorType];
+            return dictionary.TryGetValue(key, out factory);
+        }
+
         public static KeyConnectorDictionary GetFactories(ConnectorType connectorType)
         {
             return All[connectorType];

@@ -59,7 +59,8 @@
     <AssemblyOriginatorKeyFile>..\SkyNinja.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DocoptNet">
+    <Reference Include="DocoptNet, Version=0.6.1.4, Culture=neutral, PublicKeyToken=7a38c71da49a547e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\docopt.net.0.6.1.5\lib\net40\DocoptNet.dll</HintPath>
     </Reference>
     <Reference Include="NLog">
@@ -76,7 +77,9 @@
     <None Include="..\SkyNinja.pfx">
       <Link>SkyNinja.pfx</Link>
     </None>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -104,6 +107,9 @@
       <Project>{E8CF4151-0AEE-429E-A7DF-6C4378814254}</Project>
       <Name>Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Main.usage.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

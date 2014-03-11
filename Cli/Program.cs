@@ -6,8 +6,10 @@ using DocoptNet;
 using NLog;
 
 using SkyNinja.Core;
+using SkyNinja.Core.Classes;
 using SkyNinja.Core.Classes.Factories;
 using SkyNinja.Core.Enums;
+using SkyNinja.Core.Exceptions;
 using SkyNinja.Core.Helpers;
 
 namespace SkyNinja.Cli
@@ -20,16 +22,19 @@ SkyNinja Command Line Interface
 Usage:
     cli --version
     cli --list
+    cli -i URI -o URI
 
 Options:
-      -h --help  Show this screen.
-      --version  Show version.
-      --list     List connectors.
+      -h --help        Show this screen.
+      --version        Show version.
+      --list           List connectors.
+      -i --input URI   Input URI.
+      -o --output URI  Output URI.
  ";
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        public static void Main(String[] args)
+        public static int Main(String[] args)
         {
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
 
@@ -40,8 +45,17 @@ Options:
             {
                 ListConnectors();
             }
+            else
+            {
+                return Run(arguments);
+            }
+
+            return ExitCodes.Success;
         }
 
+        /// <summary>
+        /// List all available connectors.
+        /// </summary>
         private static void ListConnectors()
         {
             Console.WriteLine();
@@ -54,6 +68,9 @@ Options:
             ListConnectors(ConnectorManager.GetFactories(ConnectorType.Output));
         }
 
+        /// <summary>
+        /// List connectors.
+        /// </summary>
         private static void ListConnectors(ConnectorManager.KeyConnectorDictionary factories)
         {
             foreach (KeyValuePair<string, ConnectorFactory> entry in factories)
@@ -62,6 +79,77 @@ Options:
             }
         }
 
+        /// <summary>
+        /// Run migrator.
+        /// </summary>
+        private static int Run(IDictionary<string, ValueObject> arguments)
+        {
+            Uri inputUri, outputUri;
+            if (!TryParseUri(arguments["--input"].ToString(), out inputUri) ||
+                !TryParseUri(arguments["--output"].ToString(), out outputUri))
+            {
+                return ExitCodes.BadArguments;
+            }
+
+            Input input;
+            Output output;
+            if (!TryCreateConnector(ConnectorType.Input, inputUri, out input) ||
+                !TryCreateConnector(ConnectorType.Output, outputUri, out output))
+            {
+                return ExitCodes.BadArguments;
+            }
+
+            return ExitCodes.Success;
+        }
+
+        /// <summary>
+        /// Parse URI.
+        /// </summary>
+        private static bool TryParseUri(String argument, out Uri uri)
+        {
+            try
+            {
+                uri = new Uri(argument);
+                return true;
+            }
+            catch (UriFormatException)
+            {
+                Logger.Fatal("Invalid URI format: {0}", argument);
+                uri = default(Uri);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Create connector.
+        /// </summary>
+        private static bool TryCreateConnector<TConnector>(
+            ConnectorType connectorType, Uri uri, out TConnector connector)
+            where TConnector: Connector
+        {
+            connector = default(TConnector);
+
+            ConnectorFactory factory;
+            if (!ConnectorManager.TryGetFactory(connectorType, uri.Scheme, out factory))
+            {
+                Logger.Fatal("Unknown scheme: {1}: {0}", uri.Scheme, connectorType);
+                return false;
+            }
+            try
+            {
+                connector = (TConnector)factory.CreateConnector(uri);
+                return true;
+            }
+            catch (ConnectorUriException e)
+            {
+                Logger.Fatal("{0} In URI: {1}", e, uri);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Exception handler.
+        /// </summary>
         private static void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs e)
         {
             Logger.FatalException("Fatal error.", (Exception)e.ExceptionObject);

@@ -1,5 +1,6 @@
 ﻿using System;
 
+using SkyNinja.Core.Classes;
 using SkyNinja.Core.Classes.Factories;
 
 namespace SkyNinja.Core.Inputs
@@ -12,6 +13,11 @@ namespace SkyNinja.Core.Inputs
             {
                 return "Skype name.";
             }
+        }
+
+        public override Connector CreateConnector(Uri uri)
+        {
+            throw new NotImplementedException();
         }
     }
 }
