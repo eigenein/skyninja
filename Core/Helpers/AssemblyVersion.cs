@@ -8,6 +8,9 @@ namespace SkyNinja.Core.Helpers
         private static readonly Version current = 
             Assembly.GetExecutingAssembly().GetName().Version;
 
+        /// <summary>
+        /// Gets current executing assembly version.
+        /// </summary>
         public static Version Current
         {
             get
