@@ -1,6 +1,6 @@
 ### SkyNinja
 
-SkyNinja (`/skˈaɪ ˈnɪn.dʒə/`) &ndash; export and import [Skype](http://www.skype.com) conversations. The application is the successor of [Skype Historian](http://eigene.in/skype-historian).
+SkyNinja (`/skˈaɪ ˈnɪn.dʒə/`) is a tool for exporting and importing [Skype](http://www.skype.com) conversations. The application is the successor of [Skype Historian](http://eigene.in/skype-historian).
 
 #### Visual Studio Project Checklist
 
