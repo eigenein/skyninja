@@ -106,22 +106,24 @@ Options:
 
             try
             {
-                await input.Open();
-                await output.Open();
-                await new Migrator(input, output).Migrate();
-                return ExitCodes.Success;
+                using (input)
+                {
+                    using (output)
+                    {
+                        await input.Open();
+                        await output.Open();
+                        await new Migrator(input, output).Migrate();
+                    }
+                }
             }
             catch (InternalException e)
             {
                 Logger.Fatal("Migration error: {0}", e.Message);
                 return ExitCodes.Failure;
             }
-            finally
-            {
-                output.Close();
-                input.Close();
-                Logger.Info("Finished.");
-            }
+
+            Logger.Info("Finished.");
+            return ExitCodes.Success;
         }
 
         /// <summary>

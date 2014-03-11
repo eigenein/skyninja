@@ -64,6 +64,7 @@ namespace SkyNinja.Core.Inputs.Skype
 
         public override void Close()
         {
+            Logger.Debug("Closing connection ...");
             if (connection != null)
             {
                 connection.Close();
