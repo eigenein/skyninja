@@ -56,7 +56,7 @@
   <ItemGroup>
     <Compile Include="Classes\Connector.cs" />
     <Compile Include="Classes\Conversation.cs" />
-    <Compile Include="Classes\ConversationEnumerator.cs" />
+    <Compile Include="Classes\ChatEnumerator.cs" />
     <Compile Include="Classes\Factories\ConnectorFactory.cs" />
     <Compile Include="Classes\Factories\InputFactory.cs" />
     <Compile Include="Classes\Factories\OutputFactory.cs" />
@@ -73,6 +73,7 @@
     <Compile Include="Classes\Input.cs" />
     <Compile Include="Classes\Output.cs" />
     <Compile Include="Helpers\ExitCodes.cs" />
+    <Compile Include="Inputs\Skype\SkypeChatEnumerator.cs" />
     <Compile Include="Inputs\Skype\SkypeDbInputFactory.cs" />
     <Compile Include="Inputs\Skype\SkypeIdInputFactory.cs" />
     <Compile Include="Inputs\Skype\SkypeInput.cs" />

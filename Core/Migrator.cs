@@ -24,7 +24,10 @@ namespace SkyNinja.Core
         public async Task Migrate()
         {
             Logger.Info("Starting migration ...");
-            ConversationEnumerator conversation = await input.GetConversationsAsync();
+            using (ChatEnumerator chat = await input.GetChatsAsync())
+            {
+                
+            }
             Logger.Info("Finished.");
         }
     }

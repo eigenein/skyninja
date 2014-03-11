@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data.Common;
 using System.Data.SQLite;
 using System.Threading.Tasks;
 
@@ -14,15 +13,7 @@ namespace SkyNinja.Core.Inputs.Skype
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        private const string GetChatsQuery = @"
-            select id as id,
-                   name as name,
-                   friendlyname as friendlyName,
-                   timestamp as timestamp,
-                   activity_timestamp as activityTimestamp,
-                   topic as topic
-            from chats
-        ";
+        private static const string GetChatsQuery = @"";
 
         private readonly string databasePath;
 
@@ -48,18 +39,13 @@ namespace SkyNinja.Core.Inputs.Skype
                 throw new InternalException("Failed to open database.", e);
             }
             Logger.Info("Opened.");
-            // Add trace handler.
-            connection.Trace += ConnectionTrace;
         }
 
         public override async Task<ChatEnumerator> GetChatsAsync()
         {
             Logger.Info("Getting chats ...");
-            using (SQLiteCommand command = new SQLiteCommand(GetChatsQuery, connection))
-            {
-                DbDataReader reader = await command.ExecuteReaderAsync();
-                return new SkypeChatEnumerator(reader);
-            }
+            SQLiteCommand command = new SQLiteCommand(ReadMessagesQuery, connection);
+            return await Task.FromResult<ChatEnumerator>(null);
         }
 
         public override void Close()
@@ -68,11 +54,6 @@ namespace SkyNinja.Core.Inputs.Skype
             {
                 connection.Close();
             }
-        }
-
-        private void ConnectionTrace(object sender, TraceEventArgs e)
-        {
-            Logger.Trace("SQL: {0}", e.Statement);
         }
     }
 }
