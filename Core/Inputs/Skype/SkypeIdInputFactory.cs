@@ -32,7 +32,7 @@ namespace SkyNinja.Core.Inputs.Skype
                 Environment.SpecialFolder.ApplicationData);
             string databasePath = Path.Combine(
                 applicationDataPath, "Skype", skypeId, "main.db");
-            Logger.Info("Trying database path: {0} ...", databasePath);
+            Logger.Debug("Trying database path: {0} ...", databasePath);
             if (!File.Exists(databasePath))
             {
                 throw new ConnectorUriException("Database file is not found for this Skype ID.");

@@ -36,9 +36,9 @@ namespace SkyNinja.Core.Inputs.Skype
         public override async Task Open()
         {
             string connectionString = String.Format("Data Source={0};Read Only=True", databasePath);
-            Logger.Info("Connection string: {0}", connectionString);
+            Logger.Debug("Connection string: {0}", connectionString);
             connection = new SQLiteConnection(connectionString);
-            Logger.Info("Opening ...");
+            Logger.Debug("Opening ...");
             try
             {
                 await connection.OpenAsync();
@@ -54,7 +54,7 @@ namespace SkyNinja.Core.Inputs.Skype
 
         public override async Task<ConversationEnumerator> GetConversationsAsync()
         {
-            Logger.Info("Getting conversations ...");
+            Logger.Debug("Getting conversations ...");
             using (SQLiteCommand command = new SQLiteCommand(GetConversationsQuery, connection))
             {
                 DbDataReader reader = await command.ExecuteReaderAsync();
