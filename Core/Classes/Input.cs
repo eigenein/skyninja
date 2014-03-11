@@ -12,6 +12,6 @@ namespace SkyNinja.Core.Classes
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        public abstract Task<ChatEnumerator> GetChatsAsync();
+        public abstract Task<ConversationEnumerator> GetConversationsAsync();
     }
 }

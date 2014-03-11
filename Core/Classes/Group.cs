@@ -3,9 +3,9 @@
 namespace SkyNinja.Core.Classes
 {
     /// <summary>
-    /// Skype message.
+    /// Message group.
     /// </summary>
-    internal abstract class Message
+    internal class Group
     {
     }
 }

@@ -9,6 +9,9 @@ using SkyNinja.Core.Exceptions;
 
 namespace SkyNinja.Core.Inputs.Skype
 {
+    /// <summary>
+    /// Creates <see cref="SkypeInput"/> by Skype ID.
+    /// </summary>
     internal class SkypeIdInputFactory: InputFactory
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();

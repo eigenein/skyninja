@@ -10,18 +10,18 @@ using SkyNinja.Core.Exceptions;
 
 namespace SkyNinja.Core.Inputs.Skype
 {
+    /// <summary>
+    /// Skype database input connector.
+    /// </summary>
     internal class SkypeInput: Input
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        private const string GetChatsQuery = @"
+        private const string GetConversationsQuery = @"
             select id as id,
-                   name as name,
-                   friendlyname as friendlyName,
-                   timestamp as timestamp,
-                   activity_timestamp as activityTimestamp,
-                   topic as topic
-            from chats
+                   identity as identity,
+                   displayname as displayName
+            from conversations
         ";
 
         private readonly string databasePath;
@@ -52,13 +52,13 @@ namespace SkyNinja.Core.Inputs.Skype
             connection.Trace += ConnectionTrace;
         }
 
-        public override async Task<ChatEnumerator> GetChatsAsync()
+        public override async Task<ConversationEnumerator> GetConversationsAsync()
         {
-            Logger.Info("Getting chats ...");
-            using (SQLiteCommand command = new SQLiteCommand(GetChatsQuery, connection))
+            Logger.Info("Getting conversations ...");
+            using (SQLiteCommand command = new SQLiteCommand(GetConversationsQuery, connection))
             {
                 DbDataReader reader = await command.ExecuteReaderAsync();
-                return new SkypeChatEnumerator(reader);
+                return new SkypeConversationEnumerator(reader);
             }
         }
 
