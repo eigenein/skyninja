@@ -5,37 +5,41 @@ using System.Threading.Tasks;
 using NLog;
 
 using SkyNinja.Core.Classes;
+using SkyNinja.Core.Extensions;
 
 namespace SkyNinja.Core.Inputs.Skype
 {
-    internal class SkypeConversationEnumerator: ConversationEnumerator
+    /// <summary>
+    /// Reads <see cref="Conversation"/> from <see cref="DbDataReader"/>.
+    /// </summary>
+    internal class SkypeConversationEnumerator: DataReaderAsyncEnumerator<Conversation>
     {
+        public const string Query = @"
+            select id as id,
+                   identity as identity,
+                   displayname as displayName
+            from conversations
+            order by id
+        ";
+
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        private readonly DbDataReader reader;
-
-        public SkypeConversationEnumerator(DbDataReader reader)
+        public SkypeConversationEnumerator(DbDataReader reader) 
+            : base(reader)
         {
-            this.reader = reader;
+            // Do nothing.
         }
 
-        public override async Task<bool> Move()
+        /// <summary>
+        /// Read current item.
+        /// </summary>
+        public override async Task<Conversation> Read()
         {
-            return await reader.ReadAsync();
-        }
-
-        public override async Task<Conversation> ReadCurrent()
-        {
-            int id = reader.GetInt32(reader.GetOrdinal("id"));
-            string identity = reader.GetString(reader.GetOrdinal("identity"));
-            string displayName = reader.GetString(reader.GetOrdinal("displayName"));
+            int id = Reader.GetInt32("id");
+            string identity = Reader.GetString("identity");
+            string displayName = Reader.GetString("displayName");
             Logger.Trace("Read: {0} {1} \"{2}\"", id, identity, displayName);
             return await Task.FromResult(new Conversation(id, identity, displayName));
-        }
-
-        public override void Close()
-        {
-            reader.Close();
         }
     }
 }

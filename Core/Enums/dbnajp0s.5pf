@@ -1,0 +1,12 @@
+﻿using System;
+
+namespace SkyNinja.Core.Enums
+{
+    /// <summary>
+    /// Skype-independent message type.
+    /// </summary>
+    public enum MessageType
+    {
+        Said = 1
+    }
+}

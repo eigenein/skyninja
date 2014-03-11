@@ -54,10 +54,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\AsyncEnumerator.cs" />
     <Compile Include="Classes\Chat.cs" />
     <Compile Include="Classes\Connector.cs" />
     <Compile Include="Classes\Conversation.cs" />
-    <Compile Include="Classes\ConversationEnumerator.cs" />
     <Compile Include="Classes\Factories\ConnectorFactory.cs" />
     <Compile Include="Classes\Factories\InputFactory.cs" />
     <Compile Include="Classes\Factories\OutputFactory.cs" />
@@ -67,18 +67,24 @@
     <Compile Include="Classes\Message.cs" />
     <Compile Include="ConnectorManager.cs" />
     <Compile Include="Enums\ConnectorType.cs" />
+    <Compile Include="Enums\InternalMessageType.cs" />
     <Compile Include="Exceptions\InternalException.cs" />
     <Compile Include="Exceptions\ConnectorUriException.cs" />
+    <Compile Include="Extensions\DbDataReaderExtensions.cs" />
     <Compile Include="FileSystems\UsualFileSystem.cs" />
     <Compile Include="FileSystems\ZipArchiveFileSystem.cs" />
     <Compile Include="Helpers\AssemblyVersion.cs" />
     <Compile Include="Classes\Input.cs" />
     <Compile Include="Classes\Output.cs" />
     <Compile Include="Helpers\ExitCodes.cs" />
+    <Compile Include="Inputs\DataReaderAsyncEnumerator.cs" />
+    <Compile Include="Inputs\Skype\SkypeMessageType.cs" />
     <Compile Include="Inputs\Skype\SkypeConversationEnumerator.cs" />
     <Compile Include="Inputs\Skype\SkypeDbInputFactory.cs" />
     <Compile Include="Inputs\Skype\SkypeIdInputFactory.cs" />
     <Compile Include="Inputs\Skype\SkypeInput.cs" />
+    <Compile Include="Inputs\Skype\SkypeMessageEnumerator.cs" />
+    <Compile Include="Messages\SaidMessage.cs" />
     <Compile Include="Migrator.cs" />
     <Compile Include="Outputs\PlainText\PlainTextOutput.cs" />
     <Compile Include="Outputs\PlainText\PlainTextOutputFactory.cs" />
@@ -94,7 +100,6 @@
   <ItemGroup>
     <Folder Include="Attributes\" />
     <Folder Include="GroupGetters\" />
-    <Folder Include="Messages\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="x64\SQLite.Interop.dll">

@@ -17,6 +17,25 @@ namespace SkyNinja.Core.Inputs.Skype
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
+        private const string GetConversationsQuery = @"
+            select id as id,
+                   identity as identity,
+                   displayname as displayName
+            from conversations
+            order by id
+        ";
+
+        private const string GetConversationMessagesQuery = @"
+            select
+                chat.name as chatName,
+                message.author as messageAuthor,
+            from chats as chat, messages as message
+            where
+                chat.conv_dbid = @conversationId and
+                message.chatname = chat.name
+            order by message.timestamp
+        ";
+
         private readonly string databasePath;
 
         private SQLiteConnection connection;
@@ -45,32 +64,22 @@ namespace SkyNinja.Core.Inputs.Skype
             connection.Trace += ConnectionTrace;
         }
 
-        /// <summary>
-        /// Get conversations.
-        /// </summary>
         public override async Task<AsyncEnumerator<Conversation>> GetConversationsAsync()
         {
             Logger.Debug("Getting conversations ...");
-            using (SQLiteCommand command = new SQLiteCommand
-                (SkypeConversationEnumerator.Query, connection))
+            using (SQLiteCommand command = new SQLiteCommand(GetConversationsQuery, connection))
             {
                 DbDataReader reader = await command.ExecuteReaderAsync();
                 return new SkypeConversationEnumerator(reader);
             }
         }
 
-        /// <summary>
-        /// Get conversation messages.
-        /// </summary>
-        public override async Task<AsyncEnumerator<Message>> GetMessages(int conversationId)
+        public override Task<AsyncEnumerator<Message>> GetMessages(int conversationId)
         {
             Logger.Debug("Getting messages ...");
-            using (SQLiteCommand command = new SQLiteCommand(
-                SkypeMessageEnumerator.Query, connection))
+            using (SQLiteCommand command = new SQLiteCommand(GetConversationMessagesQuery, connection))
             {
                 command.Parameters.Add(new SQLiteParameter("conversationId", conversationId));
-                DbDataReader reader = await command.ExecuteReaderAsync();
-                return new SkypeMessageEnumerator(reader);
             }
         }
 

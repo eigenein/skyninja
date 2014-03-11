@@ -3,18 +3,17 @@ using System.Threading.Tasks;
 
 namespace SkyNinja.Core.Classes
 {
-    public abstract class ConversationEnumerator: IDisposable
+    public abstract class AsyncEnumerator<T>: IDisposable
     {
         /// <summary>
-        /// Move to next conversation.
+        /// Move to next item.
         /// </summary>
         public abstract Task<bool> Move();
 
         /// <summary>
-        /// Read current conversation.
+        /// Read current item.
         /// </summary>
-        /// <returns></returns>
-        public abstract Task<Conversation> ReadCurrent();
+        public abstract Task<T> Read();
 
         public abstract void Close();
 

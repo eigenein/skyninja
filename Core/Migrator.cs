@@ -24,14 +24,30 @@ namespace SkyNinja.Core
         public async Task Migrate()
         {
             Logger.Info("Starting migration ...");
-            using (ConversationEnumerator conversationEnumerator = await input.GetConversationsAsync())
+            using (AsyncEnumerator<Conversation> conversationEnumerator =
+                await input.GetConversationsAsync())
             {
                 while (await conversationEnumerator.Move())
                 {
-                    await conversationEnumerator.ReadCurrent();
+                    Conversation conversation = await conversationEnumerator.Read();
+                    await MigrateConversation(conversation);
                 }
             }
             Logger.Info("Finished.");
+        }
+
+        private async Task MigrateConversation(Conversation conversation)
+        {
+            Logger.Debug("Getting messages ...");
+            using (AsyncEnumerator<Message> messageEnumerator =
+                await input.GetMessages(conversation.Id))
+            {
+                while (await messageEnumerator.Move())
+                {
+                    Message message = await messageEnumerator.Read();
+                    Logger.Trace("Read message: {0}", message);
+                }
+            }
         }
     }
 }
