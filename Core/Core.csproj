@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Classes\Connector.cs" />
     <Compile Include="Classes\Conversation.cs" />
+    <Compile Include="Classes\ConversationEnumerator.cs" />
     <Compile Include="Classes\Factories\ConnectorFactory.cs" />
     <Compile Include="Classes\Factories\InputFactory.cs" />
     <Compile Include="Classes\Factories\OutputFactory.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Inputs\SkypeDbInputFactory.cs" />
     <Compile Include="Inputs\SkypeIdInputFactory.cs" />
     <Compile Include="Inputs\SkypeInput.cs" />
+    <Compile Include="Migrator.cs" />
     <Compile Include="Outputs\PlainTextOutput.cs" />
     <Compile Include="Outputs\PlainTextOutputFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

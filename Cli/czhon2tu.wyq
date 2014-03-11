@@ -49,9 +49,7 @@ Options:
             }
             else
             {
-                Task<int> task = RunMigrationAsync(arguments);
-                task.Wait();
-                return task.Result;
+                return Run(arguments);
             }
 
             return ExitCodes.Success;
@@ -86,14 +84,13 @@ Options:
         /// <summary>
         /// Run migrator.
         /// </summary>
-        private static async Task<int> RunMigrationAsync(
-            IDictionary<string, ValueObject> arguments)
+        private static int Run(IDictionary<string, ValueObject> arguments)
         {
             Uri inputUri, outputUri;
             if (!TryParseUri(arguments["--input"].ToString(), out inputUri) ||
                 !TryParseUri(arguments["--output"].ToString(), out outputUri))
             {
-                return ExitCodes.Failure;
+                return ExitCodes.BadArguments;
             }
 
             Input input;
@@ -101,26 +98,26 @@ Options:
             if (!TryCreateConnector(ConnectorType.Input, inputUri, out input) ||
                 !TryCreateConnector(ConnectorType.Output, outputUri, out output))
             {
-                return ExitCodes.Failure;
+                return ExitCodes.BadArguments;
             }
 
+            RunAsync(input, output).Wait();
+
+            Logger.Info("Finished.");
+            return ExitCodes.Success;
+        }
+
+        private static async Task RunAsync(Input input, Output output)
+        {
             try
             {
                 input.Open();
                 output.Open();
-                await new Migrator(input, output).Migrate();
-                return ExitCodes.Success;
-            }
-            catch (InternalException e)
-            {
-                Logger.Fatal("Migration error: {0}", e.Message);
-                return ExitCodes.Failure;
             }
             finally
             {
                 output.Close();
                 input.Close();
-                Logger.Info("Finished.");
             }
         }
 

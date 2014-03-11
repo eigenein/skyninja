@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 using SkyNinja.Core.Classes;
 
@@ -11,6 +12,11 @@ namespace SkyNinja.Core.Inputs
         public SkypeInput(string databasePath)
         {
             this.databasePath = databasePath;
+        }
+
+        public override async Task<ConversationEnumerator> GetConversationsAsync()
+        {
+            return await Task.FromResult<ConversationEnumerator>(null);
         }
     }
 }

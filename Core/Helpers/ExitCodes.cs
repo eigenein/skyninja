@@ -9,7 +9,7 @@ namespace SkyNinja.Core.Helpers
     public static class ExitCodes
     {
         public const int Success = 0;
-        public const int BadArguments = 160;
-        public const int UnhandledException = 574;
+        public const int Failure = 1;
+        public const int UnhandledException = 2;
     }
 }
