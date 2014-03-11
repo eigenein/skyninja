@@ -2,6 +2,11 @@
 
 SkyNinja (`/skˈaɪ ˈnɪn.dʒə/`) is a tool for exporting and importing [Skype](http://www.skype.com) conversations. The application is the successor of [Skype Historian](http://eigene.in/skype-historian).
 
+#### Advantages over Skype Historian
+
+* Does not require running and even installed Skype.
+* Dramatically faster.
+
 #### Visual Studio Project Checklist
 
 * Verify that the project requires **.NET Framework 4.5**.
