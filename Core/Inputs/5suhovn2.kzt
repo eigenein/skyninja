@@ -5,9 +5,9 @@ using NLog;
 using SkyNinja.Core.Classes;
 using SkyNinja.Core.Classes.Factories;
 
-namespace SkyNinja.Core.Outputs
+namespace SkyNinja.Core.Inputs
 {
-    internal class PlainTextOutputFactory: OutputFactory
+    internal class SkypeIdInputFactory: InputFactory
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
@@ -15,15 +15,17 @@ namespace SkyNinja.Core.Outputs
         {
             get
             {
-                return "Plain text files.";
+                return "Skype name.";
             }
         }
 
         public override Connector CreateConnector(Uri uri)
         {
-            string path = uri.LocalPath;
-            Logger.Info("Using output path: {0}", path);
-            return new PlainTextOutput();
+            String skypeId = uri.Host;
+            Logger.Info("Trying Skype ID: {0}", skypeId);
+            String applicationDataPath = Environment.GetFolderPath(
+                Environment.SpecialFolder.ApplicationData);
+            return null;
         }
     }
 }

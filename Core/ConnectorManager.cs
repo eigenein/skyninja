@@ -29,7 +29,7 @@ namespace SkyNinja.Core
         };
 
         public static bool TryGetFactory(
-            ConnectorType connectorType, String key, out ConnectorFactory factory)
+            ConnectorType connectorType, string key, out ConnectorFactory factory)
         {
             KeyConnectorDictionary dictionary = All[connectorType];
             return dictionary.TryGetValue(key, out factory);
@@ -41,9 +41,9 @@ namespace SkyNinja.Core
         }
 
         /// <summary>
-        /// Shortcut for <code>Dictionary&lt;String, Connector&gt;</code>.
+        /// Shortcut for <code>Dictionary&lt;string, Connector&gt;</code>.
         /// </summary>
-        public class KeyConnectorDictionary : Dictionary<String, ConnectorFactory>
+        public class KeyConnectorDictionary : Dictionary<string, ConnectorFactory>
         {
             // Nothing.
         };

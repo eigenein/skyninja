@@ -4,7 +4,7 @@ namespace SkyNinja.Core.Exceptions
 {
     public class InternalException: Exception
     {
-        protected InternalException(string message) : base(message)
+        protected InternalException(String message) : base(message)
         {
             // Do nothing.
         }

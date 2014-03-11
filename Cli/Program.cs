@@ -16,7 +16,7 @@ namespace SkyNinja.Cli
 {
     public static class Program
     {
-        private const String Usage = @"
+        private const string Usage = @"
 SkyNinja Command Line Interface
 
 Usage:
@@ -34,7 +34,7 @@ Options:
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        public static int Main(String[] args)
+        public static int Main(string[] args)
         {
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
 
@@ -105,7 +105,7 @@ Options:
         /// <summary>
         /// Parse URI.
         /// </summary>
-        private static bool TryParseUri(String argument, out Uri uri)
+        private static bool TryParseUri(string argument, out Uri uri)
         {
             try
             {
@@ -142,7 +142,7 @@ Options:
             }
             catch (ConnectorUriException e)
             {
-                Logger.Fatal("{0} In URI: {1}", e, uri);
+                Logger.Fatal("{0} In URI: {1}", e.Message, uri);
                 return false;
             }
         }

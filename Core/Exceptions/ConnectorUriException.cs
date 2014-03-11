@@ -7,6 +7,9 @@ namespace SkyNinja.Core.Exceptions
     /// </summary>
     public class ConnectorUriException: InternalException
     {
-        // Nothing.
+        public ConnectorUriException(string message) : base(message)
+        {
+            // Do nothing.
+        }
     }
 }
