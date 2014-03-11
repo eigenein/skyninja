@@ -14,3 +14,5 @@ SkyNinja (`/skˈaɪ ˈnɪn.dʒə/`) is a [Skype](http://www.skype.com) history e
 * Verify that **`SkyNinja.pfx` is added as a link (not a copy)**.
 * Verify that **unused references are removed**.
 * Verify **`AssemblyInfo.cs`**.
+
+#### Connector Specification

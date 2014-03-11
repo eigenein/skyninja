@@ -61,7 +61,9 @@
     <Compile Include="Helpers\AssemblyVersion.cs" />
     <Compile Include="Classes\Input.cs" />
     <Compile Include="Classes\Output.cs" />
+    <Compile Include="Helpers\ExitCodes.cs" />
     <Compile Include="Inputs\SkypeDbInputFactory.cs" />
+    <Compile Include="Inputs\SkypeIdInputFactory.cs" />
     <Compile Include="Inputs\SkypeInput.cs" />
     <Compile Include="Outputs\PlainTextOutput.cs" />
     <Compile Include="Outputs\PlainTextOutputFactory.cs" />

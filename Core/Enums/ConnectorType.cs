@@ -2,7 +2,7 @@
 
 namespace SkyNinja.Core.Enums
 {
-    internal enum ConnectorType
+    public enum ConnectorType
     {
         Input = 1,
         Output = 2

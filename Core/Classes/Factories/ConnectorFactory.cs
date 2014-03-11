@@ -2,7 +2,11 @@
 
 namespace SkyNinja.Core.Classes.Factories
 {
-    internal abstract class ConnectorFactory
+    public abstract class ConnectorFactory
     {
+        public abstract String Description
+        {
+            get;
+        }
     }
 }
