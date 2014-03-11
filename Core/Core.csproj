@@ -48,6 +48,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.91.3\lib\net45\System.Data.SQLite.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Connector.cs" />
@@ -69,24 +73,33 @@
     <Compile Include="Classes\Input.cs" />
     <Compile Include="Classes\Output.cs" />
     <Compile Include="Helpers\ExitCodes.cs" />
-    <Compile Include="Inputs\SkypeDbInputFactory.cs" />
-    <Compile Include="Inputs\SkypeIdInputFactory.cs" />
-    <Compile Include="Inputs\SkypeInput.cs" />
+    <Compile Include="Inputs\Skype\SkypeDbInputFactory.cs" />
+    <Compile Include="Inputs\Skype\SkypeIdInputFactory.cs" />
+    <Compile Include="Inputs\Skype\SkypeInput.cs" />
     <Compile Include="Migrator.cs" />
-    <Compile Include="Outputs\PlainTextOutput.cs" />
-    <Compile Include="Outputs\PlainTextOutputFactory.cs" />
+    <Compile Include="Outputs\PlainText\PlainTextOutput.cs" />
+    <Compile Include="Outputs\PlainText\PlainTextOutputFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\SkyNinja.pfx">
       <Link>SkyNinja.pfx</Link>
     </None>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Attributes\" />
     <Folder Include="GroupGetters\" />
     <Folder Include="Messages\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="x64\SQLite.Interop.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x86\SQLite.Interop.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

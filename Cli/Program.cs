@@ -106,8 +106,8 @@ Options:
 
             try
             {
-                input.Open();
-                output.Open();
+                await input.Open();
+                await output.Open();
                 await new Migrator(input, output).Migrate();
                 return ExitCodes.Success;
             }

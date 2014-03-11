@@ -1,15 +1,13 @@
 ﻿using System;
-using System.IO;
 
 using NLog;
 
 using SkyNinja.Core.Classes;
 using SkyNinja.Core.Classes.Factories;
-using SkyNinja.Core.Exceptions;
 
-namespace SkyNinja.Core.Inputs
+namespace SkyNinja.Core.Outputs.PlainText
 {
-    internal class SkypeDbInputFactory: InputFactory
+    internal class PlainTextOutputFactory: OutputFactory
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
@@ -17,15 +15,15 @@ namespace SkyNinja.Core.Inputs
         {
             get
             {
-                return "Skype database file.";
+                return "Plain text files.";
             }
         }
 
         public override Connector CreateConnector(Uri uri)
         {
-            string databasePath = uri.LocalPath;
-            Logger.Info("Trying Skype database: {0} ...", databasePath);
-            return new SkypeInput(databasePath);
+            string path = uri.LocalPath;
+            Logger.Info("Using output path: {0}", path);
+            return new PlainTextOutput();
         }
     }
 }

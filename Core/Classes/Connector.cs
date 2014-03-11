@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 using NLog;
 
@@ -8,14 +9,8 @@ namespace SkyNinja.Core.Classes
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        public void Open()
-        {
-            Logger.Info("Opening {0} ...", this);
-        }
+        public abstract Task Open();
 
-        public void Close()
-        {
-            Logger.Info("Closing {0} ...", this);
-        }
+        public abstract void Close();
     }
 }

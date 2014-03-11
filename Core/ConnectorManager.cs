@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using SkyNinja.Core.Classes.Factories;
 using SkyNinja.Core.Enums;
 using SkyNinja.Core.Inputs;
+using SkyNinja.Core.Inputs.Skype;
 using SkyNinja.Core.Outputs;
+using SkyNinja.Core.Outputs.PlainText;
 
 namespace SkyNinja.Core
 {

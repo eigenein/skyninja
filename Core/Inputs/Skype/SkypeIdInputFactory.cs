@@ -7,7 +7,7 @@ using SkyNinja.Core.Classes;
 using SkyNinja.Core.Classes.Factories;
 using SkyNinja.Core.Exceptions;
 
-namespace SkyNinja.Core.Inputs
+namespace SkyNinja.Core.Inputs.Skype
 {
     internal class SkypeIdInputFactory: InputFactory
     {
