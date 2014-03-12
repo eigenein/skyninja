@@ -22,7 +22,7 @@ namespace SkyNinja.Core.Inputs.Skype
             }
         }
 
-        public override Connector CreateConnector(Uri uri)
+        public override Input CreateConnector(Uri uri)
         {
             string databasePath = uri.LocalPath;
             Logger.Info("Trying Skype database: {0} ...", databasePath);

@@ -30,9 +30,17 @@ namespace SkyNinja.Core.Classes
             set;
         }
 
+        public DateTime Timestamp
+        {
+            get;
+            set;
+        }
+
         public override string ToString()
         {
-            return String.Format("#{0} {1}", Id, MessageType);
+            return String.Format(
+                "Timestamp: {2} Id: {0} Type: {1}",
+                Id, MessageType, Timestamp);
         }
     }
 }

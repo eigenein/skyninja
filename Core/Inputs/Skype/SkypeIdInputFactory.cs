@@ -24,7 +24,7 @@ namespace SkyNinja.Core.Inputs.Skype
             }
         }
 
-        public override Connector CreateConnector(Uri uri)
+        public override Input CreateConnector(Uri uri)
         {
             string skypeId = uri.Host;
             Logger.Info("Trying Skype ID: {0} ...", skypeId);
@@ -35,7 +35,7 @@ namespace SkyNinja.Core.Inputs.Skype
             Logger.Debug("Trying database path: {0} ...", databasePath);
             if (!File.Exists(databasePath))
             {
-                throw new ConnectorUriException("Database file is not found for this Skype ID.");
+                throw new InvalidUriParametersInternalException("Database file is not found for this Skype ID.");
             }
             Logger.Info("Database file is found.");
             return new SkypeInput(databasePath);

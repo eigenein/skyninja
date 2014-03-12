@@ -14,10 +14,5 @@ namespace SkyNinja.Core.Classes.Factories
         {
             get;
         }
-
-        /// <summary>
-        /// Create connector by URI.
-        /// </summary>
-        public abstract Connector CreateConnector(Uri uri);
     }
 }

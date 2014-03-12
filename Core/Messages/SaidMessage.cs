@@ -20,7 +20,7 @@ namespace SkyNinja.Core.Messages
 
         public override string ToString()
         {
-            return String.Format("{0} {1} {2}", base.ToString(), Author, BodyXml);
+            return String.Format("{0} Author: {1}", base.ToString(), Author);
         }
     }
 }

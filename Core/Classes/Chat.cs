@@ -4,19 +4,16 @@ namespace SkyNinja.Core.Classes
 {
     public class Chat
     {
-        private string name;
-
         public string Name
         {
-            get
-            {
-                return name;
-            }
+            get;
+            set;
         }
 
-        public Chat(string name)
+        public string Participants
         {
-            this.name = name;
+            get;
+            set;
         }
     }
 }

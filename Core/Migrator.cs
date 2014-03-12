@@ -14,11 +14,16 @@ namespace SkyNinja.Core
         private readonly Input input;
         private readonly Output output;
 
-        public Migrator(Input input, Output output)
+        private readonly Grouper grouper;
+
+        public Migrator(Input input, Output output, Grouper grouper)
         {
-            Logger.Info("Initializing migrator. Input: {0}. Output: {1}.", input, output);
+            Logger.Info(
+                "Initializing migrator. Input: {0}. Output: {1}. Grouper: {2}.",
+                input, output, grouper);
             this.input = input;
             this.output = output;
+            this.grouper = grouper;
         }
 
         public async Task Migrate()
@@ -44,8 +49,24 @@ namespace SkyNinja.Core
             {
                 while (await messageEnumerator.Move())
                 {
+                    // Read message.
                     Message message = await messageEnumerator.Read();
                     Logger.Trace("Read message: {0}", message);
+                    if (message.MessageType == Enums.InternalMessageType.Unknown)
+                    {
+                        Logger.Warn("Skip message.");
+                        continue;
+                    }
+                    // Get message group and open new group if necessary.
+                    string group = grouper.GetGroup(conversation, message);
+                    Logger.Trace("Group: {0}", group);
+                    if (output.CurrentGroup != group)
+                    {
+                        output.EndGroup();
+                        output.BeginGroup(group);
+                    }
+                    // Insert message.
+                    await output.InsertMessage(message);
                 }
             }
         }

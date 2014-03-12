@@ -19,11 +19,11 @@ namespace SkyNinja.Core.Outputs.PlainText
             }
         }
 
-        public override Connector CreateConnector(Uri uri)
+        public override Output CreateConnector(Uri uri, FileSystem fileSystem)
         {
             string path = uri.LocalPath;
             Logger.Info("Using output path: {0}", path);
-            return new PlainTextOutput();
+            return new PlainTextOutput(fileSystem, path);
         }
     }
 }

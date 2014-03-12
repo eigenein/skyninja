@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
 
 using DocoptNet;
@@ -23,15 +22,17 @@ SkyNinja Command Line Interface
 
 Usage:
     cli --version
-    cli --list
-    cli -i URI -o URI
+    cli --list-schemes
+    cli -i URI -o URI [-g URI] [-f NAME]
 
 Options:
-      -h --help        Show this screen.
-      --version        Show version.
-      --list           List connectors.
-      -i --input URI   Input URI.
-      -o --output URI  Output URI.
+      -h --help              Show this screen.
+      --version              Show version.
+      --list-schemes         List connector and group schemes and file systems.
+      -i --input URI         Input URI.
+      -o --output URI        Output URI.
+      -g --grouper URI       Grouper URI [default: group://participants].
+      -f --file-system NAME  Target file system [default: usual].
  ";
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -43,9 +44,11 @@ Options:
             IDictionary<string, ValueObject> arguments = new Docopt().Apply(
                 Usage, args, version: AssemblyVersion.Current, exit: true);
 
-            if (arguments["--list"].IsTrue)
+            if (arguments["--list-schemes"].IsTrue)
             {
                 ListConnectors();
+                ListGroupers();
+                ListFileSystems();
             }
             else
             {
@@ -63,23 +66,49 @@ Options:
         private static void ListConnectors()
         {
             Console.WriteLine();
-            Console.WriteLine("The following connectors are available:");
-            Console.WriteLine();
             Console.WriteLine("Input:");
-            ListConnectors(ConnectorManager.GetFactories(ConnectorType.Input));
+            ListConnectors(AllConnectors.Inputs);
             Console.WriteLine();
             Console.WriteLine("Output:");
-            ListConnectors(ConnectorManager.GetFactories(ConnectorType.Output));
+            ListConnectors(AllConnectors.Outputs);
         }
 
         /// <summary>
         /// List connectors.
         /// </summary>
-        private static void ListConnectors(ConnectorManager.KeyConnectorDictionary factories)
+        private static void ListConnectors<TConnectorFactory>(
+            AllConnectors.ConnectorDictionary<TConnectorFactory> factories)
+            where TConnectorFactory: ConnectorFactory
         {
-            foreach (KeyValuePair<string, ConnectorFactory> entry in factories)
+            foreach (KeyValuePair<string, TConnectorFactory> entry in factories)
             {
                 Console.WriteLine("    {0}\t{1}", entry.Key, entry.Value.Description);
+            }
+        }
+
+        /// <summary>
+        /// List grouper schemes.
+        /// </summary>
+        private static void ListGroupers()
+        {
+            Console.WriteLine();
+            Console.WriteLine("Groupers:");
+            foreach (string name in AllGroupers.Instance.Keys)
+            {
+                Console.WriteLine("    {0}", name);
+            }
+        }
+
+        /// <summary>
+        /// List file system names.
+        /// </summary>
+        private static void ListFileSystems()
+        {
+            Console.WriteLine();
+            Console.WriteLine("File Systems:");
+            foreach (string name in AllFileSystems.Instance.Keys)
+            {
+                Console.WriteLine("    {0}", name);
             }
         }
 
@@ -89,21 +118,47 @@ Options:
         private static async Task<int> RunMigrationAsync(
             IDictionary<string, ValueObject> arguments)
         {
+            // Create file system.
+            string fileSystemName = arguments["--file-system"].ToString();
+            FileSystem fileSystem;
+            if (!AllFileSystems.Instance.TryGetValue(fileSystemName, out fileSystem))
+            {
+                Logger.Fatal("Unknown file system: {0}", fileSystemName);
+                return ExitCodes.Failure;
+            }
+            Logger.Info("File system: {0}", fileSystem);
+            // Parse connector URIs.
             Uri inputUri, outputUri;
             if (!TryParseUri(arguments["--input"].ToString(), out inputUri) ||
                 !TryParseUri(arguments["--output"].ToString(), out outputUri))
             {
                 return ExitCodes.Failure;
             }
-
+            // Create connectors.
             Input input;
             Output output;
-            if (!TryCreateConnector(ConnectorType.Input, inputUri, out input) ||
-                !TryCreateConnector(ConnectorType.Output, outputUri, out output))
+            try
+            {
+                input = AllConnectors.Inputs[inputUri.Scheme].CreateConnector(inputUri);
+                output = AllConnectors.Outputs[outputUri.Scheme].CreateConnector(outputUri, fileSystem);
+            }
+            catch (KeyNotFoundException e)
+            {
+                Logger.Fatal("Unknown scheme. {0}", e.Message);
+                return ExitCodes.Failure;
+            }
+            catch (InvalidUriParametersInternalException e)
+            {
+                Logger.Fatal("Invalid URI parameters. {0}", e.Message);
+                return ExitCodes.Failure;
+            }
+            // Create group getter.
+            Grouper grouper;
+            if (!TryCreateGroupGetter(arguments, out grouper))
             {
                 return ExitCodes.Failure;
             }
-
+            // Run migration.
             try
             {
                 using (input)
@@ -112,7 +167,7 @@ Options:
                     {
                         await input.Open();
                         await output.Open();
-                        await new Migrator(input, output).Migrate();
+                        await new Migrator(input, output, grouper).Migrate();
                     }
                 }
             }
@@ -121,7 +176,7 @@ Options:
                 Logger.Fatal("Migration error: {0}", e.Message);
                 return ExitCodes.Failure;
             }
-
+            // Finished.
             Logger.Info("Finished.");
             return ExitCodes.Success;
         }
@@ -145,28 +200,32 @@ Options:
         }
 
         /// <summary>
-        /// Create connector.
+        /// Create group getter.
         /// </summary>
-        private static bool TryCreateConnector<TConnector>(
-            ConnectorType connectorType, Uri uri, out TConnector connector)
-            where TConnector: Connector
+        private static bool TryCreateGroupGetter(
+            IDictionary<string, ValueObject> arguments, out Grouper grouper)
         {
-            connector = default(TConnector);
+            grouper = null;
 
-            ConnectorFactory factory;
-            if (!ConnectorManager.TryGetFactory(connectorType, uri.Scheme, out factory))
+            Uri grouperUri;
+            if (!TryParseUri(arguments["--grouper"].ToString(), out grouperUri))
             {
-                Logger.Fatal("Unknown scheme: {1}: {0}", uri.Scheme, connectorType);
+                return false;
+            }
+            Func<Uri, Grouper> createGrouper;
+            if (!AllGroupers.Instance.TryGetValue(grouperUri.Host, out createGrouper))
+            {
+                Logger.Fatal("Unknown grouper name: {0}", grouperUri.Host);
                 return false;
             }
             try
             {
-                connector = (TConnector)factory.CreateConnector(uri);
+                grouper = createGrouper(grouperUri);
                 return true;
             }
-            catch (ConnectorUriException e)
+            catch (InvalidUriParametersInternalException e)
             {
-                Logger.Fatal("{0} In URI: {1}", e.Message, uri);
+                Logger.Fatal("Failed to create grouper. {0}", e.Message);
                 return false;
             }
         }

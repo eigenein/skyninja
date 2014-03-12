@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 using SkyNinja.Core.Classes;
 using SkyNinja.Core.Extensions;
+using SkyNinja.Core.Helpers;
 using SkyNinja.Core.Messages;
 
 namespace SkyNinja.Core.Inputs.Skype
@@ -14,6 +15,7 @@ namespace SkyNinja.Core.Inputs.Skype
         public const string Query = @"
             select
                 chat.name as chatName,
+                chat.participants as chatParticipants,
                 message.id as messageId,
                 message.author as messageAuthor,
                 message.from_dispname as messageFromDisplayName,
@@ -65,7 +67,13 @@ namespace SkyNinja.Core.Inputs.Skype
             }
             // Set common message properties.
             message.Id = Reader.GetInt32("messageId");
-            message.Chat = new Chat(Reader.GetString("chatName"));
+            message.Chat = new Chat
+            {
+                Name = Reader.GetString("chatName"),
+                Participants = Reader.GetString("chatParticipants")
+            };
+            message.Timestamp = DateTimeHelper.FromTimestamp(
+                Reader.GetInt32("messageTimestamp"));
             return await Task.FromResult(message);
         }
 

@@ -1,8 +1,16 @@
 ﻿using System;
+using System.Threading.Tasks;
+
+using SkyNinja.Core.Helpers;
 
 namespace SkyNinja.Core.Classes
 {
-    internal abstract class FileSystem
+    public abstract class FileSystem
     {
+        public virtual async Task CreatePath(string path)
+        {
+            // Do nothing.
+            await Tasks.EmptyTask;
+        }
     }
 }

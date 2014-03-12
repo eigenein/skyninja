@@ -2,12 +2,11 @@
 
 namespace SkyNinja.Core.Classes
 {
-    internal abstract class GroupGetter
+    public abstract class Grouper
     {
         /// <summary>
         /// Get group for the message.
         /// </summary>
-        public abstract Group Get(
-            Conversation conversation, Chat chat, Message message);
+        public abstract string GetGroup(Conversation conversation, Message message);
     }
 }
