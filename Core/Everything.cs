@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using SkyNinja.Core.Classes;
 using SkyNinja.Core.Classes.Factories;
 using SkyNinja.Core.FileSystems;
-using SkyNinja.Core.GroupGetters;
+using SkyNinja.Core.Groupers;
 using SkyNinja.Core.Inputs.Skype;
 using SkyNinja.Core.Outputs.PlainText;
 

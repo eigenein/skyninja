@@ -2,7 +2,7 @@
 
 using SkyNinja.Core.Classes;
 
-namespace SkyNinja.Core.GroupGetters
+namespace SkyNinja.Core.Groupers
 {
     internal class ParticipantsGrouper: Grouper
     {
