@@ -58,7 +58,6 @@
     <Compile Include="Classes\Chat.cs" />
     <Compile Include="Classes\Connector.cs" />
     <Compile Include="Classes\Conversation.cs" />
-    <Compile Include="Classes\Factories\ConnectorFactory.cs" />
     <Compile Include="Classes\Factories\InputFactory.cs" />
     <Compile Include="Classes\Factories\OutputFactory.cs" />
     <Compile Include="Classes\FileSystem.cs" />
@@ -66,13 +65,13 @@
     <Compile Include="Classes\Message.cs" />
     <Compile Include="Enums\ConnectorType.cs" />
     <Compile Include="Enums\InternalMessageType.cs" />
+    <Compile Include="Everything.cs" />
     <Compile Include="Exceptions\InternalException.cs" />
     <Compile Include="Exceptions\InvalidUriParametersInternalException.cs" />
     <Compile Include="Extensions\DbDataReaderExtensions.cs" />
-    <Compile Include="AllFileSystems.cs" />
     <Compile Include="FileSystems\UsualFileSystem.cs" />
     <Compile Include="FileSystems\ZipArchiveFileSystem.cs" />
-    <Compile Include="AllGroupers.cs" />
+    <Compile Include="Groupers\CombineGrouper.cs" />
     <Compile Include="Groupers\ParticipantsGrouper.cs" />
     <Compile Include="Helpers\AssemblyVersion.cs" />
     <Compile Include="Classes\Input.cs" />
@@ -80,7 +79,6 @@
     <Compile Include="Helpers\DateTimeHelper.cs" />
     <Compile Include="Helpers\ExitCodes.cs" />
     <Compile Include="Helpers\Tasks.cs" />
-    <Compile Include="AllConnectors.cs" />
     <Compile Include="Inputs\DataReaderAsyncEnumerator.cs" />
     <Compile Include="Inputs\Skype\SkypeMessageType.cs" />
     <Compile Include="Inputs\Skype\SkypeConversationEnumerator.cs" />

@@ -16,14 +16,6 @@ namespace SkyNinja.Core.Inputs.Skype
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        public override string Description
-        {
-            get
-            {
-                return "Skype name.";
-            }
-        }
-
         public override Input CreateConnector(Uri uri)
         {
             string skypeId = uri.Host;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,32 +9,28 @@ using NLog;
 
 using SkyNinja.Core;
 using SkyNinja.Core.Classes;
-using SkyNinja.Core.Classes.Factories;
-using SkyNinja.Core.Enums;
 using SkyNinja.Core.Exceptions;
+using SkyNinja.Core.Groupers;
 using SkyNinja.Core.Helpers;
 
 namespace SkyNinja.Cli
 {
     public static class Program
     {
-        private const string Usage = @"
+        private static readonly string Usage = @"
 SkyNinja Command Line Interface
 
 Usage:
     cli --version
-    cli --list-schemes
-    cli -i URI -o URI [-g URI] [-f NAME]
+    cli -i <uri> -o <uri> [-g <name>...] [-f <name>]
 
 Options:
-      -h --help              Show this screen.
-      --version              Show version.
-      --list-schemes         List connector and group schemes and file systems.
-      -i --input URI         Input URI.
-      -o --output URI        Output URI.
-      -g --grouper URI       Grouper URI [default: group://participants].
-      -f --file-system NAME  Target file system [default: usual].
- ";
+      -h --help                Show this screen.
+      --version                Show version.
+      -i --input <uri>         Input URI.
+      -o --output <uri>        Output URI.
+      -g --grouper <name>...   Groupers [default: participants].
+      -f --file-system <name>  Target file system [default: usual].";
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
@@ -41,75 +38,13 @@ Options:
         {
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
 
-            IDictionary<string, ValueObject> arguments = new Docopt().Apply(
+            Docopt docopt = new Docopt();
+            IDictionary<string, ValueObject> arguments = docopt.Apply(
                 Usage, args, version: AssemblyVersion.Current, exit: true);
 
-            if (arguments["--list-schemes"].IsTrue)
-            {
-                ListConnectors();
-                ListGroupers();
-                ListFileSystems();
-            }
-            else
-            {
-                Task<int> task = RunMigrationAsync(arguments);
-                task.Wait();
-                return task.Result;
-            }
-
-            return ExitCodes.Success;
-        }
-
-        /// <summary>
-        /// List all available connectors.
-        /// </summary>
-        private static void ListConnectors()
-        {
-            Console.WriteLine();
-            Console.WriteLine("Input:");
-            ListConnectors(AllConnectors.Inputs);
-            Console.WriteLine();
-            Console.WriteLine("Output:");
-            ListConnectors(AllConnectors.Outputs);
-        }
-
-        /// <summary>
-        /// List connectors.
-        /// </summary>
-        private static void ListConnectors<TConnectorFactory>(
-            AllConnectors.ConnectorDictionary<TConnectorFactory> factories)
-            where TConnectorFactory: ConnectorFactory
-        {
-            foreach (KeyValuePair<string, TConnectorFactory> entry in factories)
-            {
-                Console.WriteLine("    {0}\t{1}", entry.Key, entry.Value.Description);
-            }
-        }
-
-        /// <summary>
-        /// List grouper schemes.
-        /// </summary>
-        private static void ListGroupers()
-        {
-            Console.WriteLine();
-            Console.WriteLine("Groupers:");
-            foreach (string name in AllGroupers.Instance.Keys)
-            {
-                Console.WriteLine("    {0}", name);
-            }
-        }
-
-        /// <summary>
-        /// List file system names.
-        /// </summary>
-        private static void ListFileSystems()
-        {
-            Console.WriteLine();
-            Console.WriteLine("File Systems:");
-            foreach (string name in AllFileSystems.Instance.Keys)
-            {
-                Console.WriteLine("    {0}", name);
-            }
+            Task<int> task = RunMigrationAsync(arguments);
+            task.Wait();
+            return task.Result;
         }
 
         /// <summary>
@@ -121,7 +56,7 @@ Options:
             // Create file system.
             string fileSystemName = arguments["--file-system"].ToString();
             FileSystem fileSystem;
-            if (!AllFileSystems.Instance.TryGetValue(fileSystemName, out fileSystem))
+            if (!Everything.FileSystems.TryGetValue(fileSystemName, out fileSystem))
             {
                 Logger.Fatal("Unknown file system: {0}", fileSystemName);
                 return ExitCodes.Failure;
@@ -139,8 +74,8 @@ Options:
             Output output;
             try
             {
-                input = AllConnectors.Inputs[inputUri.Scheme].CreateConnector(inputUri);
-                output = AllConnectors.Outputs[outputUri.Scheme].CreateConnector(outputUri, fileSystem);
+                input = Everything.Inputs[inputUri.Scheme].CreateConnector(inputUri);
+                output = Everything.Outputs[outputUri.Scheme].CreateConnector(outputUri, fileSystem);
             }
             catch (KeyNotFoundException e)
             {
@@ -154,7 +89,7 @@ Options:
             }
             // Create group getter.
             Grouper grouper;
-            if (!TryCreateGroupGetter(arguments, out grouper))
+            if (!TryCreateGrouper(arguments["--grouper"].AsList, out grouper))
             {
                 return ExitCodes.Failure;
             }
@@ -202,32 +137,22 @@ Options:
         /// <summary>
         /// Create group getter.
         /// </summary>
-        private static bool TryCreateGroupGetter(
-            IDictionary<string, ValueObject> arguments, out Grouper grouper)
+        private static bool TryCreateGrouper(IEnumerable arguments, out Grouper grouper)
         {
-            grouper = null;
-
-            Uri grouperUri;
-            if (!TryParseUri(arguments["--grouper"].ToString(), out grouperUri))
+            CombineGrouper combineGrouper = new CombineGrouper();
+            foreach (object argument in arguments)
             {
-                return false;
+                Grouper innerGrouper;
+                if (!Everything.Groupers.TryGetValue(argument.ToString(), out innerGrouper))
+                {
+                    Logger.Fatal("Unknown grouper name: {0}", argument);
+                    grouper = null;
+                    return false;
+                }
+                combineGrouper.AddGrouper(innerGrouper);
             }
-            Func<Uri, Grouper> createGrouper;
-            if (!AllGroupers.Instance.TryGetValue(grouperUri.Host, out createGrouper))
-            {
-                Logger.Fatal("Unknown grouper name: {0}", grouperUri.Host);
-                return false;
-            }
-            try
-            {
-                grouper = createGrouper(grouperUri);
-                return true;
-            }
-            catch (InvalidUriParametersInternalException e)
-            {
-                Logger.Fatal("Failed to create grouper. {0}", e.Message);
-                return false;
-            }
+            grouper = combineGrouper;
+            return true;
         }
 
         /// <summary>
@@ -236,6 +161,10 @@ Options:
         private static void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs e)
         {
             Logger.FatalException("Fatal error.", (Exception)e.ExceptionObject);
+            Logger.Fatal(@"
+Please send this log to bugs@skyninja.im
+We promise not to disclose your personal data.
+");
             Environment.Exit(ExitCodes.UnhandledException);
         }
     }

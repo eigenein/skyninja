@@ -11,14 +11,6 @@ namespace SkyNinja.Core.Outputs.PlainText
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        public override string Description
-        {
-            get
-            {
-                return "Plain text files.";
-            }
-        }
-
         public override Output CreateConnector(Uri uri, FileSystem fileSystem)
         {
             string path = uri.LocalPath;

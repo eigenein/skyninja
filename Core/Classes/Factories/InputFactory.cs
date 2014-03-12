@@ -5,7 +5,7 @@ namespace SkyNinja.Core.Classes.Factories
     /// <summary>
     /// Input connector factory.
     /// </summary>
-    public abstract class InputFactory: ConnectorFactory
+    public abstract class InputFactory
     {
         /// <summary>
         /// Create connector by URI.
