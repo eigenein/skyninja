@@ -40,5 +40,10 @@ namespace SkyNinja.Core.Classes
             this.identity = identity;
             this.displayName = displayName;
         }
+
+        public override string ToString()
+        {
+            return String.Format("Conversation(id: {0})", id);
+        }
     }
 }

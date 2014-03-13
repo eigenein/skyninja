@@ -9,6 +9,7 @@ using NLog;
 
 using SkyNinja.Core;
 using SkyNinja.Core.Classes;
+using SkyNinja.Core.Classes.Factories;
 using SkyNinja.Core.Exceptions;
 using SkyNinja.Core.Groupers;
 using SkyNinja.Core.Helpers;
@@ -53,15 +54,6 @@ Options:
         private static async Task<int> RunMigrationAsync(
             IDictionary<string, ValueObject> arguments)
         {
-            // Create file system.
-            string fileSystemName = arguments["--file-system"].ToString();
-            FileSystem fileSystem;
-            if (!Everything.FileSystems.TryGetValue(fileSystemName, out fileSystem))
-            {
-                Logger.Fatal("Unknown file system: {0}", fileSystemName);
-                return ExitCodes.Failure;
-            }
-            Logger.Info("File system: {0}", fileSystem);
             // Parse connector URIs.
             Uri inputUri, outputUri;
             if (!TryParseUri(arguments["--input"].ToString(), out inputUri) ||
@@ -69,6 +61,24 @@ Options:
             {
                 return ExitCodes.Failure;
             }
+            // Create file system.
+            string fileSystemName = arguments["--file-system"].ToString();
+            FileSystem fileSystem;
+            try
+            {
+                fileSystem = Everything.FileSystems[fileSystemName].Create(outputUri);
+            }
+            catch (KeyNotFoundException e)
+            {
+                Logger.Fatal("Unknown file system. {0}", e.Message);
+                return ExitCodes.Failure;
+            }
+            catch (InvalidUriParametersInternalException e)
+            {
+                Logger.Fatal("Invalid file system URI parameters. {0}", e.Message);
+                return ExitCodes.Failure;
+            }
+            Logger.Info("File system: {0}", fileSystem);
             // Create connectors.
             Input input;
             Output output;
@@ -84,7 +94,7 @@ Options:
             }
             catch (InvalidUriParametersInternalException e)
             {
-                Logger.Fatal("Invalid URI parameters. {0}", e.Message);
+                Logger.Fatal("Invalid connector URI parameters. {0}", e.Message);
                 return ExitCodes.Failure;
             }
             // Create group getter.
@@ -96,13 +106,17 @@ Options:
             // Run migration.
             try
             {
-                using (input)
+                using (fileSystem)
                 {
-                    using (output)
+                    await fileSystem.Open();
+                    using (input)
                     {
                         await input.Open();
-                        await output.Open();
-                        await new Migrator(input, output, grouper).Migrate();
+                        using (output)
+                        {
+                            await output.Open();
+                            await new Migrator(input, output, grouper).Migrate();
+                        }
                     }
                 }
             }

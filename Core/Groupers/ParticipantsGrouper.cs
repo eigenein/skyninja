@@ -8,7 +8,7 @@ namespace SkyNinja.Core.Groupers
     {
         public override string GetGroup(Conversation conversation, Message message)
         {
-            return message.Chat.Participants;
+            
         }
     }
 }

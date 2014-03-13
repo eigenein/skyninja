@@ -12,6 +12,12 @@ namespace SkyNinja.Core.Messages
             set;
         }
 
+        public string FromDisplayName
+        {
+            get;
+            set;
+        }
+
         public string BodyXml
         {
             get;
@@ -20,7 +26,7 @@ namespace SkyNinja.Core.Messages
 
         public override string ToString()
         {
-            return String.Format("{0} Author: {1}", base.ToString(), Author);
+            return String.Format("SaidMessage(Message: {0}, Author: {1})", base.ToString(), Author);
         }
     }
 }

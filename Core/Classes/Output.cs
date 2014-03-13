@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 
+using NLog;
+
 using SkyNinja.Core.Exceptions;
 
 namespace SkyNinja.Core.Classes
@@ -10,6 +12,8 @@ namespace SkyNinja.Core.Classes
     /// </summary>
     public abstract class Output: Connector
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
         private string currentGroup;
 
         public string CurrentGroup
@@ -26,6 +30,7 @@ namespace SkyNinja.Core.Classes
             {
                 throw new InternalException(String.Format("Group is not closed: {0}", currentGroup));
             }
+            Logger.Trace("Begin group {0}", group);
             currentGroup = group;
         }
 
@@ -33,6 +38,7 @@ namespace SkyNinja.Core.Classes
 
         public virtual void EndGroup()
         {
+            Logger.Trace("End group {0}", currentGroup);
             currentGroup = null;
         }
 

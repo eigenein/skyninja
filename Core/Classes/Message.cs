@@ -21,15 +21,6 @@ namespace SkyNinja.Core.Classes
             set;
         }
 
-        /// <summary>
-        /// Get chat.
-        /// </summary>
-        public Chat Chat
-        {
-            get;
-            set;
-        }
-
         public DateTime Timestamp
         {
             get;
@@ -39,7 +30,7 @@ namespace SkyNinja.Core.Classes
         public override string ToString()
         {
             return String.Format(
-                "Timestamp: {2} Id: {0} Type: {1}",
+                "Message(Id: {0}, MessageType: {1}, Timestamp: {2})",
                 Id, MessageType, Timestamp);
         }
     }

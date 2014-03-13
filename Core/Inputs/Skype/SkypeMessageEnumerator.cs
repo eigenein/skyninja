@@ -14,8 +14,6 @@ namespace SkyNinja.Core.Inputs.Skype
     {
         public const string Query = @"
             select
-                chat.name as chatName,
-                chat.participants as chatParticipants,
                 message.id as messageId,
                 message.author as messageAuthor,
                 message.from_dispname as messageFromDisplayName,
@@ -25,10 +23,10 @@ namespace SkyNinja.Core.Inputs.Skype
                 message.body_xml as messageBodyXml,
                 message.chatmsg_type as chatMessageType,
                 message.chatmsg_status as chatMessageStatus
-            from chats as chat, messages as message
+            from
+                messages as message
             where
-                chat.conv_dbid = @conversationId and
-                message.chatname = chat.name
+                message.convo_id = @conversationId
             order by
                 message.timestamp
         ";
@@ -36,8 +34,8 @@ namespace SkyNinja.Core.Inputs.Skype
         /// <summary>
         /// Maps message type to message reader function.
         /// </summary>
-        private static readonly IDictionary<SkypeMessageType, ReaderFunc> ReaderByMessageType =
-            new Dictionary<SkypeMessageType, ReaderFunc>()
+        private static readonly IDictionary<SkypeMessageType, ReadMessage> ReaderByMessageType =
+            new Dictionary<SkypeMessageType, ReadMessage>()
             {
                 {SkypeMessageType.Said, ReadSaid}
             };
@@ -51,14 +49,14 @@ namespace SkyNinja.Core.Inputs.Skype
         public override async Task<Message> Read()
         {
             Message message;
-            ReaderFunc read;
+            ReadMessage readMessage;
 
-            SkypeMessageType type = (SkypeMessageType)Reader.GetInt32("messageType");
+            SkypeMessageType type = (SkypeMessageType)(await Reader.GetInt32("messageType"));
 
             // Read message by messages.type.
-            if (ReaderByMessageType.TryGetValue(type, out read))
+            if (ReaderByMessageType.TryGetValue(type, out readMessage))
             {
-                message = await Task.FromResult(read(Reader));
+                message = await readMessage(Reader);
             }
             else
             {
@@ -66,33 +64,29 @@ namespace SkyNinja.Core.Inputs.Skype
                 message = new Message {MessageType = Enums.InternalMessageType.Unknown};
             }
             // Set common message properties.
-            message.Id = Reader.GetInt32("messageId");
-            message.Chat = new Chat
-            {
-                Name = Reader.GetString("chatName"),
-                Participants = Reader.GetString("chatParticipants")
-            };
+            message.Id = await Reader.GetInt32("messageId");
             message.Timestamp = DateTimeHelper.FromTimestamp(
-                Reader.GetInt32("messageTimestamp"));
+                await Reader.GetInt32("messageTimestamp"));
             return await Task.FromResult(message);
         }
 
         /// <summary>
         /// Read <see cref="SaidMessage"/>.
         /// </summary>
-        private static Message ReadSaid(DbDataReader reader)
+        private static async Task<Message> ReadSaid(DbDataReader reader)
         {
             return new SaidMessage
             {
                 MessageType = Enums.InternalMessageType.Said,
-                Author = reader.GetString("messageAuthor"),
-                BodyXml = reader.GetString("messageBodyXml")
+                Author = await reader.GetString("messageAuthor"),
+                FromDisplayName = await reader.GetString("messageFromDisplayName"),
+                BodyXml = await reader.GetString("messageBodyXml")
             };
         }
 
         /// <summary>
         /// Read message from reader.
         /// </summary>
-        private delegate Message ReaderFunc(DbDataReader reader);
+        private delegate Task<Message> ReadMessage(DbDataReader reader);
     }
 }

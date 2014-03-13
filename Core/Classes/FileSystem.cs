@@ -1,16 +1,29 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
-
-using SkyNinja.Core.Helpers;
 
 namespace SkyNinja.Core.Classes
 {
-    public abstract class FileSystem
+    public abstract class FileSystem: IDisposable
     {
-        public virtual async Task CreatePath(string path)
+        public abstract Task Open();
+
+        public abstract StreamWriter OpenWriter(string group, string extension);
+
+        public abstract void Close();
+
+        public void Dispose()
         {
-            // Do nothing.
-            await Tasks.EmptyTask;
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Close();
+            }
         }
     }
 }

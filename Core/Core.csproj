@@ -55,9 +55,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\AsyncEnumerator.cs" />
-    <Compile Include="Classes\Chat.cs" />
     <Compile Include="Classes\Connector.cs" />
     <Compile Include="Classes\Conversation.cs" />
+    <Compile Include="Classes\Factories\FileSystemFactory.cs" />
     <Compile Include="Classes\Factories\InputFactory.cs" />
     <Compile Include="Classes\Factories\OutputFactory.cs" />
     <Compile Include="Classes\FileSystem.cs" />
@@ -69,8 +69,10 @@
     <Compile Include="Exceptions\InternalException.cs" />
     <Compile Include="Exceptions\InvalidUriParametersInternalException.cs" />
     <Compile Include="Extensions\DbDataReaderExtensions.cs" />
-    <Compile Include="FileSystems\UsualFileSystem.cs" />
-    <Compile Include="FileSystems\ZipArchiveFileSystem.cs" />
+    <Compile Include="FileSystems\Usual\UsualFileSystem.cs" />
+    <Compile Include="FileSystems\Usual\UsualFileSystemFactory.cs" />
+    <Compile Include="FileSystems\Zip\ZipFileSystem.cs" />
+    <Compile Include="FileSystems\Zip\ZipFileSystemFactory.cs" />
     <Compile Include="Groupers\CombineGrouper.cs" />
     <Compile Include="Groupers\ParticipantsGrouper.cs" />
     <Compile Include="Helpers\AssemblyVersion.cs" />

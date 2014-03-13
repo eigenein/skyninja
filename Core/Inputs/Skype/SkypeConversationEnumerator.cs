@@ -35,9 +35,9 @@ namespace SkyNinja.Core.Inputs.Skype
         /// </summary>
         public override async Task<Conversation> Read()
         {
-            int id = Reader.GetInt32("id");
-            string identity = Reader.GetString("identity");
-            string displayName = Reader.GetString("displayName");
+            int id = await Reader.GetInt32("id");
+            string identity = await Reader.GetString("identity");
+            string displayName = await Reader.GetString("displayName");
             Logger.Trace("Read: {0} {1} \"{2}\"", id, identity, displayName);
             return await Task.FromResult(new Conversation(id, identity, displayName));
         }

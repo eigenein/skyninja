@@ -1,18 +1,25 @@
 ﻿using System;
 using System.Data.Common;
+using System.Threading.Tasks;
 
 namespace SkyNinja.Core.Extensions
 {
     internal static class DbDataReaderExtensions
     {
-        public static int GetInt32(this DbDataReader reader, String name)
+        public static async Task<int> GetInt32(this DbDataReader reader, String name)
         {
-            return reader.GetInt32(reader.GetOrdinal(name));
+            int ordinal = reader.GetOrdinal(name);
+            if (await reader.IsDBNullAsync(ordinal))
+            {
+                throw new InvalidCastException(String.Format("Ordinal {0} is null.", ordinal));
+            }
+            return reader.GetInt32(ordinal);
         }
 
-        public static string GetString(this DbDataReader reader, String name)
+        public static async Task<string> GetString(this DbDataReader reader, String name)
         {
-            return reader.GetString(reader.GetOrdinal(name));
+            int ordinal = reader.GetOrdinal(name);
+            return !(await reader.IsDBNullAsync(ordinal)) ? reader.GetString(ordinal) : null;
         }
     }
 }

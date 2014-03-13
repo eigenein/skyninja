@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 
 using NLog;
 
 using SkyNinja.Core.Classes;
+using SkyNinja.Core.Enums;
+using SkyNinja.Core.Helpers;
+using SkyNinja.Core.Messages;
 
 namespace SkyNinja.Core.Outputs.PlainText
 {
@@ -13,31 +16,32 @@ namespace SkyNinja.Core.Outputs.PlainText
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        private readonly FileSystem fileSystem;
+        private delegate Task WriteMessage(StreamWriter writer, Message message);
 
-        private readonly string path;
+        private static readonly IDictionary<InternalMessageType, WriteMessage> Writers =
+            new Dictionary<InternalMessageType, WriteMessage>()
+            {
+                {InternalMessageType.Said, WriteSaid}
+            };
+
+        private readonly FileSystem fileSystem;
 
         private StreamWriter currentWriter;
 
-        public PlainTextOutput(FileSystem fileSystem, string path)
+        public PlainTextOutput(FileSystem fileSystem)
         {
             this.fileSystem = fileSystem;
-            this.path = path;
         }
 
         public override async Task Open()
         {
-            Logger.Info("Create path: {0} ...", path);
-            await fileSystem.CreatePath(path);
+            await Tasks.EmptyTask;
         }
 
         public override void BeginGroup(string group)
         {
             base.BeginGroup(group);
-
-            string filePath = Path.ChangeExtension(Path.Combine(path, group), "txt");
-            Logger.Debug("Opening file {0} ...", filePath);
-            currentWriter = new StreamWriter(filePath, false, Encoding.UTF8);
+            currentWriter = fileSystem.OpenWriter(group, ".txt");
         }
 
         public override void EndGroup()
@@ -53,7 +57,26 @@ namespace SkyNinja.Core.Outputs.PlainText
 
         public override async Task InsertMessage(Message message)
         {
-            await currentWriter.WriteLineAsync(message.ToString());
+            Logger.Trace("Insert message: {0}", message);
+            WriteMessage writeMessage;
+            if (Writers.TryGetValue(message.MessageType, out writeMessage))
+            {
+                await writeMessage(currentWriter, message);
+            }
+            else
+            {
+                Logger.Warn("No writer found.");
+            }
+        }
+
+        private static async Task WriteSaid(StreamWriter writer, Message message)
+        {
+            SaidMessage saidMessage = (SaidMessage)message;
+            await writer.WriteLineAsync(String.Format(
+                "{0} {1} {2}",
+                message.Timestamp,
+                saidMessage.FromDisplayName,
+                saidMessage.BodyXml));
         }
     }
 }

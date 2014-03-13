@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using SkyNinja.Core.Classes;
 using SkyNinja.Core.Classes.Factories;
 using SkyNinja.Core.FileSystems;
+using SkyNinja.Core.FileSystems.Usual;
+using SkyNinja.Core.FileSystems.Zip;
 using SkyNinja.Core.Groupers;
 using SkyNinja.Core.Inputs.Skype;
 using SkyNinja.Core.Outputs.PlainText;
@@ -31,11 +33,11 @@ namespace SkyNinja.Core
                 {"participants", new ParticipantsGrouper()}
             };
 
-        public static readonly IDictionary<string, FileSystem> FileSystems =
-            new Dictionary<string, FileSystem>()
+        public static readonly IDictionary<string, FileSystemFactory> FileSystems =
+            new Dictionary<string, FileSystemFactory>()
             {
-                {"usual", new UsualFileSystem()},
-                {"zip", new ZipArchiveFileSystem()}
+                {"usual", new UsualFileSystemFactory()},
+                {"zip", new ZipFileSystemFactory()}
             };
     }
 }

@@ -35,6 +35,7 @@ namespace SkyNinja.Core
                 while (await conversationEnumerator.Move())
                 {
                     Conversation conversation = await conversationEnumerator.Read();
+                    Logger.Debug("Read conversation: {0}", conversation);
                     await MigrateConversation(conversation);
                 }
             }
