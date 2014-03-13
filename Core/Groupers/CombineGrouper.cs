@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 using SkyNinja.Core.Classes;
 
@@ -19,12 +20,15 @@ namespace SkyNinja.Core.Groupers
             innerGroupers.Add(innerGrouper);
         }
 
-        public override string GetGroup(Conversation conversation, Message message)
+        public override async Task<string> GetGroup(
+            Input input, Conversation conversation, Message message)
         {
-            string[] paths = innerGroupers
-                .Select(grouper => grouper.GetGroup(conversation, message))
-                .ToArray();
-            return Path.Combine(paths);
+            ICollection<string> paths = new List<string>();
+            foreach (Grouper grouper in innerGroupers)
+            {
+                paths.Add(await grouper.GetGroup(input, conversation, message));
+            }
+            return Path.Combine(paths.ToArray());
         }
     }
 }

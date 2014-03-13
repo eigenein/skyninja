@@ -27,10 +27,10 @@ namespace SkyNinja.Core
                 {"plain", new PlainTextOutputFactory()}
             };
 
-        public static readonly IDictionary<string, Grouper> Groupers =
-            new Dictionary<string, Grouper>()
+        public static readonly IDictionary<string, Func<Grouper>> Groupers =
+            new Dictionary<string, Func<Grouper>>()
             {
-                {"participants", new ParticipantsGrouper()}
+                {"participants", () => new ParticipantsGrouper()}
             };
 
         public static readonly IDictionary<string, FileSystemFactory> FileSystems =

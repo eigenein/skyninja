@@ -156,14 +156,14 @@ Options:
             CombineGrouper combineGrouper = new CombineGrouper();
             foreach (object argument in arguments)
             {
-                Grouper innerGrouper;
-                if (!Everything.Groupers.TryGetValue(argument.ToString(), out innerGrouper))
+                Func<Grouper> newGrouper;
+                if (!Everything.Groupers.TryGetValue(argument.ToString(), out newGrouper))
                 {
                     Logger.Fatal("Unknown grouper name: {0}", argument);
                     grouper = null;
                     return false;
                 }
-                combineGrouper.AddGrouper(innerGrouper);
+                combineGrouper.AddGrouper(newGrouper());
             }
             grouper = combineGrouper;
             return true;

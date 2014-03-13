@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using NLog;
@@ -16,6 +17,12 @@ namespace SkyNinja.Core.Classes
         /// Get conversations.
         /// </summary>
         public abstract Task<AsyncEnumerator<Conversation>> GetConversationsAsync();
+
+        /// <summary>
+        /// Get conversation participants.
+        /// </summary>
+        public abstract Task<IEnumerable<string>> GetConversationParticipantsAsync(
+            int conversationId);
 
         /// <summary>
         /// Get conversation messages.

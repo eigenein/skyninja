@@ -59,7 +59,7 @@ namespace SkyNinja.Core
                         continue;
                     }
                     // Get message group and open new group if necessary.
-                    string group = grouper.GetGroup(conversation, message);
+                    string group = await grouper.GetGroup(input, conversation, message);
                     Logger.Trace("Group: {0}", group);
                     if (output.CurrentGroup != group)
                     {

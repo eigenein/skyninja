@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.SQLite;
+using System.Linq;
 using System.Threading.Tasks;
 
 using NLog;
@@ -16,6 +18,9 @@ namespace SkyNinja.Core.Inputs.Skype
     internal class SkypeInput: Input
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
+        private const string GetConversationParticipantsQuery =
+            "select identity from participants where convo_id = @conversationId order by identity";
 
         private readonly string databasePath;
 
@@ -60,11 +65,31 @@ namespace SkyNinja.Core.Inputs.Skype
         }
 
         /// <summary>
+        /// Get conversation participants.
+        /// </summary>
+        public override async Task<IEnumerable<string>> GetConversationParticipantsAsync(int conversationId)
+        {
+            Logger.Debug("Getting participants of conversation #{0} ...", conversationId);
+            using (SQLiteCommand command = new SQLiteCommand(
+                GetConversationParticipantsQuery, connection))
+            {
+                command.Parameters.Add(new SQLiteParameter("conversationId", conversationId));
+                DbDataReader reader = await command.ExecuteReaderAsync();
+                ICollection<string> participants = new List<string>();
+                while (await reader.ReadAsync())
+                {
+                    participants.Add(reader.GetString(0));
+                }
+                return participants.ToArray();
+            }
+        }
+
+        /// <summary>
         /// Get conversation messages.
         /// </summary>
         public override async Task<AsyncEnumerator<Message>> GetMessages(int conversationId)
         {
-            Logger.Debug("Getting messages ...");
+            Logger.Debug("Getting messages in conversation #{0} ...", conversationId);
             using (SQLiteCommand command = new SQLiteCommand(
                 SkypeMessageEnumerator.Query, connection))
             {

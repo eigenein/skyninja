@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace SkyNinja.Core.Classes
 {
@@ -7,6 +8,6 @@ namespace SkyNinja.Core.Classes
         /// <summary>
         /// Get group for the message.
         /// </summary>
-        public abstract string GetGroup(Conversation conversation, Message message);
+        public abstract Task<string> GetGroup(Input input, Conversation conversation, Message message);
     }
 }
