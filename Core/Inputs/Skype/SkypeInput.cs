@@ -103,7 +103,6 @@ namespace SkyNinja.Core.Inputs.Skype
                 // Add filter paramaters.
                 foreach (SQLiteParameter parameter in filter.GetWhereParameters())
                 {
-                    Logger.Trace("{0}: {1}.", parameter.ParameterName, parameter.Value);
                     command.Parameters.Add(parameter);
                 }
                 // Execute command.
