@@ -76,6 +76,7 @@ namespace SkyNinja.Core
                         // Runtime check.
                         if (seenGroups.Contains(group))
                         {
+                            // TODO: group re-opening.
                             throw new DuplicateGroupInternalException(group);
                         }
                         seenGroups.Add(group);
