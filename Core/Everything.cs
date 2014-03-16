@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 using SkyNinja.Core.Classes;
 using SkyNinja.Core.Classes.Factories;
-using SkyNinja.Core.FileSystems;
 using SkyNinja.Core.FileSystems.Usual;
 using SkyNinja.Core.FileSystems.Zip;
 using SkyNinja.Core.Groupers;
@@ -31,7 +30,8 @@ namespace SkyNinja.Core
             new Dictionary<string, Func<Grouper>>()
             {
                 {"participants", () => new ParticipantsGrouper()},
-                {"year-month", () => new YearMonthGrouper()}
+                {"year-month", () => new YearMonthGrouper()},
+                {"day", () => new DayGrouper()}
             };
 
         public static readonly IDictionary<string, FileSystemFactory> FileSystems =

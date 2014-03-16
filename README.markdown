@@ -35,6 +35,7 @@ SkyNinja (`/skˈaɪ ˈnɪn.dʒə/`) is a tool for exporting and importing [Skype
 
 * `participants`
 * `year-month`
+* `day`
 
 ##### File Systems
 
