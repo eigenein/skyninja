@@ -114,9 +114,14 @@ namespace SkyNinja.Core.Inputs.Skype
             }
         }
 
+        public override string ToString()
+        {
+            return String.Format("SkypeInput(databasePath: {0})", databasePath);
+        }
+
         private void ConnectionTrace(object sender, TraceEventArgs e)
         {
-            Logger.Trace("SQL: {0}", e.Statement);
+            Logger.Trace("Statement: {0}", e.Statement);
         }
     }
 }

@@ -30,5 +30,12 @@ namespace SkyNinja.Core.Groupers
             }
             return Path.Combine(paths.ToArray());
         }
+
+        public override string ToString()
+        {
+            return String.Format(
+                "CombineGrouper(innerGroupers: [{0}])",
+                String.Join(", ", innerGroupers.Select(grouper => grouper.ToString())));
+        }
     }
 }

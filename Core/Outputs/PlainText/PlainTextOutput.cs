@@ -33,6 +33,9 @@ namespace SkyNinja.Core.Outputs.PlainText
             this.fileSystem = fileSystem;
         }
 
+        /// <summary>
+        /// Opens connector for reading.
+        /// </summary>
         public override async Task Open()
         {
             await Tasks.EmptyTask;
@@ -55,6 +58,9 @@ namespace SkyNinja.Core.Outputs.PlainText
             }
         }
 
+        /// <summary>
+        /// Inserts message to output.
+        /// </summary>
         public override async Task InsertMessage(Message message)
         {
             Logger.Trace("Insert message: {0}", message);
@@ -69,6 +75,9 @@ namespace SkyNinja.Core.Outputs.PlainText
             }
         }
 
+        /// <summary>
+        /// Writes <see cref="SaidMessage"/>.
+        /// </summary>
         private static async Task WriteSaid(StreamWriter writer, Message message)
         {
             SaidMessage saidMessage = (SaidMessage)message;

@@ -56,5 +56,10 @@ namespace SkyNinja.Core.FileSystems.Zip
                 archive.Dispose();
             }
         }
+
+        public override string ToString()
+        {
+            return String.Format("ZipFileSystem(path: {0})", path);
+        }
     }
 }

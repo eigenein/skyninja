@@ -34,6 +34,9 @@ namespace SkyNinja.Core.Classes
             currentGroup = group;
         }
 
+        /// <summary>
+        /// Inserts message to output.
+        /// </summary>
         public abstract Task InsertMessage(Message message);
 
         public virtual void EndGroup()

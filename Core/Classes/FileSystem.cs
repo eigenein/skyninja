@@ -25,5 +25,10 @@ namespace SkyNinja.Core.Classes
                 Close();
             }
         }
+
+        public override string ToString()
+        {
+            return GetType().Name;
+        }
     }
 }
