@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data.SQLite;
 
 using SkyNinja.Core.Classes;
 
@@ -9,12 +11,22 @@ namespace SkyNinja.Core.Filters
     /// </summary>
     internal class NoneFilter: Filter
     {
-        /// <summary>
-        /// Gets filtering SQL WHERE clause.
-        /// </summary>
+        public override bool IsComplete
+        {
+            get
+            {
+                return true;
+            }
+        }
+
         public override string GetWhereClause()
         {
             return "1";
+        }
+
+        public override IEnumerable<SQLiteParameter> GetWhereParameters()
+        {
+            yield break;
         }
     }
 }

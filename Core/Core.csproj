@@ -72,6 +72,7 @@
     <Compile Include="Everything.cs" />
     <Compile Include="Exceptions\DuplicateGroupInternalException.cs" />
     <Compile Include="Exceptions\InternalException.cs" />
+    <Compile Include="Exceptions\InvalidFilterExpressionInternalException.cs" />
     <Compile Include="Exceptions\InvalidUriParameterInternalException.cs" />
     <Compile Include="Exceptions\KnownKeyNotFoundInternalException.cs" />
     <Compile Include="Extensions\DbDataReaderExtensions.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="FileSystems\Zip\ZipFileSystem.cs" />
     <Compile Include="FileSystems\Zip\ZipFileSystemFactory.cs" />
     <Compile Include="Filters\NoneFilter.cs" />
+    <Compile Include="Filters\OperatorFilter.cs" />
     <Compile Include="Groupers\CombineGrouper.cs" />
     <Compile Include="Groupers\DayGrouper.cs" />
     <Compile Include="Groupers\YearMonthGrouper.cs" />
@@ -90,6 +92,7 @@
     <Compile Include="Classes\Output.cs" />
     <Compile Include="Helpers\DateTimeHelper.cs" />
     <Compile Include="Helpers\ExitCodes.cs" />
+    <Compile Include="Helpers\FilterParser.cs" />
     <Compile Include="Helpers\ParsedUri.cs" />
     <Compile Include="Helpers\PathShortener.cs" />
     <Compile Include="Helpers\Tasks.cs" />

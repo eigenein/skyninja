@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -33,6 +34,7 @@ Options:
       -o --output <uri>        Output URI.
       -g --grouper <name>...   Groupers [default: participants].
       -f --file-system <name>  Target file system [default: usual].
+      <filter>...              Filter expression.
 
 2014 (c) Pavel Perestoronin
 To email me, please contact contact@skyninja.im
@@ -74,12 +76,14 @@ http://skyninja.im/donate
             FileSystem fileSystem;
             Input input;
             Output output;
+            Filter filter;
             Grouper grouper;
 
-            // Parse URIs.
+            // Parse arguments.
             ParsedUri inputUri, outputUri;
             if (!TryParseUri(arguments["--input"], out inputUri) ||
                 !TryParseUri(arguments["--output"], out outputUri) ||
+                !TryCreateFilter(arguments["<filter>"].AsList, out filter) ||
                 !TryCreateGrouper(arguments["--grouper"].AsList, out grouper))
             {
                 return ExitCodes.Failure;
@@ -117,7 +121,7 @@ http://skyninja.im/donate
                         {
                             Logger.Info("Using output: {0}.", output);
                             await output.Open();
-                            await new Migrator(input, output, null, grouper).Migrate(CancellationTokenSource.Token);
+                            await new Migrator(input, output, filter, grouper).Migrate(CancellationTokenSource.Token);
                         }
                     }
                 }
@@ -156,7 +160,27 @@ http://skyninja.im/donate
         }
 
         /// <summary>
-        /// Create group getter.
+        /// Create filter.
+        /// </summary>
+        private static bool TryCreateFilter(IEnumerable arguments, out Filter filter)
+        {
+            try
+            {
+                filter = new FilterParser().Parse(arguments
+                    .Cast<object>()
+                    .Select(argument => argument.ToString()));
+                return true;
+            }
+            catch (InvalidFilterExpressionInternalException e)
+            {
+                Logger.Fatal("Invalid filter expression. {0}", e);
+                filter = default(Filter);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Create grouper.
         /// </summary>
         private static bool TryCreateGrouper(IEnumerable arguments, out Grouper grouper)
         {
