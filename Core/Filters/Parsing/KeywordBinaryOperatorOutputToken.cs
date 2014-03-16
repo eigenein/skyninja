@@ -1,5 +1,7 @@
 ﻿using System;
 
+using SkyNinja.Core.Classes;
+
 namespace SkyNinja.Core.Filters.Parsing
 {
     /// <summary>
@@ -9,8 +11,8 @@ namespace SkyNinja.Core.Filters.Parsing
     {
         private readonly string keyword;
 
-        public KeywordBinaryOperatorOutputToken(int priority, string keyword)
-            : base(priority)
+        public KeywordBinaryOperatorOutputToken(string token, int priority, string keyword)
+            : base(token, priority)
         {
             this.keyword = keyword;
         }
@@ -23,9 +25,9 @@ namespace SkyNinja.Core.Filters.Parsing
                 keyword);
         }
 
-        protected override string GetWhereClause(string clause1, string clause2)
+        protected override Filter GetFilter(Filter filter1, Filter filter2)
         {
-            return String.Format("({0}) {1} ({2})", clause1, keyword, clause2);
+            return new KeywordBinaryOperatorFilter(filter1, filter2, keyword);
         }
     }
 }

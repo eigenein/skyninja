@@ -10,6 +10,8 @@ namespace SkyNinja.Core.Filters.Parsing
     /// </summary>
     internal abstract class OperatorOutputToken: OutputToken
     {
+        protected readonly string token;
+
         private readonly int priority;
 
         public int Priority
@@ -20,9 +22,10 @@ namespace SkyNinja.Core.Filters.Parsing
             }
         }
 
-        public OperatorOutputToken(int priority)
+        protected OperatorOutputToken(string token, int priority)
             : base(TokenType.Operator)
         {
+            this.token = token;
             this.priority = priority;
         }
 
@@ -31,9 +34,10 @@ namespace SkyNinja.Core.Filters.Parsing
         public override string ToString()
         {
             return String.Format(
-                "OperatorOutputToken(OutputToken: {0}, priority: {1})",
+                "OperatorOutputToken(OutputToken: {0}, token: {2}, priority: {1})",
                 base.ToString(),
-                priority);
+                priority,
+                token);
         }
     }
 }

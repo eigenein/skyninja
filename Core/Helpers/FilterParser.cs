@@ -7,6 +7,7 @@ using NLog;
 
 using SkyNinja.Core.Classes;
 using SkyNinja.Core.Exceptions;
+using SkyNinja.Core.Filters;
 using SkyNinja.Core.Filters.Parsing;
 
 namespace SkyNinja.Core.Helpers
@@ -18,17 +19,17 @@ namespace SkyNinja.Core.Helpers
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        private static HashSet<string> FieldNames = new HashSet<string>()
+        private static readonly HashSet<string> FieldNames = new HashSet<string>()
         {
             "messageTimestamp"
         };
 
-        private static IDictionary<string, OperatorOutputToken> BinaryOperators =
+        private static readonly IDictionary<string, OperatorOutputToken> BinaryOperators =
             new Dictionary<string, OperatorOutputToken>()
             {
-                {"gte", new KeywordBinaryOperatorOutputToken(1, ">=")},
-                {"lte", new KeywordBinaryOperatorOutputToken(1, "<=")},
-                {"and", new KeywordBinaryOperatorOutputToken(0, "and")}
+                {"gte", new KeywordBinaryOperatorOutputToken("gte", 1, ">=")},
+                {"lte", new KeywordBinaryOperatorOutputToken("lte", 1, "<=")},
+                {"and", new KeywordBinaryOperatorOutputToken("and", 0, "and")}
             };
 
         private int parameterCounter;
@@ -42,23 +43,19 @@ namespace SkyNinja.Core.Helpers
         private IEnumerable<OutputToken> Convert(IEnumerable<string> tokens)
         {
             Stack<OperatorOutputToken> operatorStack = new Stack<OperatorOutputToken>();
-
+            // Iterate over tokens.
             foreach (string inputToken in tokens)
             {
                 OutputToken outputToken;
                 OperatorOutputToken operatorOutputToken;
-
+                // Parse as field name.
                 if (FieldNames.Contains(inputToken))
                 {
                     outputToken = new FieldValueOutputToken(inputToken);
                     Logger.Trace("Yield field: {0}.", outputToken);
                     yield return outputToken;
                 }
-                else if (TryParseValue(inputToken, out outputToken))
-                {
-                    Logger.Trace("Yield value: {0}.", outputToken);
-                    yield return outputToken;
-                }
+                // Parse as operator.
                 else if (TryParseOperator(inputToken, out operatorOutputToken))
                 {
                     while (operatorStack.Count != 0 &&
@@ -71,10 +68,12 @@ namespace SkyNinja.Core.Helpers
                     Logger.Trace("Push operator: {0}.", operatorOutputToken);
                     operatorStack.Push(operatorOutputToken);
                 }
+                // Parse as value.
                 else
                 {
-                    throw new InvalidFilterExpressionInternalException(String.Format(
-                        "Could not parse token: {0}.", inputToken));
+                    outputToken = ParseValue(inputToken);
+                    Logger.Trace("Yield value: {0}.", outputToken);
+                    yield return outputToken;
                 }
             }
 
@@ -88,17 +87,46 @@ namespace SkyNinja.Core.Helpers
 
         private Filter Evaluate(IEnumerable<OutputToken> tokens)
         {
+            Stack<Filter> filterStack = new Stack<Filter>();
+            // Iterate over tokens.
             foreach (OutputToken token in tokens)
             {
                 Logger.Trace("Token: {0}.", token);
+                // Evaluate filter.
+                Filter filter;
+                if (token.Type == TokenType.Value)
+                {
+                    filter = ((ValueOutputToken)token).GetFilter();
+                }
+                else if (token.Type == TokenType.Operator)
+                {
+                    filter = ((OperatorOutputToken)token).GetFilter(filterStack);
+                }
+                else
+                {
+                    throw new InternalException(String.Format("Invalid token type: {0}.", token.Type));
+                }
+                Logger.Trace("Push: {0}.", filter);
+                filterStack.Push(filter);
             }
-            return null;
+            // Check stack.
+            if (filterStack.Count == 1)
+            {
+                return filterStack.Pop();
+            }
+            else if (filterStack.Count == 0)
+            {
+                return new NoneFilter();
+            }
+            // Failed.
+            throw new InvalidFilterExpressionInternalException(String.Format(
+                "Too many filters on the stack: {0}.", filterStack.Count));
         }
 
         /// <summary>
         /// Parses simple value.
         /// </summary>
-        private bool TryParseValue(string inputToken, out OutputToken outputToken)
+        private OutputToken ParseValue(string inputToken)
         {
             // DateTime
             DateTime dateTimeValue;
@@ -109,12 +137,11 @@ namespace SkyNinja.Core.Helpers
                 DateTimeStyles.AllowWhiteSpaces,
                 out dateTimeValue))
             {
-                outputToken = new ConstValueOutputToken<DateTime>(GetParameterName(), dateTimeValue);
-                return true;
+                return new ConstValueOutputToken<int>(
+                    GetParameterName(), DateTimeHelper.ToTimestamp(dateTimeValue.ToUniversalTime()));
             }
-            // Failed.
-            outputToken = default(OutputToken);
-            return false;
+            // String.
+            return new ConstValueOutputToken<string>(GetParameterName(), inputToken);
         }
 
         /// <summary>

@@ -11,5 +11,10 @@ namespace SkyNinja.Core.Helpers
         {
             return Epoch.AddSeconds(timestamp).ToUniversalTime();
         }
+
+        public static int ToTimestamp(DateTime dateTime)
+        {
+            return (int)(dateTime - Epoch).TotalSeconds;
+        }
     }
 }

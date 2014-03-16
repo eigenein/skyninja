@@ -83,6 +83,8 @@
     <Compile Include="FileSystems\Zip\ZipFileSystemFactory.cs" />
     <Compile Include="Filters\BinaryOperatorFilter.cs" />
     <Compile Include="Filters\FieldValueFilter.cs" />
+    <Compile Include="Filters\KeywordBinaryOperatorFilter.cs" />
+    <Compile Include="Filters\NoneFilter.cs" />
     <Compile Include="Filters\Parsing\BinaryOperatorOutputToken.cs" />
     <Compile Include="Filters\Parsing\FieldValueOutputToken.cs" />
     <Compile Include="Filters\Parsing\KeywordBinaryOperatorOutputToken.cs" />

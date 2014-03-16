@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.SQLite;
 
 using SkyNinja.Core.Classes;
 
@@ -9,16 +7,16 @@ namespace SkyNinja.Core.Filters
     /// <summary>
     /// Wraps binary operator.
     /// </summary>
-    internal class BinaryOperatorFilter: Filter
+    internal abstract class BinaryOperatorFilter: Filter
     {
-        public override string GetWhereClause()
-        {
-            throw new NotImplementedException();
-        }
+        protected readonly Filter Filter1;
 
-        public override IEnumerable<SQLiteParameter> GetWhereParameters()
+        protected readonly Filter Filter2;
+
+        protected BinaryOperatorFilter(Filter filter1, Filter filter2)
         {
-            throw new NotImplementedException();
+            this.Filter1 = filter1;
+            this.Filter2 = filter2;
         }
     }
 }

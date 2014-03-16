@@ -94,10 +94,19 @@ namespace SkyNinja.Core.Inputs.Skype
             int conversationId, Filter filter)
         {
             Logger.Debug("Getting messages in conversation #{0} ...", conversationId);
+            // Insert filter query clause.
             string query = String.Format(SkypeMessageEnumerator.Query, filter.GetWhereClause());
+            // Initialize command.
             using (SQLiteCommand command = new SQLiteCommand(query, connection))
             {
                 command.Parameters.Add(new SQLiteParameter("conversationId", conversationId));
+                // Add filter paramaters.
+                foreach (SQLiteParameter parameter in filter.GetWhereParameters())
+                {
+                    Logger.Trace("{0}: {1}.", parameter.ParameterName, parameter.Value);
+                    command.Parameters.Add(parameter);
+                }
+                // Execute command.
                 DbDataReader reader = await command.ExecuteReaderAsync();
                 return new SkypeMessageEnumerator(reader);
             }
