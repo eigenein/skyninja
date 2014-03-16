@@ -28,7 +28,7 @@ namespace SkyNinja.Core.Inputs.Skype
             Logger.Debug("Trying database path: {0} ...", databasePath);
             if (!File.Exists(databasePath))
             {
-                throw new InvalidUriParametersInternalException("Database file is not found for this Skype ID.");
+                throw new InvalidUriParameterInternalException("Database file is not found for this Skype ID.");
             }
             Logger.Info("Database file is found.");
             return new SkypeInput(databasePath);

@@ -11,6 +11,7 @@ using NLog;
 using SkyNinja.Core;
 using SkyNinja.Core.Classes;
 using SkyNinja.Core.Exceptions;
+using SkyNinja.Core.Extensions;
 using SkyNinja.Core.Groupers;
 using SkyNinja.Core.Helpers;
 
@@ -41,15 +42,15 @@ http://skyninja.im/donate
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        private static readonly CancellationTokenSource CancellationTokenSource = new CancellationTokenSource();
+        private static readonly CancellationTokenSource CancellationTokenSource = 
+            new CancellationTokenSource();
 
         public static int Main(string[] args)
         {
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
             Console.CancelKeyPress += ConsoleCancelKeyPress;
 
-            Docopt docopt = new Docopt();
-            IDictionary<string, ValueObject> arguments = docopt.Apply(
+            IDictionary<string, ValueObject> arguments = new Docopt().Apply(
                 Usage, args, version: AssemblyVersion.Current, exit: true);
 
             Task<int> task = RunMigrationAsync(arguments);
@@ -63,66 +64,51 @@ http://skyninja.im/donate
         private static async Task<int> RunMigrationAsync(
             IDictionary<string, ValueObject> arguments)
         {
-            // Parse connector URIs.
-            ParsedUri inputUri, outputUri;
-            if (!TryParseUri(arguments["--input"], out inputUri) ||
-                !TryParseUri(arguments["--output"], out outputUri))
-            {
-                return ExitCodes.Failure;
-            }
-            // Create file system.
-            string fileSystemName = arguments["--file-system"].ToString();
             FileSystem fileSystem;
-            try
-            {
-                fileSystem = Everything.FileSystems[fileSystemName].Create(outputUri);
-            }
-            catch (KeyNotFoundException e)
-            {
-                Logger.Fatal("Unknown file system. {0}", e.Message);
-                return ExitCodes.Failure;
-            }
-            catch (InvalidUriParametersInternalException e)
-            {
-                Logger.Fatal("Invalid file system URI parameters. {0}", e.Message);
-                return ExitCodes.Failure;
-            }
-            Logger.Info("File system: {0}", fileSystem);
-            // Create connectors.
             Input input;
             Output output;
+            Grouper grouper;
+
+            // Parse URIs.
+            ParsedUri inputUri, outputUri;
+            if (!TryParseUri(arguments["--input"], out inputUri) ||
+                !TryParseUri(arguments["--output"], out outputUri) ||
+                !TryCreateGrouper(arguments["--grouper"].AsList, out grouper))
+            {
+                return ExitCodes.Failure;
+            }
+            // Create file system and connectors.
+            string fileSystemName = arguments["--file-system"].ToString();
             try
             {
-                input = Everything.Inputs[inputUri.Scheme].CreateConnector(inputUri);
-                output = Everything.Outputs[outputUri.Scheme].CreateConnector(outputUri, fileSystem);
+                fileSystem = Everything.FileSystems.GetValue(fileSystemName).Create(outputUri);
+                input = Everything.Inputs.GetValue(inputUri.Scheme).CreateConnector(inputUri);
+                output = Everything.Outputs.GetValue(outputUri.Scheme).CreateConnector(outputUri, fileSystem);
             }
             catch (KeyNotFoundException e)
             {
-                Logger.Fatal("Unknown scheme. {0}", e.Message);
+                Logger.Fatal("Unknown name. {0}", e.Message);
                 return ExitCodes.Failure;
             }
-            catch (InvalidUriParametersInternalException e)
+            catch (InvalidUriParameterInternalException e)
             {
-                Logger.Fatal("Invalid connector URI parameters. {0}", e.Message);
+                Logger.Fatal("Invalid URI parameter. {0}", e.Message);
                 return ExitCodes.Failure;
             }
-            // Create group getter.
-            Grouper grouper;
-            if (!TryCreateGrouper(arguments["--grouper"].AsList, out grouper))
-            {
-                return ExitCodes.Failure;
-            }
-            // Run migration.
+            // Create connectors and run migration.
             try
             {
                 using (fileSystem)
                 {
+                    Logger.Info("Using file system: {0}.", fileSystem);
                     await fileSystem.Open();
                     using (input)
                     {
+                        Logger.Info("Using input: {0}.", input);
                         await input.Open();
                         using (output)
                         {
+                            Logger.Info("Using output: {0}.", output);
                             await output.Open();
                             await new Migrator(input, output, grouper).Migrate(CancellationTokenSource.Token);
                         }
@@ -173,7 +159,7 @@ http://skyninja.im/donate
                 Func<Grouper> newGrouper;
                 if (!Everything.Groupers.TryGetValue(argument.ToString(), out newGrouper))
                 {
-                    Logger.Fatal("Unknown grouper name: {0}", argument);
+                    Logger.Fatal("Unknown grouper name: {0}.", argument);
                     grouper = null;
                     return false;
                 }

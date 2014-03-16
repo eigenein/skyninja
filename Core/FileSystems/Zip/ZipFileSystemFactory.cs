@@ -27,7 +27,7 @@ namespace SkyNinja.Core.FileSystems.Zip
             }
             catch (ArgumentException)
             {
-                throw new InvalidUriParametersInternalException("Invalid encoding.");
+                throw new InvalidUriParameterInternalException("Invalid encoding.");
             }
             Logger.Debug("Using {0} entry name encoding.", entryEncoding);
             // Initialize file system.
