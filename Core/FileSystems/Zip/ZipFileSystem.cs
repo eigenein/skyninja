@@ -1,11 +1,13 @@
 ﻿using System;
 using System.IO;
 using System.IO.Compression;
+using System.Text;
 using System.Threading.Tasks;
 
 using NLog;
 
 using SkyNinja.Core.Classes;
+using SkyNinja.Core.Exceptions;
 using SkyNinja.Core.Helpers;
 
 namespace SkyNinja.Core.FileSystems.Zip
@@ -15,14 +17,16 @@ namespace SkyNinja.Core.FileSystems.Zip
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         private readonly string path;
+        private readonly Encoding entryEncoding;
 
         private readonly PathShortener pathShortener = new PathShortener(250);
 
         private ZipArchive archive;
 
-        public ZipFileSystem(string path)
+        public ZipFileSystem(string path, Encoding entryEncoding)
         {
             this.path = path;
+            this.entryEncoding = entryEncoding;
         }
 
         public override async Task Open()
@@ -33,7 +37,7 @@ namespace SkyNinja.Core.FileSystems.Zip
                 File.Delete(path);
             }
             Logger.Info("Creating ZIP archive on {0} ...", path);
-            archive = ZipFile.Open(path, ZipArchiveMode.Create);
+            archive = ZipFile.Open(path, ZipArchiveMode.Create, entryEncoding);
             await Tasks.EmptyTask;
         }
 
@@ -48,7 +52,10 @@ namespace SkyNinja.Core.FileSystems.Zip
 
         public override void Close()
         {
-            archive.Dispose();
+            if (archive != null)
+            {
+                archive.Dispose();
+            }
         }
     }
 }

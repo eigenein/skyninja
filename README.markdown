@@ -39,11 +39,19 @@ SkyNinja (`/skˈaɪ ˈnɪn.dʒə/`) is a tool for exporting and importing [Skype
 
 ##### File Systems
 
-* `usual`
-* `zip`
+###### `usual`
+
+Usual file system.
+
+###### `zip`
+
+Zip arhcive. Accepted parameters:
+
+* `zipEntryEncoding`
 
 #### Examples
 
 * `.\Cli -i skypeid://eigenein -o plain://C:\Users\eigenein\Downloads\SkyNinja -g year-month -g participants`
 * `.\Cli -i skypeid://eigenein -o plain://C:\Users\eigenein\Downloads\SkyNinja.zip -f zip`
 * `.\Cli -i skypeid://eigenein -o plain://C:\Users\eigenein\Downloads\SkyNinja.zip -f zip -g year-month -g day -g participants`
+* `.\Cli -i skypeid://eigenein -o plain://C:\Users\eigenein\Downloads\SkyNinja.zip?zipEntryEncoding=CP866 -f zip -g year-month -g day -g participants`

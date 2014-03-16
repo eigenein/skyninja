@@ -149,7 +149,7 @@ http://skyninja.im/donate
         /// </summary>
         private static bool TryParseUri(string argument, out Uri uri)
         {
-            // TODO: parse query string and return a pair Uri and NameValueCollection.
+            // TODO: parse query and return a pair Uri and NameValueCollection.
             try
             {
                 uri = new Uri(argument);
