@@ -12,7 +12,7 @@ namespace SkyNinja.Core.Groupers
         public override async Task<string> GetGroup(
             Input input, Conversation conversation, Message message)
         {
-            DateTime timestamp = message.Timestamp;
+            DateTime timestamp = message.Timestamp.ToLocalTime();
             return await Task.FromResult(Path.Combine(
                 timestamp.Year.ToString(CultureInfo.InvariantCulture),
                 CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(timestamp.Month)));
