@@ -9,7 +9,7 @@ namespace SkyNinja.Core.Helpers
 
         public static DateTime FromTimestamp(int timestamp)
         {
-            return Epoch.AddSeconds(timestamp).ToLocalTime();
+            return Epoch.AddSeconds(timestamp).ToUniversalTime();
         }
     }
 }

@@ -83,7 +83,7 @@ namespace SkyNinja.Core.Outputs.PlainText
             SaidMessage saidMessage = (SaidMessage)message;
             await writer.WriteLineAsync(String.Format(
                 "[{0}] {1}: {2}",
-                message.Timestamp,
+                message.Timestamp.ToLocalTime(),
                 saidMessage.FromDisplayName,
                 saidMessage.BodyXml));
         }
