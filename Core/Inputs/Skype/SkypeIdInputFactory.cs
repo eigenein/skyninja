@@ -6,6 +6,7 @@ using NLog;
 using SkyNinja.Core.Classes;
 using SkyNinja.Core.Classes.Factories;
 using SkyNinja.Core.Exceptions;
+using SkyNinja.Core.Helpers;
 
 namespace SkyNinja.Core.Inputs.Skype
 {
@@ -16,7 +17,7 @@ namespace SkyNinja.Core.Inputs.Skype
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        public override Input CreateConnector(Uri uri)
+        public override Input CreateConnector(ParsedUri uri)
         {
             string skypeId = uri.Host;
             Logger.Info("Trying Skype ID: {0} ...", skypeId);

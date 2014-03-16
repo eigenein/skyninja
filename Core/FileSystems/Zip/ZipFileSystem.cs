@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using NLog;
 
 using SkyNinja.Core.Classes;
-using SkyNinja.Core.Exceptions;
 using SkyNinja.Core.Helpers;
 
 namespace SkyNinja.Core.FileSystems.Zip

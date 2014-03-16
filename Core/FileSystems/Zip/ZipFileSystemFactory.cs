@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Specialized;
 using System.Text;
-using System.Web;
 
 using NLog;
 
 using SkyNinja.Core.Classes;
 using SkyNinja.Core.Classes.Factories;
 using SkyNinja.Core.Exceptions;
+using SkyNinja.Core.Helpers;
 
 namespace SkyNinja.Core.FileSystems.Zip
 {
@@ -15,11 +14,10 @@ namespace SkyNinja.Core.FileSystems.Zip
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        public override FileSystem Create(Uri uri)
+        public override FileSystem Create(ParsedUri uri)
         {
-            NameValueCollection arguments = HttpUtility.ParseQueryString(uri.Query);
             // Get entry encoding.
-            string encodingName = arguments.Get("zipEntryEncoding");
+            string encodingName = uri.Arguments.Get("zipEntryEncoding");
             Encoding entryEncoding;
             try
             {

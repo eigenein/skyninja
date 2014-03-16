@@ -64,7 +64,7 @@ http://skyninja.im/donate
             IDictionary<string, ValueObject> arguments)
         {
             // Parse connector URIs.
-            Uri inputUri, outputUri;
+            ParsedUri inputUri, outputUri;
             if (!TryParseUri(arguments["--input"].ToString(), out inputUri) ||
                 !TryParseUri(arguments["--output"].ToString(), out outputUri))
             {
@@ -147,18 +147,17 @@ http://skyninja.im/donate
         /// <summary>
         /// Parse URI.
         /// </summary>
-        private static bool TryParseUri(string argument, out Uri uri)
+        private static bool TryParseUri(string argument, out ParsedUri uri)
         {
-            // TODO: parse query string and return a pair Uri and NameValueCollection.
             try
             {
-                uri = new Uri(argument);
+                uri = new ParsedUri(argument);
                 return true;
             }
             catch (UriFormatException)
             {
                 Logger.Fatal("Invalid URI format: {0}", argument);
-                uri = default(Uri);
+                uri = default(ParsedUri);
                 return false;
             }
         }

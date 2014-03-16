@@ -86,6 +86,7 @@
     <Compile Include="Classes\Output.cs" />
     <Compile Include="Helpers\DateTimeHelper.cs" />
     <Compile Include="Helpers\ExitCodes.cs" />
+    <Compile Include="Helpers\ParsedUri.cs" />
     <Compile Include="Helpers\PathShortener.cs" />
     <Compile Include="Helpers\Tasks.cs" />
     <Compile Include="Inputs\DataReaderAsyncEnumerator.cs" />
@@ -108,9 +109,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Attributes\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="x64\SQLite.Interop.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
