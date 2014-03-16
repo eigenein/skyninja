@@ -46,3 +46,4 @@ SkyNinja (`/skˈaɪ ˈnɪn.dʒə/`) is a tool for exporting and importing [Skype
 
 * `.\Cli -i skypeid://eigenein -o plain://C:\Users\eigenein\Downloads\SkyNinja -g year-month -g participants`
 * `.\Cli -i skypeid://eigenein -o plain://C:\Users\eigenein\Downloads\SkyNinja.zip -f zip`
+* `.\Cli -i skypeid://eigenein -o plain://C:\Users\eigenein\Downloads\SkyNinja.zip -f zip -g year-month -g day -g participants`
