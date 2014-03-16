@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 using NLog;
@@ -26,7 +27,7 @@ namespace SkyNinja.Core
             this.grouper = grouper;
         }
 
-        public async Task Migrate()
+        public async Task Migrate(CancellationToken cancellationToken)
         {
             Logger.Info("Starting migration ...");
             using (AsyncEnumerator<Conversation> conversationEnumerator =
@@ -36,13 +37,15 @@ namespace SkyNinja.Core
                 {
                     Conversation conversation = await conversationEnumerator.Read();
                     Logger.Debug("Read conversation: {0}", conversation);
-                    await MigrateConversation(conversation);
+                    await MigrateConversation(conversation, cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                 }
             }
             Logger.Info("Finished.");
         }
 
-        private async Task MigrateConversation(Conversation conversation)
+        private async Task MigrateConversation(
+            Conversation conversation, CancellationToken cancellationToken)
         {
             Logger.Debug("Getting messages ...");
             using (AsyncEnumerator<Message> messageEnumerator =
@@ -68,6 +71,8 @@ namespace SkyNinja.Core
                     }
                     // Insert message.
                     await output.InsertMessage(message);
+                    // Check cancellation token.
+                    cancellationToken.ThrowIfCancellationRequested();
                 }
             }
         }

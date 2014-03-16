@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 using DocoptNet;
@@ -40,9 +41,12 @@ http://skyninja.im/donate
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
+        private static readonly CancellationTokenSource CancellationTokenSource = new CancellationTokenSource();
+
         public static int Main(string[] args)
         {
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
+            Console.CancelKeyPress += ConsoleCancelKeyPress;
 
             Docopt docopt = new Docopt();
             IDictionary<string, ValueObject> arguments = docopt.Apply(
@@ -120,7 +124,7 @@ http://skyninja.im/donate
                         using (output)
                         {
                             await output.Open();
-                            await new Migrator(input, output, grouper).Migrate();
+                            await new Migrator(input, output, grouper).Migrate(CancellationTokenSource.Token);
                         }
                     }
                 }
@@ -129,6 +133,11 @@ http://skyninja.im/donate
             {
                 Logger.Fatal("Migration error: {0}", e.Message);
                 return ExitCodes.Failure;
+            }
+            catch (OperationCanceledException)
+            {
+                Logger.Warn("Cancelled.");
+                return ExitCodes.Success;
             }
             // Finished.
             Logger.Info("Finished.");
@@ -172,6 +181,16 @@ http://skyninja.im/donate
             }
             grouper = combineGrouper;
             return true;
+        }
+
+        /// <summary>
+        /// Ctrl+C handler.
+        /// </summary>
+        private static void ConsoleCancelKeyPress(object sender, ConsoleCancelEventArgs e)
+        {
+            Logger.Warn("Keyboard interrupt.");
+            e.Cancel = true;
+            CancellationTokenSource.Cancel();
         }
 
         /// <summary>

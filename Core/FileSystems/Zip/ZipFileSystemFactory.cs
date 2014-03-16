@@ -9,7 +9,7 @@ namespace SkyNinja.Core.FileSystems.Zip
     {
         public override FileSystem Create(Uri uri)
         {
-            return new ZipFileSystem();
+            return new ZipFileSystem(uri.LocalPath);
         }
     }
 }
