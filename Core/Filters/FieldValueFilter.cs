@@ -11,15 +11,16 @@ namespace SkyNinja.Core.Filters
     /// </summary>
     internal class FieldValueFilter: Filter
     {
-        public string FieldName
+        private readonly string fieldName;
+
+        public FieldValueFilter(string fieldName)
         {
-            get;
-            set;
+            this.fieldName = fieldName;
         }
 
         public override string GetWhereClause()
         {
-            return FieldName;
+            return fieldName;
         }
 
         public override IEnumerable<SQLiteParameter> GetWhereParameters()
@@ -29,7 +30,7 @@ namespace SkyNinja.Core.Filters
 
         public override string ToString()
         {
-            return String.Format("FieldValueFilter(FieldName: {0})", FieldName);
+            return String.Format("FieldValueFilter(fieldName: {0})", fieldName);
         }
     }
 }

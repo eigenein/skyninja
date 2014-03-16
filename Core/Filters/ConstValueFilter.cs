@@ -16,31 +16,29 @@ namespace SkyNinja.Core.Filters
     /// </summary>
     internal class ConstValueFilter<TValue>: ConstValueFilter
     {
-        public string ParameterName
-        {
-            get;
-            set;
-        }
+        private readonly string parameterName;
 
-        public TValue Value
-        {
-            get;
-            set;
-        }
+        private readonly TValue value;
 
+        public ConstValueFilter(string parameterName, TValue value)
+        {
+            this.parameterName = parameterName;
+            this.value = value;
+        }
+        
         public override string GetWhereClause()
         {
-            return String.Format("@{0}", ParameterName);
+            return String.Format("@{0}", parameterName);
         }
 
         public override IEnumerable<SQLiteParameter> GetWhereParameters()
         {
-            yield return new SQLiteParameter(ParameterName, Value);
+            yield return new SQLiteParameter(parameterName, value);
         }
 
         public override string ToString()
         {
-            return String.Format("ConstValueFilter({0}: {1})", ParameterName, Value);
+            return String.Format("ConstValueFilter({0}: {1})", parameterName, value);
         }
     }
 }

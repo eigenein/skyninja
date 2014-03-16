@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -22,12 +23,12 @@ namespace SkyNinja.Core.Helpers
             "messageTimestamp"
         };
 
-        private static IDictionary<string, OutputToken> BinaryOperators =
-            new Dictionary<string, OutputToken>()
+        private static IDictionary<string, OperatorOutputToken> BinaryOperators =
+            new Dictionary<string, OperatorOutputToken>()
             {
-                {"gte", new KeywordBinaryOperatorOutputToken(0, ">=")},
-                {"lte", new KeywordBinaryOperatorOutputToken(0, "<=")},
-                {"and", new KeywordBinaryOperatorOutputToken(1, "and")}
+                {"gte", new KeywordBinaryOperatorOutputToken(1, ">=")},
+                {"lte", new KeywordBinaryOperatorOutputToken(1, "<=")},
+                {"and", new KeywordBinaryOperatorOutputToken(0, "and")}
             };
 
         private int parameterCounter;
@@ -40,23 +41,48 @@ namespace SkyNinja.Core.Helpers
 
         private IEnumerable<OutputToken> Convert(IEnumerable<string> tokens)
         {
+            Stack<OperatorOutputToken> operatorStack = new Stack<OperatorOutputToken>();
+
             foreach (string inputToken in tokens)
             {
                 OutputToken outputToken;
+                OperatorOutputToken operatorOutputToken;
 
                 if (FieldNames.Contains(inputToken))
                 {
-                    yield return new FieldValueOutputToken() { FieldName = inputToken };
+                    outputToken = new FieldValueOutputToken(inputToken);
+                    Logger.Trace("Yield field: {0}.", outputToken);
+                    yield return outputToken;
                 }
                 else if (TryParseValue(inputToken, out outputToken))
                 {
+                    Logger.Trace("Yield value: {0}.", outputToken);
                     yield return outputToken;
+                }
+                else if (TryParseOperator(inputToken, out operatorOutputToken))
+                {
+                    while (operatorStack.Count != 0 &&
+                        operatorStack.Peek().Priority >= operatorOutputToken.Priority)
+                    {
+                        outputToken = operatorStack.Pop();
+                        Logger.Trace("Yield operator: {0}.", outputToken);
+                        yield return outputToken;
+                    }
+                    Logger.Trace("Push operator: {0}.", operatorOutputToken);
+                    operatorStack.Push(operatorOutputToken);
                 }
                 else
                 {
                     throw new InvalidFilterExpressionInternalException(String.Format(
                         "Could not parse token: {0}.", inputToken));
                 }
+            }
+
+            while (operatorStack.Count != 0)
+            {
+                OperatorOutputToken outputToken = operatorStack.Pop();
+                Logger.Trace("Finally yield operator: {0}.", outputToken);
+                yield return outputToken;
             }
         }
 
@@ -72,7 +98,7 @@ namespace SkyNinja.Core.Helpers
         /// <summary>
         /// Parses simple value.
         /// </summary>
-        private static bool TryParseValue(string inputToken, out OutputToken outputToken)
+        private bool TryParseValue(string inputToken, out OutputToken outputToken)
         {
             // DateTime
             DateTime dateTimeValue;
@@ -83,7 +109,7 @@ namespace SkyNinja.Core.Helpers
                 DateTimeStyles.AllowWhiteSpaces,
                 out dateTimeValue))
             {
-                outputToken = new ConstValueOutputToken<DateTime>() { Value = dateTimeValue };
+                outputToken = new ConstValueOutputToken<DateTime>(GetParameterName(), dateTimeValue);
                 return true;
             }
             // Failed.
@@ -94,7 +120,7 @@ namespace SkyNinja.Core.Helpers
         /// <summary>
         /// Parses operator.
         /// </summary>
-        private bool TryParseOperator(string inputToken, out OutputToken outputToken)
+        private bool TryParseOperator(string inputToken, out OperatorOutputToken outputToken)
         {
             return BinaryOperators.TryGetValue(inputToken, out outputToken);
         }

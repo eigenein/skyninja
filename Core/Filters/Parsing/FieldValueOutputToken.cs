@@ -9,23 +9,32 @@ namespace SkyNinja.Core.Filters.Parsing
     /// </summary>
     internal class FieldValueOutputToken: ValueOutputToken
     {
+        private readonly string fieldName;
+
         public string FieldName
         {
-            get;
-            set;
+            get
+            {
+                return fieldName;
+            }
+        }
+
+        public FieldValueOutputToken(string fieldName)
+        {
+            this.fieldName = fieldName;
         }
 
         public override Filter GetFilter()
         {
-            return new FieldValueFilter() {FieldName = FieldName};
+            return new FieldValueFilter(fieldName);
         }
 
         public override string ToString()
         {
             return String.Format(
-                "FieldValueOutputToken(ValueOutputToken: {0}, FieldName: {1})",
+                "FieldValueOutputToken(ValueOutputToken: {0}, fieldName: {1})",
                 base.ToString(),
-                FieldName);
+                fieldName);
         }
     }
 }

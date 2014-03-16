@@ -9,15 +9,19 @@ namespace SkyNinja.Core.Filters.Parsing
     /// </summary>
     internal class ConstValueOutputToken<TValue>: ValueOutputToken
     {
-        public TValue Value
+        private readonly string parameterName;
+
+        private readonly TValue value;
+
+        public ConstValueOutputToken(string parameterName, TValue value)
         {
-            get;
-            set;
+            this.parameterName = parameterName;
+            this.value = value;
         }
 
         public override Filter GetFilter()
         {
-            return new ConstValueFilter<TValue>() {Value = Value};
+            return new ConstValueFilter<TValue>(parameterName, value);
         }
 
         public override string ToString()
@@ -25,8 +29,8 @@ namespace SkyNinja.Core.Filters.Parsing
             return String.Format(
                 "ConstValueOutputToken(ValueOutputToken: {0}, Value: {1}({2}))",
                 base.ToString(),
-                Value.GetType().Name,
-                Value);
+                value.GetType().Name,
+                value);
         }
     }
 }
