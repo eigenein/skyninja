@@ -27,6 +27,9 @@ namespace SkyNinja.Core.Inputs.Skype
                 messages as message
             where
                 message.convo_id = @conversationId
+                and (
+                    {0}
+                )
             order by
                 message.timestamp
         ";

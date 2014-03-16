@@ -16,18 +16,19 @@ namespace SkyNinja.Core
 
         private readonly Input input;
         private readonly Output output;
-
+        private readonly Filter filter;
         private readonly Grouper grouper;
 
         private readonly HashSet<string> seenGroups = new HashSet<string>();
 
-        public Migrator(Input input, Output output, Grouper grouper)
+        public Migrator(Input input, Output output, Filter filter, Grouper grouper)
         {
             Logger.Info(
                 "Initializing migrator. Input: {0}. Output: {1}. Grouper: {2}.",
                 input, output, grouper);
             this.input = input;
             this.output = output;
+            this.filter = filter;
             this.grouper = grouper;
         }
 
@@ -53,7 +54,7 @@ namespace SkyNinja.Core
         {
             Logger.Debug("Getting messages ...");
             using (AsyncEnumerator<Message> messageEnumerator =
-                await input.GetMessages(conversation.Id))
+                await input.GetMessages(conversation.Id, filter))
             {
                 while (await messageEnumerator.Move())
                 {

@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Threading.Tasks;
 
 namespace SkyNinja.Core.Classes
 {
     /// <summary>
-    /// Message grouper.
+    /// Message filter.
     /// </summary>
-    public abstract class Grouper
+    public abstract class Filter
     {
         /// <summary>
-        /// Get group for the message.
+        /// Gets filtering SQL WHERE clause.
         /// </summary>
-        public abstract Task<string> GetGroup(Input input, Conversation conversation, Message message);
+        public abstract string GetWhereClause();
 
         public override string ToString()
         {

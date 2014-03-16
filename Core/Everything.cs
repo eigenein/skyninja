@@ -5,6 +5,7 @@ using SkyNinja.Core.Classes;
 using SkyNinja.Core.Classes.Factories;
 using SkyNinja.Core.FileSystems.Usual;
 using SkyNinja.Core.FileSystems.Zip;
+using SkyNinja.Core.Filters;
 using SkyNinja.Core.Groupers;
 using SkyNinja.Core.Inputs.Skype;
 using SkyNinja.Core.Outputs.PlainText;
@@ -24,6 +25,12 @@ namespace SkyNinja.Core
             new Dictionary<string, OutputFactory>()
             {
                 {"plain", new PlainTextOutputFactory()}
+            };
+
+        public static readonly IDictionary<string, Filter> Filters =
+            new Dictionary<string, Filter>()
+            {
+                {"none", new NoneFilter()}
             };
 
         public static readonly IDictionary<string, Func<Grouper>> Groupers =

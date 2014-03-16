@@ -27,6 +27,7 @@ namespace SkyNinja.Core.Classes
         /// <summary>
         /// Get conversation messages.
         /// </summary>
-        public abstract Task<AsyncEnumerator<Message>> GetMessages(int conversationId);
+        public abstract Task<AsyncEnumerator<Message>> GetMessages(
+            int conversationId, Filter filter);
     }
 }

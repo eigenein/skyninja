@@ -24,7 +24,7 @@ SkyNinja Command Line Interface
 
 Usage:
     cli --version
-    cli -i <uri> -o <uri> [-g <name>...] [-f <name>]
+    cli -i <uri> -o <uri> [-g <name>...] [-f <name>] [<filter>...]
 
 Options:
       -h --help                Show this screen.
@@ -47,12 +47,19 @@ http://skyninja.im/donate
 
         public static int Main(string[] args)
         {
+            // Setup exception handling.
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
             Console.CancelKeyPress += ConsoleCancelKeyPress;
-
+            // Parse command-line arguments.
             IDictionary<string, ValueObject> arguments = new Docopt().Apply(
                 Usage, args, version: AssemblyVersion.Current, exit: true);
-
+            // Print arguments for debugging.
+            Logger.Debug("Cli version {0}.", AssemblyVersion.Current);
+            foreach (KeyValuePair<string, ValueObject> argument in arguments)
+            {
+                Logger.Debug("{0}: {1}", argument.Key, argument.Value);
+            }
+            // Run migration task.
             Task<int> task = RunMigrationAsync(arguments);
             task.Wait();
             return task.Result;
@@ -110,7 +117,7 @@ http://skyninja.im/donate
                         {
                             Logger.Info("Using output: {0}.", output);
                             await output.Open();
-                            await new Migrator(input, output, grouper).Migrate(CancellationTokenSource.Token);
+                            await new Migrator(input, output, null, grouper).Migrate(CancellationTokenSource.Token);
                         }
                     }
                 }

@@ -90,11 +90,12 @@ namespace SkyNinja.Core.Inputs.Skype
         /// <summary>
         /// Get conversation messages.
         /// </summary>
-        public override async Task<AsyncEnumerator<Message>> GetMessages(int conversationId)
+        public override async Task<AsyncEnumerator<Message>> GetMessages(
+            int conversationId, Filter filter)
         {
             Logger.Debug("Getting messages in conversation #{0} ...", conversationId);
-            using (SQLiteCommand command = new SQLiteCommand(
-                SkypeMessageEnumerator.Query, connection))
+            string query = String.Format(SkypeMessageEnumerator.Query, filter.GetWhereClause());
+            using (SQLiteCommand command = new SQLiteCommand(query, connection))
             {
                 command.Parameters.Add(new SQLiteParameter("conversationId", conversationId));
                 DbDataReader reader = await command.ExecuteReaderAsync();
