@@ -11,7 +11,7 @@ namespace SkyNinja.Core.Filters.Parsing
     {
         public abstract Filter GetFilter();
 
-        public ValueOutputToken()
+        protected ValueOutputToken()
             : base(TokenType.Value)
         {
             // Do nothing.
