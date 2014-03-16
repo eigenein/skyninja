@@ -117,7 +117,7 @@ http://skyninja.im/donate
             }
             catch (InternalException e)
             {
-                Logger.Fatal("Migration error: {0}", e.Message);
+                Logger.Fatal("Migration error. {0}", e.Message);
                 return ExitCodes.Failure;
             }
             catch (OperationCanceledException)
