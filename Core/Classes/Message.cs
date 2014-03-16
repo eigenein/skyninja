@@ -21,6 +21,9 @@ namespace SkyNinja.Core.Classes
             set;
         }
 
+        /// <summary>
+        /// Universal time when message is posted.
+        /// </summary>
         public DateTime Timestamp
         {
             get;
