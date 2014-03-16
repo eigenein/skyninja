@@ -81,8 +81,13 @@
     <Compile Include="FileSystems\Usual\UsualFileSystemFactory.cs" />
     <Compile Include="FileSystems\Zip\ZipFileSystem.cs" />
     <Compile Include="FileSystems\Zip\ZipFileSystemFactory.cs" />
-    <Compile Include="Filters\NoneFilter.cs" />
+    <Compile Include="Filters\DateTimeValueFilter.cs" />
+    <Compile Include="Filters\GetterFilter.cs" />
+    <Compile Include="Filters\GreaterThanOperatorFilter.cs" />
+    <Compile Include="Filters\NoneGetterFilter.cs" />
     <Compile Include="Filters\OperatorFilter.cs" />
+    <Compile Include="Filters\TimestampGetterFilter.cs" />
+    <Compile Include="Filters\ValueGetterFilter.cs" />
     <Compile Include="Groupers\CombineGrouper.cs" />
     <Compile Include="Groupers\DayGrouper.cs" />
     <Compile Include="Groupers\YearMonthGrouper.cs" />

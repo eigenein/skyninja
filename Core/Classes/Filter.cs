@@ -10,14 +10,6 @@ namespace SkyNinja.Core.Classes
     public abstract class Filter
     {
         /// <summary>
-        /// Gets whether filter is a complete expression.
-        /// </summary>
-        public abstract bool IsComplete
-        {
-            get;
-        }
-
-        /// <summary>
         /// Gets filtering SQL WHERE clause.
         /// </summary>
         public abstract string GetWhereClause();

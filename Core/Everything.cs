@@ -27,12 +27,6 @@ namespace SkyNinja.Core
                 {"plain", new PlainTextOutputFactory()}
             };
 
-        public static readonly IDictionary<string, Func<string[], Filter>> Filters =
-            new Dictionary<string, Func<string[], Filter>>()
-            {
-                {"none", arguments => new NoneFilter()}
-            };
-
         public static readonly IDictionary<string, Func<Grouper>> Groupers =
             new Dictionary<string, Func<Grouper>>()
             {

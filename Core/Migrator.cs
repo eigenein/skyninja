@@ -24,8 +24,8 @@ namespace SkyNinja.Core
         public Migrator(Input input, Output output, Filter filter, Grouper grouper)
         {
             Logger.Info(
-                "Initializing migrator. Input: {0}. Output: {1}. Grouper: {2}.",
-                input, output, grouper);
+                "Initializing migrator. Input: {0}. Output: {1}. Filter: {2}. Grouper: {3}.",
+                input, output, filter, grouper);
             this.input = input;
             this.output = output;
             this.filter = filter;
