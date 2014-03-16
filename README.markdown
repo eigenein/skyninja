@@ -30,3 +30,8 @@ SkyNinja (`/skˈaɪ ˈnɪn.dʒə/`) is a tool for exporting and importing [Skype
 ##### Output Connectors
 
 * `plain://C:\Users\User\Downloads\Output`
+
+##### File Systems
+
+* `usual`
+* `zip`

@@ -9,7 +9,6 @@ using NLog;
 
 using SkyNinja.Core;
 using SkyNinja.Core.Classes;
-using SkyNinja.Core.Classes.Factories;
 using SkyNinja.Core.Exceptions;
 using SkyNinja.Core.Groupers;
 using SkyNinja.Core.Helpers;
@@ -31,7 +30,13 @@ Options:
       -i --input <uri>         Input URI.
       -o --output <uri>        Output URI.
       -g --grouper <name>...   Groupers [default: participants].
-      -f --file-system <name>  Target file system [default: usual].";
+      -f --file-system <name>  Target file system [default: usual].
+
+2014 (c) Pavel Perestoronin
+To email me, please contact contact@skyninja.im
+If you like SkyNinja and want to support it, you can make a donation:
+http://skyninja.im/donate
+";
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
