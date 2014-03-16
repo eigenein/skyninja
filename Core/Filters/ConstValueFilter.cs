@@ -6,10 +6,15 @@ using SkyNinja.Core.Classes;
 
 namespace SkyNinja.Core.Filters
 {
+    internal abstract class ConstValueFilter: Filter
+    {
+        // Nothing.
+    }
+
     /// <summary>
     /// Wraps simple value.
     /// </summary>
-    internal class SimpleValueFilter<TValue>: Filter
+    internal class ConstValueFilter<TValue>: ConstValueFilter
     {
         public string ParameterName
         {
@@ -35,7 +40,7 @@ namespace SkyNinja.Core.Filters
 
         public override string ToString()
         {
-            return String.Format("SimpleValueFilter({0}: {1})", ParameterName, Value);
+            return String.Format("ConstValueFilter({0}: {1})", ParameterName, Value);
         }
     }
 }

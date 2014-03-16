@@ -173,7 +173,7 @@ http://skyninja.im/donate
             }
             catch (InvalidFilterExpressionInternalException e)
             {
-                Logger.Fatal("Invalid filter expression. {0}", e);
+                Logger.Fatal("Invalid filter expression. {0}", e.Message);
                 filter = default(Filter);
                 return false;
             }
