@@ -3,6 +3,8 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
+using NLog;
+
 using SkyNinja.Core.Classes;
 using SkyNinja.Core.Helpers;
 
@@ -10,6 +12,8 @@ namespace SkyNinja.Core.FileSystems.Usual
 {
     internal class UsualFileSystem: FileSystem
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
         private readonly string path;
 
         private readonly PathShortener pathShortener = new PathShortener(259);
@@ -27,8 +31,17 @@ namespace SkyNinja.Core.FileSystems.Usual
 
         public override StreamWriter OpenWriter(string group, string extension)
         {
+            // Get file path.
             string filePath = Path.Combine(path, group);
             filePath = pathShortener.Shorten(filePath, extension);
+            // Create directory.
+            DirectoryInfo directory = (new FileInfo(filePath)).Directory;
+            if (directory != null && !directory.Exists)
+            {
+                Logger.Debug("Creating directory {0} ...", directory);
+                directory.Create();
+            }
+            // Return writer.
             return new StreamWriter(filePath, false, Encoding.UTF8);
         }
 

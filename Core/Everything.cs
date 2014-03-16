@@ -30,7 +30,8 @@ namespace SkyNinja.Core
         public static readonly IDictionary<string, Func<Grouper>> Groupers =
             new Dictionary<string, Func<Grouper>>()
             {
-                {"participants", () => new ParticipantsGrouper()}
+                {"participants", () => new ParticipantsGrouper()},
+                {"year-month", () => new YearMonthGrouper()}
             };
 
         public static readonly IDictionary<string, FileSystemFactory> FileSystems =

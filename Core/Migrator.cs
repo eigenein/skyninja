@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
 using NLog;
 
 using SkyNinja.Core.Classes;
+using SkyNinja.Core.Exceptions;
 
 namespace SkyNinja.Core
 {
@@ -16,6 +18,8 @@ namespace SkyNinja.Core
         private readonly Output output;
 
         private readonly Grouper grouper;
+
+        private readonly HashSet<string> seenGroups = new HashSet<string>();
 
         public Migrator(Input input, Output output, Grouper grouper)
         {
@@ -66,7 +70,15 @@ namespace SkyNinja.Core
                     Logger.Trace("Group: {0}", group);
                     if (output.CurrentGroup != group)
                     {
+                        // End previous group.
                         output.EndGroup();
+                        // Runtime check.
+                        if (seenGroups.Contains(group))
+                        {
+                            throw new DuplicateGroupInternalException(group);
+                        }
+                        seenGroups.Add(group);
+                        // Begin new group.
                         output.BeginGroup(group);
                     }
                     // Insert message.

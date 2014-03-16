@@ -7,7 +7,8 @@ namespace SkyNinja.Core.Exceptions
     /// </summary>
     public class InvalidUriParametersInternalException: InternalException
     {
-        public InvalidUriParametersInternalException(string message) : base(message)
+        public InvalidUriParametersInternalException(string message) 
+            : base(message)
         {
             // Do nothing.
         }
