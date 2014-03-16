@@ -5,7 +5,6 @@ using SkyNinja.Core.Classes;
 using SkyNinja.Core.Classes.Factories;
 using SkyNinja.Core.FileSystems.Usual;
 using SkyNinja.Core.FileSystems.Zip;
-using SkyNinja.Core.Filters;
 using SkyNinja.Core.Groupers;
 using SkyNinja.Core.Inputs.Skype;
 using SkyNinja.Core.Outputs.PlainText;
