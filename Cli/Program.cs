@@ -87,7 +87,7 @@ http://skyninja.im/donate
             }
             catch (KeyNotFoundException e)
             {
-                Logger.Fatal("Unknown name. {0}", e.Message);
+                Logger.Fatal("Unknown scheme or name. {0}", e.Message);
                 return ExitCodes.Failure;
             }
             catch (InvalidUriParameterInternalException e)
