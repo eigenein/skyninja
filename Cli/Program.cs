@@ -65,8 +65,8 @@ http://skyninja.im/donate
         {
             // Parse connector URIs.
             ParsedUri inputUri, outputUri;
-            if (!TryParseUri(arguments["--input"].ToString(), out inputUri) ||
-                !TryParseUri(arguments["--output"].ToString(), out outputUri))
+            if (!TryParseUri(arguments["--input"], out inputUri) ||
+                !TryParseUri(arguments["--output"], out outputUri))
             {
                 return ExitCodes.Failure;
             }
@@ -147,11 +147,11 @@ http://skyninja.im/donate
         /// <summary>
         /// Parse URI.
         /// </summary>
-        private static bool TryParseUri(string argument, out ParsedUri uri)
+        private static bool TryParseUri(ValueObject argument, out ParsedUri uri)
         {
             try
             {
-                uri = new ParsedUri(argument);
+                uri = new ParsedUri(argument.ToString());
                 return true;
             }
             catch (UriFormatException)
