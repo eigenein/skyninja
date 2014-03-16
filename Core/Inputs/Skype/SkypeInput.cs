@@ -31,6 +31,9 @@ namespace SkyNinja.Core.Inputs.Skype
             this.databasePath = databasePath;
         }
 
+        /// <summary>
+        /// Opens connector for reading.
+        /// </summary>
         public override async Task Open()
         {
             string connectionString = String.Format("Data Source={0};Read Only=True", databasePath);
@@ -99,6 +102,9 @@ namespace SkyNinja.Core.Inputs.Skype
             }
         }
 
+        /// <summary>
+        /// Closes connector.
+        /// </summary>
         public override void Close()
         {
             Logger.Debug("Closing connection ...");
