@@ -45,7 +45,7 @@ Usual file system.
 
 ###### `zip`
 
-Zip arhcive. Accepted parameters:
+Zip archive. Accepted parameters:
 
 * `zipEntryEncoding`
 
