@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+
+using SkyNinja.Core.Classes;
 
 namespace SkyNinja.Core.Filters.Parsing
 {
@@ -7,23 +10,30 @@ namespace SkyNinja.Core.Filters.Parsing
     /// </summary>
     internal abstract class OperatorOutputToken: OutputToken
     {
+        private readonly int priority;
+
         public int Priority
         {
-            get;
-            set;
+            get
+            {
+                return priority;
+            }
         }
 
-        public OperatorOutputToken()
+        public OperatorOutputToken(int priority)
+            : base(TokenType.Operator)
         {
-            Type = TokenType.Operator;
+            this.priority = priority;
         }
+
+        public abstract Filter GetFilter(Stack<Filter> filterStack);
 
         public override string ToString()
         {
             return String.Format(
-                "OperatorOutputToken(OutputToken: {0}, Priority: {1})",
+                "OperatorOutputToken(OutputToken: {0}, priority: {1})",
                 base.ToString(),
-                Priority);
+                priority);
         }
     }
 }

@@ -7,15 +7,24 @@ namespace SkyNinja.Core.Filters.Parsing
     /// </summary>
     internal class OutputToken
     {
+        private readonly TokenType type;
+
         public TokenType Type
         {
-            get;
-            set;
+            get
+            {
+                return type;
+            }
+        }
+
+        public OutputToken(TokenType type)
+        {
+            this.type = type;
         }
 
         public override string ToString()
         {
-            return String.Format("OutputToken(Type: {0})", Type);
+            return String.Format("OutputToken(type: {0})", type);
         }
     }
 }

@@ -25,9 +25,12 @@ namespace SkyNinja.Core.Helpers
         private static IDictionary<string, OutputToken> BinaryOperators =
             new Dictionary<string, OutputToken>()
             {
-                {"gte", new KeywordBinaryOperatorOutputToken(0, ">=")},
-                {"lte", new KeywordBinaryOperatorOutputToken(0, "<=")},
-                {"and", new KeywordBinaryOperatorOutputToken(1, "and")}
+                {
+                    "gt", new KeywordBinaryOperatorOutputToken(0, ">")
+                },
+                {
+                    "and", new KeywordBinaryOperatorOutputToken()
+                }
             };
 
         private int parameterCounter;

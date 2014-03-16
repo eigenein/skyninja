@@ -22,12 +22,10 @@ namespace SkyNinja.Core.Helpers
             "messageTimestamp"
         };
 
-        private static IDictionary<string, OutputToken> BinaryOperators =
-            new Dictionary<string, OutputToken>()
+        private static IDictionary<string, Func<string, string, string>> BinaryOperators =
+            new Dictionary<string, Func<string, string, string>>()
             {
-                {"gte", new KeywordBinaryOperatorOutputToken(0, ">=")},
-                {"lte", new KeywordBinaryOperatorOutputToken(0, "<=")},
-                {"and", new KeywordBinaryOperatorOutputToken(1, "and")}
+                {"gt", (clause1, clause2) => String.Format("({0}) > ({1})")}
             };
 
         private int parameterCounter;
