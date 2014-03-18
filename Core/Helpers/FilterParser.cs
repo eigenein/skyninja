@@ -147,7 +147,7 @@ namespace SkyNinja.Core.Helpers
         /// <summary>
         /// Parses operator.
         /// </summary>
-        private bool TryParseOperator(string inputToken, out OperatorOutputToken outputToken)
+        private static bool TryParseOperator(string inputToken, out OperatorOutputToken outputToken)
         {
             return BinaryOperators.TryGetValue(inputToken, out outputToken);
         }
