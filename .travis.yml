@@ -9,4 +9,4 @@ install:
   - chmod +x nuget.exe
   - mono --runtime=v4.0 nuget.exe restore SkyNinja.sln
 script:
-  - xbuild /p:Configuration=Release SkyNinja.sln
+  - xbuild /p:Configuration=Release /p:SignAssembly=false SkyNinja.sln

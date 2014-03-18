@@ -16,6 +16,7 @@ SkyNinja (`/skˈaɪ ˈnɪn.dʒə/`) is a tool for exporting and importing [Skype
 * Verify that **Code Analysis is turned on for all configurations**.
 * Verify that **SkyNinja Ruleset** is chosen **for all configurations**.
 * Verify that the assembly is **signed with the `SkyNinja.pfx`**.
+* Verify that **`SkyNinja.pfx` is added as a link (not a copy)**.
 * Verify that **unused references are removed**.
 * Verify **`AssemblyInfo.cs`**.
 

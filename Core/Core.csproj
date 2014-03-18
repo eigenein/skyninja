@@ -39,7 +39,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>SkyNinja.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\SkyNinja.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="NLog, Version=2.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
@@ -121,9 +121,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\SkyNinja.pfx">
+      <Link>SkyNinja.pfx</Link>
+    </None>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="SkyNinja.pfx" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
