@@ -4,5 +4,7 @@ env:
   - EnableNuGetPackageRestore=true 
 install:
   - sudo apt-get install mono-devel
+after_install:
+  - mono --version
 script:
   - xbuild /p:Configuration=Release SkyNinja.sln
