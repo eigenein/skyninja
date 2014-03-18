@@ -11,8 +11,6 @@ namespace SkyNinja.Core.Classes
     /// </summary>
     public abstract class Input: Connector
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
         /// <summary>
         /// Get conversations.
         /// </summary>
