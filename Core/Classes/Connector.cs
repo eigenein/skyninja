@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-using NLog;
-
 namespace SkyNinja.Core.Classes
 {
     public abstract class Connector: IDisposable
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
         /// <summary>
         /// Opens connector for reading.
         /// </summary>
