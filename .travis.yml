@@ -1,11 +1,12 @@
 language: objective-c
 env:
-  global:
-    - EnableNuGetPackageRestore=true
   matrix:
     - MONO_PACKAGE="MonoFramework-MRE-3.2.7.macos10.xamarin.x86.pkg"
 install:
   - wget "http://download.mono-project.com/archive/3.2.7/macos-10-x86/${MONO_PACKAGE}"
   - sudo installer -pkg ${MONO_PACKAGE} -target /
+  - wget http://nuget.org/nuget.exe
+  - chmod +x nuget.exe
 script:
+  - mono --runtime=v4.5 nuget.exe restore SkyNinja.sln
   - xbuild /p:Configuration=Release SkyNinja.sln
