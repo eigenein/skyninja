@@ -7,6 +7,6 @@ install:
   - sudo installer -pkg ${MONO_PACKAGE} -target /
   - wget http://nuget.org/nuget.exe
   - chmod +x nuget.exe
-  - mono --runtime=v4.0 nuget.exe restore SkyNinja.sln
+  - mono --runtime=v4.0 nuget.exe restore SkyNinja.sln -Verbosity detailed
 script:
   - xbuild /p:Configuration=Release /p:SignAssembly=false SkyNinja.sln
