@@ -1,0 +1,8 @@
+language: python
+env:
+ global:
+  - EnableNuGetPackageRestore=true 
+install:
+  - apt-get install mono-devel
+script:
+  - xbuild /p:Configuration=Release SkyNinja.sln
