@@ -10,9 +10,9 @@ namespace SkyNinja.Core.Classes
     public abstract class Filter
     {
         /// <summary>
-        /// Gets filtering SQL WHERE clause.
+        /// Gets filtering SQL WHERE expression.
         /// </summary>
-        public abstract string GetWhereClause();
+        public abstract string GetWhereExpression();
 
         /// <summary>
         /// Gets SQL parameters.
@@ -21,7 +21,7 @@ namespace SkyNinja.Core.Classes
 
         public override string ToString()
         {
-            return String.Format("Filter(GetWhereClause: {0})", GetWhereClause());
+            return String.Format("Filter(GetWhereExpression: {0})", GetWhereExpression());
         }
     }
 }

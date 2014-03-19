@@ -6,7 +6,7 @@ using SkyNinja.Core.Helpers;
 
 namespace SkyNinja.Core.Outputs.PlainText
 {
-    internal class PlainTextOutputFactory: OutputFactory
+    internal class PlainTextOutputFactory : OutputFactory
     {
         public override Output CreateConnector(ParsedUri uri, FileSystem fileSystem)
         {

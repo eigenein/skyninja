@@ -11,7 +11,7 @@ using SkyNinja.Core.Helpers;
 
 namespace SkyNinja.Core.FileSystems.Zip
 {
-    internal class ZipFileSystem: FileSystem
+    internal class ZipFileSystem : FileSystem
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 

@@ -6,7 +6,7 @@ using SkyNinja.Core.Classes;
 
 namespace SkyNinja.Core.Groupers
 {
-    internal class ParticipantsGrouper: Grouper
+    internal class ParticipantsGrouper : Grouper
     {
         private readonly IDictionary<int, string> cache = new Dictionary<int, string>();
 

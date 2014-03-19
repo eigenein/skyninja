@@ -2,7 +2,7 @@
 
 namespace SkyNinja.Core.Exceptions
 {
-    public class InternalException: Exception
+    public class InternalException : Exception
     {
         public InternalException(string message)
             : base(message)

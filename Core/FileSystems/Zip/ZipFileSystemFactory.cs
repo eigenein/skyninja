@@ -10,7 +10,7 @@ using SkyNinja.Core.Helpers;
 
 namespace SkyNinja.Core.FileSystems.Zip
 {
-    internal class ZipFileSystemFactory: FileSystemFactory
+    internal class ZipFileSystemFactory : FileSystemFactory
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 

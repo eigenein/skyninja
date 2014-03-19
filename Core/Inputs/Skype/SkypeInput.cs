@@ -15,7 +15,7 @@ namespace SkyNinja.Core.Inputs.Skype
     /// <summary>
     /// Skype database input connector.
     /// </summary>
-    internal class SkypeInput: Input
+    internal class SkypeInput : Input
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
@@ -95,7 +95,7 @@ namespace SkyNinja.Core.Inputs.Skype
         {
             Logger.Debug("Getting messages in conversation #{0} ...", conversationId);
             // Insert filter query clause.
-            string query = String.Format(SkypeMessageEnumerator.Query, filter.GetWhereClause());
+            string query = String.Format(SkypeMessageEnumerator.Query, filter.GetWhereExpression());
             // Initialize command.
             using (SQLiteCommand command = new SQLiteCommand(query, connection))
             {

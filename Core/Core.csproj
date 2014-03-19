@@ -82,6 +82,7 @@
     <Compile Include="FileSystems\Usual\UsualFileSystemFactory.cs" />
     <Compile Include="FileSystems\Zip\ZipFileSystem.cs" />
     <Compile Include="FileSystems\Zip\ZipFileSystemFactory.cs" />
+    <Compile Include="Filters\NoneFilter.cs" />
     <Compile Include="Groupers\ChainGrouper.cs" />
     <Compile Include="Groupers\DayGrouper.cs" />
     <Compile Include="Groupers\YearMonthGrouper.cs" />

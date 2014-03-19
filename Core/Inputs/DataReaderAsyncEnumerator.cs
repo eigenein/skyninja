@@ -6,7 +6,7 @@ using SkyNinja.Core.Classes;
 
 namespace SkyNinja.Core.Inputs
 {
-    internal abstract class DataReaderAsyncEnumerator<T>: AsyncEnumerator<T>
+    internal abstract class DataReaderAsyncEnumerator<T> : AsyncEnumerator<T>
     {
         protected readonly DbDataReader Reader;
 

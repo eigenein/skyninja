@@ -10,7 +10,7 @@ using SkyNinja.Core.Messages;
 
 namespace SkyNinja.Core.Inputs.Skype
 {
-    internal class SkypeMessageEnumerator: DataReaderAsyncEnumerator<Message>
+    internal class SkypeMessageEnumerator : DataReaderAsyncEnumerator<Message>
     {
         public const string Query = @"
             select

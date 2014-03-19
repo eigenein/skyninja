@@ -9,7 +9,7 @@ namespace SkyNinja.Core.Classes
     /// <summary>
     /// Input connector.
     /// </summary>
-    public abstract class Input: Connector
+    public abstract class Input : Connector
     {
         /// <summary>
         /// Get conversations.

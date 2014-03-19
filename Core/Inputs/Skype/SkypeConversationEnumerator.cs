@@ -12,7 +12,7 @@ namespace SkyNinja.Core.Inputs.Skype
     /// <summary>
     /// Reads <see cref="Conversation"/> from <see cref="DbDataReader"/>.
     /// </summary>
-    internal class SkypeConversationEnumerator: DataReaderAsyncEnumerator<Conversation>
+    internal class SkypeConversationEnumerator : DataReaderAsyncEnumerator<Conversation>
     {
         public const string Query = @"
             select id as id,

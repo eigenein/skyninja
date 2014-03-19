@@ -11,7 +11,7 @@ namespace SkyNinja.Core.Inputs.Skype
     /// <summary>
     /// Creates <see cref="SkypeInput"/> by database file path.
     /// </summary>
-    internal class SkypeDbInputFactory: InputFactory
+    internal class SkypeDbInputFactory : InputFactory
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 

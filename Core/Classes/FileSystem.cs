@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace SkyNinja.Core.Classes
 {
-    public abstract class FileSystem: IDisposable
+    public abstract class FileSystem : IDisposable
     {
         public abstract Task Open();
 

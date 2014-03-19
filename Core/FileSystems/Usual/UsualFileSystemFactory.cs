@@ -6,7 +6,7 @@ using SkyNinja.Core.Helpers;
 
 namespace SkyNinja.Core.FileSystems.Usual
 {
-    internal class UsualFileSystemFactory: FileSystemFactory
+    internal class UsualFileSystemFactory : FileSystemFactory
     {
         public override FileSystem Create(ParsedUri uri)
         {

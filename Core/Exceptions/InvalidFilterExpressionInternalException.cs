@@ -2,7 +2,7 @@
 
 namespace SkyNinja.Core.Exceptions
 {
-    public class InvalidFilterExpressionInternalException: InternalException
+    public class InvalidFilterExpressionInternalException : InternalException
     {
         public InvalidFilterExpressionInternalException(string message)
             : base(message)

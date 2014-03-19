@@ -10,7 +10,7 @@ namespace SkyNinja.Core.Classes
     /// <summary>
     /// Output connector.
     /// </summary>
-    public abstract class Output: Connector
+    public abstract class Output : Connector
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 

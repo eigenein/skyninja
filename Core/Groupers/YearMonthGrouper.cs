@@ -7,7 +7,7 @@ using SkyNinja.Core.Classes;
 
 namespace SkyNinja.Core.Groupers
 {
-    internal class YearMonthGrouper: Grouper
+    internal class YearMonthGrouper : Grouper
     {
         public override async Task<string> GetGroup(
             Input input, Conversation conversation, Message message)

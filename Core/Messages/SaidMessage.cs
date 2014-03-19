@@ -4,7 +4,7 @@ using SkyNinja.Core.Classes;
 
 namespace SkyNinja.Core.Messages
 {
-    internal class SaidMessage: Message
+    internal class SaidMessage : Message
     {
         public string Author
         {

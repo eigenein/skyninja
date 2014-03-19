@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
 using NLog;
 
 using SkyNinja.Core.Classes;
-using SkyNinja.Core.Exceptions;
 
 namespace SkyNinja.Core
 {

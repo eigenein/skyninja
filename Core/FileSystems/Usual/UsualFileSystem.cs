@@ -10,7 +10,7 @@ using SkyNinja.Core.Helpers;
 
 namespace SkyNinja.Core.FileSystems.Usual
 {
-    internal class UsualFileSystem: FileSystem
+    internal class UsualFileSystem : FileSystem
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 

@@ -12,7 +12,7 @@ using SkyNinja.Core.Messages;
 
 namespace SkyNinja.Core.Outputs.PlainText
 {
-    internal class PlainTextOutput: Output
+    internal class PlainTextOutput : Output
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 

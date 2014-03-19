@@ -4,11 +4,11 @@ namespace SkyNinja.Core.Classes
 {
     public class Conversation
     {
-        private string displayName;
+        private readonly string displayName;
 
-        private string identity;
+        private readonly string identity;
 
-        private int id;
+        private readonly int id;
 
         public int Id
         {

@@ -4,7 +4,7 @@ using System.Web;
 
 namespace SkyNinja.Core.Helpers
 {
-    public class ParsedUri: Uri
+    public class ParsedUri : Uri
     {
         private readonly NameValueCollection arguments;
 

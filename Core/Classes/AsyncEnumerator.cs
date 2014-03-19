@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace SkyNinja.Core.Classes
 {
-    public abstract class AsyncEnumerator<T>: IDisposable
+    public abstract class AsyncEnumerator<T> : IDisposable
     {
         /// <summary>
         /// Move to next item.

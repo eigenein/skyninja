@@ -11,7 +11,7 @@ namespace SkyNinja.Core.Groupers
     /// <summary>
     /// Chains results of other groupers.
     /// </summary>
-    public class ChainGrouper: Grouper
+    public class ChainGrouper : Grouper
     {
         private readonly ICollection<Grouper> innerGroupers = new List<Grouper>();
 

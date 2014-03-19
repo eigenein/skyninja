@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace SkyNinja.Core.Classes
 {
-    public abstract class Connector: IDisposable
+    public abstract class Connector : IDisposable
     {
         /// <summary>
         /// Opens connector for reading.

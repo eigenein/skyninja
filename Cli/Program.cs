@@ -13,6 +13,7 @@ using SkyNinja.Core;
 using SkyNinja.Core.Classes;
 using SkyNinja.Core.Exceptions;
 using SkyNinja.Core.Extensions;
+using SkyNinja.Core.Filters;
 using SkyNinja.Core.Groupers;
 using SkyNinja.Core.Helpers;
 
@@ -25,7 +26,7 @@ SkyNinja Command Line Interface
 
 Usage:
     cli --version
-    cli -i <uri> -o <uri> [-g <name>...] [-f <name>] [<filter>...]
+    cli -i <uri> -o <uri> [-g <name>...] [-f <name>]
 
 Options:
       -h --help                Show this screen.
@@ -34,7 +35,6 @@ Options:
       -o --output <uri>        Output URI.
       -g --grouper <name>...   Groupers [default: participants].
       -f --file-system <name>  Target file system [default: usual].
-      <filter>...              Filter expression.
 
 2014 (c) Pavel Perestoronin
 To email me, please contact contact@skyninja.im
@@ -166,7 +166,7 @@ http://skyninja.im/donate
             IDictionary<string, ValueObject> arguments,
             out Filter filter)
         {
-            filter = null;
+            filter = new NoneFilter();
             return true;
         }
 

@@ -6,7 +6,7 @@ using SkyNinja.Core.Classes;
 
 namespace SkyNinja.Core.Groupers
 {
-    internal class DayGrouper: Grouper
+    internal class DayGrouper : Grouper
     {
         public override Task<string> GetGroup(
             Input input, Conversation conversation, Message message)
