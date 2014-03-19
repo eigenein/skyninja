@@ -7,7 +7,7 @@ using SkyNinja.Core.Classes;
 namespace SkyNinja.Core.Filters
 {
     // Passes all messages.
-    public class NoneFilter : Filter
+    public class EmptyFilter : Filter
     {
         public override string GetWhereExpression()
         {

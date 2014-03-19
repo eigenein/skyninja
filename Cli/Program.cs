@@ -166,7 +166,7 @@ http://skyninja.im/donate
             IDictionary<string, ValueObject> arguments,
             out Filter filter)
         {
-            filter = new NoneFilter();
+            filter = new EmptyFilter();
             return true;
         }
 
