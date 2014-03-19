@@ -31,7 +31,7 @@ namespace SkyNinja.Core.Helpers
                 return String.Format("{0}{1}", group, extension);
             }
 
-            // GetPath group.
+            // Build path.
             string countString = count.ToString(CultureInfo.InvariantCulture);
             int newLength = maximumLength - 1 - countString.Length - extension.Length;
             group = group.Length > newLength ? group.Substring(0, newLength) : group;
