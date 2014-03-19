@@ -9,12 +9,15 @@ using SkyNinja.Core.Classes;
 namespace SkyNinja.Core.Groupers
 {
     /// <summary>
-    /// Combines results of other groupers.
+    /// Chains results of other groupers.
     /// </summary>
-    public class CombineGrouper: Grouper
+    public class ChainGrouper: Grouper
     {
         private readonly ICollection<Grouper> innerGroupers = new List<Grouper>();
 
+        /// <summary>
+        /// Add grouper to chain.
+        /// </summary>
         public void AddGrouper(Grouper innerGrouper)
         {
             innerGroupers.Add(innerGrouper);
@@ -34,7 +37,7 @@ namespace SkyNinja.Core.Groupers
         public override string ToString()
         {
             return String.Format(
-                "CombineGrouper(innerGroupers: [{0}])",
+                "ChainGrouper(innerGroupers: [{0}])",
                 String.Join(", ", innerGroupers.Select(grouper => grouper.ToString())));
         }
     }

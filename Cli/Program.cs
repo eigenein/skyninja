@@ -184,7 +184,7 @@ http://skyninja.im/donate
         /// </summary>
         private static bool TryCreateGrouper(IEnumerable arguments, out Grouper grouper)
         {
-            CombineGrouper combineGrouper = new CombineGrouper();
+            ChainGrouper chainGrouper = new ChainGrouper();
             foreach (object argument in arguments)
             {
                 Func<Grouper> newGrouper;
@@ -194,9 +194,9 @@ http://skyninja.im/donate
                     grouper = null;
                     return false;
                 }
-                combineGrouper.AddGrouper(newGrouper());
+                chainGrouper.AddGrouper(newGrouper());
             }
-            grouper = combineGrouper;
+            grouper = chainGrouper;
             return true;
         }
 

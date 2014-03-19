@@ -1,13 +1,13 @@
-### SkyNinja
+## SkyNinja
 
 SkyNinja (`/skˈaɪ ˈnɪn.dʒə/`) is a tool for exporting and importing [Skype](http://www.skype.com) conversations. The application is the successor of [Skype Historian](http://eigene.in/skype-historian).
 
-#### Advantages over Skype Historian
+### Advantages over Skype Historian
 
 * Does not require running and even installed Skype.
 * Dramatically faster.
 
-#### Visual Studio Project Checklist
+### Visual Studio Project Checklist
 
 * Verify that the project requires **.NET Framework 4.5**.
 * Verify that **the namespace starts with `SkyNinja`**.
@@ -20,40 +20,16 @@ SkyNinja (`/skˈaɪ ˈnɪn.dʒə/`) is a tool for exporting and importing [Skype
 * Verify that **unused references are removed**.
 * Verify **`AssemblyInfo.cs`**.
 
-#### Connector Specification
+### Connector Specification
 
-##### Input Connectors
+#### Input Connectors
 
 * `skypeid://username`
 * `skypedb://C:\Users\User\AppData\Roaming\Skype\user\main.db`
 
-##### Output Connectors
+#### Output Connectors
 
-* `plain://C:\Users\User\Downloads\Output`
-
-##### Filters
-
-
-
-##### Groupers
-
-* `participants`
-* `year-month`
-* `day`
-
-##### File Systems
-
-###### `usual`
-
-Usual file system.
-
-###### `zip`
-
-Zip archive. Accepted parameters:
-
-* `zipEntryEncoding`
-
-#### Cli Usage Examples
+##### `plain`
 
 ```
 .\Cli
@@ -62,12 +38,17 @@ Zip archive. Accepted parameters:
     -g year-month -g participants
 ```
 
-```
-.\Cli
-    -i skypeid://eigenein
-    -o plain://C:\Users\eigenein\Downloads\SkyNinja.zip
-    -f zip
-```
+#### Filters
+
+
+
+#### Groupers
+
+* `participants`
+* `year-month`
+* `day`
+
+##### Chaining Groupers
 
 ```
 .\Cli
@@ -76,6 +57,25 @@ Zip archive. Accepted parameters:
     -f zip
     -g year-month -g day -g participants
 ```
+
+#### File Systems
+
+##### `usual`
+
+Usual file system.
+
+##### `zip`
+
+Zip archive.
+
+```
+.\Cli
+    -i skypeid://eigenein
+    -o plain://C:\Users\eigenein\Downloads\SkyNinja.zip
+    -f zip
+```
+
+###### `zipEntryEncoding`
 
 ```
 .\Cli
