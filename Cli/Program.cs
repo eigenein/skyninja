@@ -83,7 +83,7 @@ http://skyninja.im/donate
             ParsedUri inputUri, outputUri;
             if (!TryParseUri(arguments["--input"], out inputUri) ||
                 !TryParseUri(arguments["--output"], out outputUri) ||
-                !TryCreateFilter(arguments["<filter>"].AsList, out filter) ||
+                !TryCreateFilter(arguments, out filter) ||
                 !TryCreateGrouper(arguments["--grouper"].AsList, out grouper))
             {
                 return ExitCodes.Failure;
@@ -162,21 +162,12 @@ http://skyninja.im/donate
         /// <summary>
         /// Create filter.
         /// </summary>
-        private static bool TryCreateFilter(IEnumerable arguments, out Filter filter)
+        private static bool TryCreateFilter(
+            IDictionary<string, ValueObject> arguments,
+            out Filter filter)
         {
-            try
-            {
-                filter = new FilterParser().Parse(arguments
-                    .Cast<object>()
-                    .Select(argument => argument.ToString()));
-                return true;
-            }
-            catch (InvalidFilterExpressionInternalException e)
-            {
-                Logger.Fatal("Invalid filter expression. {0}", e.Message);
-                filter = default(Filter);
-                return false;
-            }
+            filter = null;
+            return true;
         }
 
         /// <summary>

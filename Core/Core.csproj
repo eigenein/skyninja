@@ -82,19 +82,6 @@
     <Compile Include="FileSystems\Usual\UsualFileSystemFactory.cs" />
     <Compile Include="FileSystems\Zip\ZipFileSystem.cs" />
     <Compile Include="FileSystems\Zip\ZipFileSystemFactory.cs" />
-    <Compile Include="Filters\BinaryOperatorFilter.cs" />
-    <Compile Include="Filters\FieldValueFilter.cs" />
-    <Compile Include="Filters\KeywordBinaryOperatorFilter.cs" />
-    <Compile Include="Filters\NoneFilter.cs" />
-    <Compile Include="Filters\Parsing\BinaryOperatorOutputToken.cs" />
-    <Compile Include="Filters\Parsing\FieldValueOutputToken.cs" />
-    <Compile Include="Filters\Parsing\KeywordBinaryOperatorOutputToken.cs" />
-    <Compile Include="Filters\Parsing\OperatorOutputToken.cs" />
-    <Compile Include="Filters\Parsing\OutputToken.cs" />
-    <Compile Include="Filters\Parsing\ValueOutputToken.cs" />
-    <Compile Include="Filters\Parsing\TokenType.cs" />
-    <Compile Include="Filters\Parsing\ConstValueOutputToken.cs" />
-    <Compile Include="Filters\ConstValueFilter.cs" />
     <Compile Include="Groupers\ChainGrouper.cs" />
     <Compile Include="Groupers\DayGrouper.cs" />
     <Compile Include="Groupers\YearMonthGrouper.cs" />
@@ -104,7 +91,6 @@
     <Compile Include="Classes\Output.cs" />
     <Compile Include="Helpers\DateTimeHelper.cs" />
     <Compile Include="Helpers\ExitCodes.cs" />
-    <Compile Include="Helpers\FilterParser.cs" />
     <Compile Include="Helpers\ParsedUri.cs" />
     <Compile Include="Helpers\PathDeduplicator.cs" />
     <Compile Include="Helpers\Tasks.cs" />
