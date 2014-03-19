@@ -106,7 +106,7 @@
     <Compile Include="Helpers\ExitCodes.cs" />
     <Compile Include="Helpers\FilterParser.cs" />
     <Compile Include="Helpers\ParsedUri.cs" />
-    <Compile Include="Helpers\PathShortener.cs" />
+    <Compile Include="Helpers\PathDeduplicator.cs" />
     <Compile Include="Helpers\Tasks.cs" />
     <Compile Include="Inputs\DataReaderAsyncEnumerator.cs" />
     <Compile Include="Inputs\Skype\SkypeMessageType.cs" />

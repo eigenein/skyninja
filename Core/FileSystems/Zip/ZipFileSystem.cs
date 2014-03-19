@@ -18,7 +18,7 @@ namespace SkyNinja.Core.FileSystems.Zip
         private readonly string path;
         private readonly Encoding entryEncoding;
 
-        private readonly PathShortener pathShortener = new PathShortener(250);
+        private readonly PathDeduplicator pathDeduplicator = new PathDeduplicator(250);
 
         private ZipArchive archive;
 
@@ -42,7 +42,7 @@ namespace SkyNinja.Core.FileSystems.Zip
 
         public override StreamWriter OpenWriter(string group, string extension)
         {
-            string entryName = pathShortener.Shorten(group, extension);
+            string entryName = pathDeduplicator.GetPath(group, extension);
             Logger.Debug("Creating entry {0} ...", entryName);
             ZipArchiveEntry entry = archive.CreateEntry(entryName);
             Stream stream = entry.Open();

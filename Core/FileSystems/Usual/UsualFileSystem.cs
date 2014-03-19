@@ -16,7 +16,7 @@ namespace SkyNinja.Core.FileSystems.Usual
 
         private readonly string path;
 
-        private readonly PathShortener pathShortener = new PathShortener(259);
+        private readonly PathDeduplicator pathDeduplicator = new PathDeduplicator(259);
 
         public UsualFileSystem(string path)
         {
@@ -33,7 +33,7 @@ namespace SkyNinja.Core.FileSystems.Usual
         {
             // Get file path.
             string filePath = Path.Combine(path, group);
-            filePath = pathShortener.Shorten(filePath, extension);
+            filePath = pathDeduplicator.GetPath(filePath, extension);
             // Create directory.
             DirectoryInfo directory = (new FileInfo(filePath)).Directory;
             if (directory != null && !directory.Exists)

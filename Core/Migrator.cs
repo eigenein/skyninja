@@ -19,8 +19,6 @@ namespace SkyNinja.Core
         private readonly Filter filter;
         private readonly Grouper grouper;
 
-        private readonly HashSet<string> seenGroups = new HashSet<string>();
-
         public Migrator(Input input, Output output, Filter filter, Grouper grouper)
         {
             Logger.Info(
@@ -71,16 +69,7 @@ namespace SkyNinja.Core
                     Logger.Trace("Group: {0}", group);
                     if (output.CurrentGroup != group)
                     {
-                        // End previous group.
                         output.EndGroup();
-                        // Runtime check.
-                        if (seenGroups.Contains(group))
-                        {
-                            // TODO: group re-opening.
-                            throw new DuplicateGroupInternalException(group);
-                        }
-                        seenGroups.Add(group);
-                        // Begin new group.
                         output.BeginGroup(group);
                     }
                     // Insert message.
