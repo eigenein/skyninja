@@ -106,7 +106,7 @@ BTC Wallet: 1PPDYb4jgMM5J7XPy1D1ocggzgLUqiYGN3
             out Output output)
         {
             
-            filter = FilterHelper.Create(arguments);
+            filter = new FilterHelper(arguments).Create();
             grouper = GrouperHelper.Create(arguments["--grouper"].AsList);
 
             string fileSystemName = arguments["--file-system"].ToString();
