@@ -62,7 +62,7 @@ http://skyninja.im/donate
                 Logger.Debug("{0}: {1}", argument.Key, argument.Value);
             }
             // Run migration task.
-            Task<int> task = RunMigrationAsync(arguments);
+            Task<int> task = MainAsync(arguments);
             task.Wait();
             return task.Result;
         }
@@ -70,7 +70,7 @@ http://skyninja.im/donate
         /// <summary>
         /// Run migrator.
         /// </summary>
-        private static async Task<int> RunMigrationAsync(
+        private static async Task<int> MainAsync(
             IDictionary<string, ValueObject> arguments)
         {
             FileSystem fileSystem;
@@ -81,10 +81,10 @@ http://skyninja.im/donate
 
             // Parse arguments.
             ParsedUri inputUri, outputUri;
-            if (!TryParseUri(arguments["--input"], out inputUri) ||
-                !TryParseUri(arguments["--output"], out outputUri) ||
-                !TryCreateFilter(arguments, out filter) ||
-                !TryCreateGrouper(arguments["--grouper"].AsList, out grouper))
+            if (!ParsedUriHelper.TryParse(arguments["--input"], out inputUri) ||
+                !ParsedUriHelper.TryParse(arguments["--output"], out outputUri) ||
+                !FilterHelper.TryCreate(arguments, out filter) ||
+                !GrouperHelper.TryCreate(arguments["--grouper"].AsList, out grouper))
             {
                 return ExitCodes.Failure;
             }
@@ -134,56 +134,6 @@ http://skyninja.im/donate
             // Finished.
             Logger.Info("Finished.");
             return ExitCodes.Success;
-        }
-
-        /// <summary>
-        /// Parse URI.
-        /// </summary>
-        private static bool TryParseUri(ValueObject argument, out ParsedUri uri)
-        {
-            try
-            {
-                uri = new ParsedUri(argument.ToString());
-                return true;
-            }
-            catch (UriFormatException)
-            {
-                Logger.Fatal("Invalid URI format: {0}", argument);
-                uri = default(ParsedUri);
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Create filter.
-        /// </summary>
-        private static bool TryCreateFilter(
-            IDictionary<string, ValueObject> arguments,
-            out Filter filter)
-        {
-            filter = new EmptyFilter();
-            return true;
-        }
-
-        /// <summary>
-        /// Create grouper.
-        /// </summary>
-        private static bool TryCreateGrouper(IEnumerable arguments, out Grouper grouper)
-        {
-            ChainGrouper chainGrouper = new ChainGrouper();
-            foreach (object argument in arguments)
-            {
-                Func<Grouper> newGrouper;
-                if (!Everything.Groupers.TryGetValue(argument.ToString(), out newGrouper))
-                {
-                    Logger.Fatal("Unknown grouper name: {0}.", argument);
-                    grouper = null;
-                    return false;
-                }
-                chainGrouper.AddGrouper(newGrouper());
-            }
-            grouper = chainGrouper;
-            return true;
         }
 
         /// <summary>
