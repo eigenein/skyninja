@@ -40,7 +40,24 @@ SkyNinja (`/skˈaɪ ˈnɪn.dʒə/`) is a tool for exporting and importing [Skype
 
 ### Filters
 
+#### `--time-from` and `--time-to`
 
+Include only messages sent after of before the specified time. Accepted formats are UNIX timestamp and "dd-MM-yyyy HH:mm:ss" (UTC).
+
+```
+.\Cli
+    -i skypeid://eigenein
+    -o plain://C:\Users\eigenein\Downloads\eigenein
+    --time-from "01-01-2014 00:00:00"
+```
+
+```
+.\Cli
+    -i skypeid://eigenein
+    -o plain://C:\Users\eigenein\Downloads\eigenein
+    --time-from "01-01-2014 00:05:33"
+    --time-to "01-01-2014 00:05:33"
+```
 
 ### Groupers
 
