@@ -28,6 +28,10 @@ SkyNinja (`/skˈaɪ ˈnɪn.dʒə/`) is a tool for exporting and importing [Skype
 * Verify that **unused references are removed**.
 * Verify **`AssemblyInfo.cs`**.
 
+## Publish Checklist
+
+* Publish **Cli** project.
+
 ## Connector Specification
 
 ### Input Connectors
