@@ -4,26 +4,23 @@ using DocoptNet;
 
 using NLog;
 
+using SkyNinja.Core.Exceptions;
 using SkyNinja.Core.Helpers;
 
 namespace SkyNinja.Cli
 {
     internal static class ParsedUriHelper
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
-        public static bool TryParse(ValueObject argument, out ParsedUri uri)
+        public static ParsedUri Parse(ValueObject argument)
         {
             try
             {
-                uri = new ParsedUri(argument.ToString());
-                return true;
+                return new ParsedUri(argument.ToString());
             }
-            catch (UriFormatException)
+            catch (UriFormatException e)
             {
-                Logger.Fatal("Invalid URI format: {0}", argument);
-                uri = default(ParsedUri);
-                return false;
+                throw new InvalidArgumentInternalException(String.Format(
+                    "Invalid URI format: {0}.", argument), e);
             }
         }
     }

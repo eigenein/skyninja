@@ -71,10 +71,8 @@
     <Compile Include="Enums\ConnectorType.cs" />
     <Compile Include="Enums\InternalMessageType.cs" />
     <Compile Include="Everything.cs" />
-    <Compile Include="Exceptions\DuplicateGroupInternalException.cs" />
     <Compile Include="Exceptions\InternalException.cs" />
-    <Compile Include="Exceptions\InvalidFilterExpressionInternalException.cs" />
-    <Compile Include="Exceptions\InvalidUriParameterInternalException.cs" />
+    <Compile Include="Exceptions\InvalidArgumentInternalException.cs" />
     <Compile Include="Exceptions\KnownKeyNotFoundInternalException.cs" />
     <Compile Include="Extensions\DbDataReaderExtensions.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
@@ -82,6 +80,7 @@
     <Compile Include="FileSystems\Usual\UsualFileSystemFactory.cs" />
     <Compile Include="FileSystems\Zip\ZipFileSystem.cs" />
     <Compile Include="FileSystems\Zip\ZipFileSystemFactory.cs" />
+    <Compile Include="Filters\DateTimeFilter.cs" />
     <Compile Include="Filters\EmptyFilter.cs" />
     <Compile Include="Groupers\ChainGrouper.cs" />
     <Compile Include="Groupers\DayGrouper.cs" />

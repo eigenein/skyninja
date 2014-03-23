@@ -10,12 +10,9 @@ namespace SkyNinja.Cli
 {
     internal static class FilterHelper
     {
-        public static bool TryCreate(
-            IDictionary<string, ValueObject> arguments,
-            out Filter filter)
+        public static Filter Create(IDictionary<string, ValueObject> arguments)
         {
-            filter = new EmptyFilter();
-            return true;
+            return new EmptyFilter();
         }
     }
 }

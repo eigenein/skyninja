@@ -10,7 +10,7 @@ SkyNinja (`/skˈaɪ ˈnɪn.dʒə/`) is a tool for exporting and importing [Skype
 ## Visual Studio Project Checklist
 
 * Verify that the project requires **.NET Framework 4.5**.
-* Verify that **the namespace starts with `SkyNinja`**.
+* Verify that **namespace starts with `SkyNinja`**.
 * Verify that **all warnings are treated as errors**.
 * Verify that output directory is set to `..\Release` (`..\Debug`).
 * Verify that **Code Analysis is turned on for all configurations**.
