@@ -70,6 +70,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FilterHelper.cs" />
     <Compile Include="GrouperHelper.cs" />
     <Compile Include="ParsedUriHelper.cs" />
     <Compile Include="Program.cs" />

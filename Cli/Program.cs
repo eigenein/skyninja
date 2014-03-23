@@ -38,8 +38,10 @@ Options:
 
 2014 (c) Pavel Perestoronin
 To email me, please contact contact@skyninja.im
+
 If you like SkyNinja and want to support it, you can make a donation:
 http://skyninja.im/donate
+BTC Wallet: 1PPDYb4jgMM5J7XPy1D1ocggzgLUqiYGN3
 ";
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
