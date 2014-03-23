@@ -7,6 +7,14 @@ SkyNinja (`/skˈaɪ ˈnɪn.dʒə/`) is a tool for exporting and importing [Skype
 * Does not require running and even installed Skype.
 * Dramatically faster.
 
+## Features
+
+* Exporting of chat messages.
+* Date and time filtering.
+* Grouping by conversation participants and message date.
+* Saving to plain text files.
+* Creating ZIP archive "on the fly".
+
 ## Visual Studio Project Checklist
 
 * Verify that the project requires **.NET Framework 4.5**.
