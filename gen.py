@@ -56,6 +56,13 @@ pages = {
 
 translations = {
     "": {
+        "eigenein_fullname": "Pavel Perestoronin",
+        "footer_based_on": "Based on",
+        "footer_hosted_on": "Hosted on",
+        "footer_icons_from": "Icons from",
+        "footer_made_by": "Developed by",
+        "footer_theme_from": "Theme from",
+        "footer_webfonts_from": "Webfonts from",
         "header_contact": "Contact",
         "header_donations": "Donations",
         "header_download": "Download",
