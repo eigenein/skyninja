@@ -1,0 +1,4 @@
+User-Agent: *
+Disallow: /clickonce
+Disallow: /templates
+Disallow: /gen.py
