@@ -39,7 +39,7 @@ def main():
             page_body = renderer.render_name(
                 template_name,
                 page_name=page_name,
-                slash_locale="/%s" % locale,
+                slash_locale=("/%s" % locale) if locale else "",
                 **final_translation
             )
             print("[INFO] HTML:", len(page_body), "characters.")
