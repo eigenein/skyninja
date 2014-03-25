@@ -21,7 +21,7 @@ def main():
         print("[INFO] Locale:", locale)
         locale_path = pathlib.Path(".") / locale
         print("[INFO] Locale Path:", locale_path)
-        for page_name, template_name in pages.items():
+        for page_name, (template_name, title_key) in pages.items():
             print("[INFO] Page:", page_name or "<empty>")
             print("[INFO] Template:", template_name)
             page_path = locale_path / page_name / "index.html"
@@ -39,6 +39,7 @@ def main():
             page_body = renderer.render_name(
                 template_name,
                 page_name=page_name,
+                title=final_translation.get(title_key),
                 slash_locale=("/%s" % locale) if locale else "",
                 **final_translation
             )
@@ -48,10 +49,10 @@ def main():
 
 
 pages = {
-    "": "index",
-    "download": "download",
-    "donate": "donate",
-    "contact": "contact",
+    "": ("index", None),
+    "download": ("download", "header_download"),
+    "donate": ("donate", "header_donations"),
+    "contact": ("contact", "header_contact"),
 }
 
 translations = {
@@ -67,6 +68,7 @@ translations = {
         "header_donations": "Donations",
         "header_download": "Download",
         "header_home": "Home",
+        "header_skyninja": "SkyNinja",
     },
     "ru": {
         "header_download": "Скачать",
