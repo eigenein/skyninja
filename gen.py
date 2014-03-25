@@ -17,7 +17,7 @@ def main():
         string_encoding="utf-8",
     )
 
-    for locale, context in translations.items():
+    for locale, translation in translations.items():
         print("[INFO] Locale:", locale)
         locale_path = pathlib.Path(".") / locale
         print("[INFO] Locale Path:", locale_path)
@@ -34,7 +34,14 @@ def main():
             else:
                 print("[INFO] Directory exists:", page_directory)
             print("[INFO] Rendering ...")
-            page_body = renderer.render_name(template_name, slash_locale="/%s" % locale, **context)
+            final_translation = dict(default_translation)
+            final_translation.update(translation)
+            page_body = renderer.render_name(
+                template_name,
+                page_name=page_name,
+                slash_locale="/%s" % locale,
+                **final_translation
+            )
             print("[INFO] HTML:", len(page_body), "characters.")
             page_path.open("wt", encoding="utf-8").write(page_body)
             print("[ OK ]")
@@ -49,12 +56,17 @@ pages = {
 
 translations = {
     "": {
-
+        "header_contact": "Contact",
+        "header_donations": "Donations",
+        "header_download": "Download",
+        "header_home": "Home",
     },
     "ru": {
-
+        "header_download": "Скачать",
     }
 }
+
+default_translation = translations[""]
 
 if __name__ == "__main__":
     main()
