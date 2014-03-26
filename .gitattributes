@@ -1,1 +1,4 @@
-* binary
+* text
+
+*.application binary diff=astextplain
+*.deploy binary diff=astextplain
