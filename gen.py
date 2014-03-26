@@ -40,6 +40,7 @@ def main():
                 template_name,
                 page_name=page_name,
                 title=final_translation.get(title_key),
+                locale=locale or "en",
                 slash_locale=("/%s" % locale) if locale else "",
                 **final_translation
             )
