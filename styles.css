@@ -209,6 +209,11 @@ code {
   display: inline-block;
 }
 
+.donate-button {
+  min-width: 120px;
+  text-align: center;
+}
+
 /* Footer. */
 
 footer {
