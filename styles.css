@@ -1,7 +1,8 @@
 /* Reset styles. */
-body, html, nav, p, ul, li, a, h6 {
+body, html, nav, p, ul, li, a, h1, h6 {
   background: transparent; border: 0; font-size: 100%; font-weight: normal; margin: 0; padding: 0; vertical-align: baseline;
 }
+h1, h6 { line-height: 1; }
 *, *:before, *:after { -moz-box-sizing: border-box; box-sizing: border-box; }
 html { overflow-y: scroll; }
 article, aside, figure, footer, header, nav, section, details, summary { display: block; }
@@ -45,8 +46,20 @@ nav ul li a:hover {
 /* Body. */
 
 body {
+  -webkit-font-smoothing: antialiased;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
+}
+
+h1 {
+  -webkit-text-stroke: 1px rgba(0,0,0,0.1);
+  border-bottom: 1px solid #F0F0F0;
+  padding: 10px 20px;
+  font-size: 24px;
+}
+
+section {
+  border-bottom: 1px solid #EAEAEA;
 }
 
 a {
@@ -58,7 +71,6 @@ a {
 footer {
   padding: 20px 0;
   background: #FAFAFA;
-  border-top: 1px solid #EAEAEA;
   text-align: center;
   color: #808080;
   font-size: 12px;
@@ -85,7 +97,7 @@ footer > ul > li li {
 
 footer ul h6 {
   font-weight: bold;
-  padding: 2px 0;
+  padding: 6px 0;
 }
 
 .footer-share {

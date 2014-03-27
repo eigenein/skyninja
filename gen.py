@@ -15,6 +15,7 @@ def main():
         file_extension="mustache",
         search_dirs=["templates"],
         string_encoding="utf-8",
+        missing_tags="strict",
     )
 
     for locale, translation in translations.items():
@@ -59,12 +60,9 @@ pages = {
 translations = {
     "": {
         "eigenein_fullname": "Pavel Perestoronin",
-        "footer_based_on": "Based on",
-        "footer_hosted_on": "Hosted on",
-        "footer_icons_from": "Icons from",
-        "footer_made_by": "Developed by",
-        "footer_theme_from": "Theme from",
-        "footer_webfonts_from": "Webfonts from",
+        "footer_facebook": "Facebook",
+        "footer_twitter": "Twitter",
+        "footer_vk": "VKontakte",
         "header_contact": "Contact",
         "header_donations": "Donations",
         "header_download": "Download",
@@ -72,6 +70,10 @@ translations = {
         "header_skyninja": "SkyNinja",
     },
     "ru": {
+        "eigenein_fullname": "eigenein",
+        "footer_facebook": "Фейсбук",
+        "footer_twitter": "Твиттер",
+        "footer_vk": "ВКонтакте",
         "header_download": "Скачать",
     }
 }
