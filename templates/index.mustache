@@ -1,7 +1,103 @@
 {{> header}}
 
+<section id="top-section">
+  <p>
+    <strong>SkyNinja</strong> &mdash; is a simple and easy to use application for exporting your chats and call history from <strong>Skype</strong>.
+  </p>
+  <p>
+    <strong>SkyNinja</strong> is currently in beta and has command-line interface only. <a href="{{slash_locale}}/contact">Follow us</a> to get notified about new versions.
+  </p>
+  <div>
+    <a href="http://yadi.sk/d/5dFD55Z-LH7xS" target="_blank" class="large button"><i class="fa fa-download"></i> Download Now!</a>
+    <div>
+      <small>Command Line Interface Only 0.1 Beta</small><br>
+      <small><a href="http://www.microsoft.com/en-us/download/details.aspx?id=30653" title="Download .NET Framework 4.5" target="_blank"><i class="fa fa-download"></i> .NET Framework 4.5</a> required</small>
+    </div>
+  </div>
+</section>
+
 <section>
-  <h1><i class="fa fa-fw fa-arrow-circle-o-right"></i> Meet SkyNinja</h1>
+  <h1><i class="fa fa-fw fa-terminal"></i> Command-Line Interface</h1>
+
+  <h2>Usage</h2>
+  <pre><code><!--
+  -->cli -i &lt;uri&gt; -o &lt;uri&gt; [-g &lt;name&gt;...] [-f &lt;name&gt;] [--time-from &lt;time&gt;] [--time-to &lt;time&gt;]<!--
+  --></code></pre>
+
+  <h2>Options</h2>
+  <pre><code><!--
+  -->-i --input &lt;uri&gt;         Input URI.
+-o --output &lt;uri&gt;        Output URI.
+-g --grouper &lt;name&gt;...   Groupers [default: participants].
+-f --file-system &lt;name&gt;  Target file system [default: usual].
+--time-from &lt;time&gt;       Include only messages sent after the specified time.
+--time-to &lt;time&gt;         Include only messages sent before the specified time.<!--
+  --></code></pre>
+
+  <h2>Inputs</h2>
+
+  <h3>Skype ID</h3>
+  <p>
+    Locates Skype database by Skype ID (user name).
+  </p>
+  <pre><code><!--
+  -->Cli
+    -i skypeid://your_skype_name
+    -o plain://D:\Logs
+    -g year-month -g participants<!--
+  --></code></pre>
+
+  <h3>Skype DB</h3>
+  <p>
+    Locates Skype database by path.
+  </p>
+  <pre><code><!--
+  -->Cli
+    -i skypedb://C:\Users\User\AppData\Roaming\Skype\user\main.db
+    -o plain://D:\Logs
+    -g year-month -g participants<!--
+  --></pre></code>
+
+  <h2>Outputs</h2>
+
+  <h3>Plain Text</h3>
+  <p>Plain text files (*.txt).</p>
+  <pre><code><!--
+  -->Cli
+    -i skypeid://your_skype_name
+    -o plain://D:\Logs
+    -g year-month -g participants<!--
+  --></code></pre>
+
+  <h2>Filters</h2>
+
+  <h3>Date and Time</h3>
+  <p>Include only messages sent after of before the specified time. Accepted formats are UNIX timestamp and <code>dd-MM-yyyy HH:mm:ss</code> (UTC).</p>
+  <pre><code><!--
+  -->Cli
+    -i skypeid://your_skype_name
+    -o plain://D:\Logs
+    --time-from "01-01-2014 00:05:33"
+    --time-to "01-02-2014 00:05:53"<!--
+  --></code></pre>
+
+  <h2>Groupers</h2>
+  <p>Grouper defines how to group all messages in output.</p>
+  <p>The following groupers are available at the moment:</p>
+  <ul>
+    <li><code>participants</code></li>
+    <li><code>year-month</code></li>
+    <li><code>day</code></li>
+  </ul>
+  <h3>Chaining Groupers</h3>
+  <p>One can specify several groupers. In this case they will be applied one by one.</p>
+  <pre><code><!--
+  -->Cli
+    -i skypeid://your_skype_name
+    -o plain://D:\Logs
+    -f zip
+    -g year-month -g day -g participants<!--
+  --></code></pre>
 </section>
 
 {{> footer}}
