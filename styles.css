@@ -8,7 +8,8 @@ html { overflow-y: scroll; }
 article, aside, figure, footer, header, nav, section, details, summary { display: block; }
 ul { list-style: none; }
 strong { font-weight: bold; }
-button, input, select, textarea { margin: 0; }
+button, input, select, textarea { margin: 0; font-size: 100%; }
+input[type=submit] { border: 0; }
 
 /* Header. */
 
@@ -117,7 +118,7 @@ a {
   text-decoration: none;
 }
 
-a.button {
+a.button, input[type=submit].button {
   padding: 10px;
   color: white;
   background: #99CC00;
@@ -125,13 +126,25 @@ a.button {
   line-height: 1;
   border: none;
 }
-a.button:hover {
+a.button:hover, input[type=submit].button:hover {
   -webkit-box-shadow: inset 0 -3px 0 0 #669900;
      -moz-box-shadow: inset 0 -3px 0 0 #669900;
           box-shadow: inset 0 -3px 0 0 #669900;
 }
-a.button:active {
+a.button:active, input[type=submit].button:active {
   background: #669900;
+}
+
+.button-orange {
+  background: #FFBB33 !important;
+}
+.button-orange:hover {
+  -webkit-box-shadow: inset 0 -3px 0 0 #FF8800 !important;
+     -moz-box-shadow: inset 0 -3px 0 0 #FF8800 !important;
+          box-shadow: inset 0 -3px 0 0 #FF8800 !important;
+}
+.button-orange:active {
+  background: #FF8800 !important;
 }
 
 .button-blue {
@@ -190,6 +203,10 @@ code {
 #top-section p:first-child {
   font-size: 24px;
   line-height: 36px;
+}
+
+.donate-form {
+  display: inline-block;
 }
 
 /* Footer. */
