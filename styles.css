@@ -85,7 +85,7 @@ section a {
 
 small {
   font-size: 12px;
-  line-height: 1;
+  line-height: 18px;
 }
 
 small, small a {
@@ -152,8 +152,6 @@ code {
 
 #top-section p:first-child {
   font-size: 24px;
-  margin-bottom: 60px;
-  line-height: 1;
 }
 
 /* Footer. */
