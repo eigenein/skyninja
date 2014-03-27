@@ -95,6 +95,28 @@
   -->Cli
     -i skypeid://your_skype_name
     -o plain://D:\Logs
+    -g year-month -g day -g participants<!--
+  --></code></pre>
+
+  <h2>File Systems</h2>
+  <p>&laquo;File system&raquo; is an abstraction of a storage.</p>
+
+  <h3>Usual</h3>
+  <p>Messages are grouped into files and files are grouped into folders.</p>
+
+  <h3>ZIP Archive</h3>
+  <p>Same as usual one but compressed into a ZIP archive &laquo;on-the-fly&raquo;.</p>
+  <pre><code><!--
+  -->Cli
+    -i skypeid://your_skype_name
+    -o plain://D:\Logs.zip
+    -f zip<!--
+  --></code></pre>
+  <p>ZIP file name encoding can also be specified in order to be able open an archive with Windows Explorer.</p>
+  <pre><code><!--
+  -->.\Cli
+    -i skypeid://your_skype_name
+    -o plain://D:\Logs.zip?zipEntryEncoding=CP866
     -f zip
     -g year-month -g day -g participants<!--
   --></code></pre>
