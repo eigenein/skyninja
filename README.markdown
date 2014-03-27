@@ -30,9 +30,8 @@ SkyNinja (`/skˈaɪ ˈnɪn.dʒə/`) is a tool for exporting and importing [Skype
 
 ## Publish Checklist
 
-* Publish **Cli** project.
+* Publish **SkyNinja** project.
 * **Commit** each **`ApplicationRevision`** change.
-* Publish SkyNinja project in the future.
 
 ## Connector Specification
 
