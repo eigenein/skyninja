@@ -1,5 +1,43 @@
 {{> header}}
 
+<section id="top-section">
+  <h1><i class="fa fa-btc"></i> Donations</h1>
+  <p>
+    <strong>SkyNinja</strong> is a free application and supported by donations. If you like <strong>SkyNinja</strong> and want to support it, you can make a donation.<br>
+    Even a small donation is appreciated.
+  </p>
 
+  <p>
+    <a href="https://www.facebook.com/pages/SkyNinja/834438353239570" target="_blank" class="button button-blue"><i class="fa fa-fw fa-facebook"></i> {{footer_facebook}}</a><!--
+    --><a href="https://plus.google.com/b/114098906513991312153/114098906513991312153" target="_blank" class="button button-red"><i class="fa fa-fw fa-google-plus"></i> Google+</a><!--
+    --><a href="https://twitter.com/skyninjapp" target="_blank" class="button button-blue"><i class="fa fa-fw fa-twitter"></i> {{footer_twitter}}</a><!--
+    --><a href="https://vk.com/skyninja" target="_blank" class="button button-blue-inverse"><i class="fa fa-fw fa-vk"></i> {{footer_vk}}</a>
+  </p>
+
+  <h2>Translations</h2>
+  <p>
+    Help us translate application and website into your native language.<br>
+    Please <a href="{{slash_locale}}/contact">contact us</a> if you are interested.
+  </p>
+
+  <h2>Share!</h2>
+  <p>If nothing else is option, please share this application with your friends!</p>
+  <p>
+    <div id="ya-share-donate"></div>
+    <script>
+      new Ya.share({
+        element: "ya-share-donate",
+        l10n: "{{locale}}",
+        theme: "counter",
+        image: "http://skyninja.im/images/SkyNinja-128.png",
+        link: "http://skyninja.im",
+        title: "SkyNinja",
+        elementStyle: {
+          quickServices: ["facebook", "twitter", "vkontakte", "gplus", "moimir", "odnoklassniki"]
+        }
+      });
+    </script>
+  </p>
+</section>
 
 {{> footer}}

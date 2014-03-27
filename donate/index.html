@@ -14,6 +14,7 @@
     <link rel="icon" href="/images/SkyNinja-16.png" sizes="16x16" type="image/png">
     <link rel="stylesheet" href="/styles.css">
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script>
   </head>
   <body>
 
@@ -30,7 +31,45 @@
 
     <!-- End header. -->
 
+<section id="top-section">
+  <h1><i class="fa fa-btc"></i> Donations</h1>
+  <p>
+    <strong>SkyNinja</strong> is a free application and supported by donations. If you like <strong>SkyNinja</strong> and want to support it, you can make a donation.<br>
+    Even a small donation is appreciated.
+  </p>
 
+  <p>
+    <a href="https://www.facebook.com/pages/SkyNinja/834438353239570" target="_blank" class="button button-blue"><i class="fa fa-fw fa-facebook"></i> Facebook</a><!--
+    --><a href="https://plus.google.com/b/114098906513991312153/114098906513991312153" target="_blank" class="button button-red"><i class="fa fa-fw fa-google-plus"></i> Google+</a><!--
+    --><a href="https://twitter.com/skyninjapp" target="_blank" class="button button-blue"><i class="fa fa-fw fa-twitter"></i> Twitter</a><!--
+    --><a href="https://vk.com/skyninja" target="_blank" class="button button-blue-inverse"><i class="fa fa-fw fa-vk"></i> VKontakte</a>
+  </p>
+
+  <h2>Translations</h2>
+  <p>
+    Help us translate application and website into your native language.<br>
+    Please <a href="/contact">contact us</a> if you are interested.
+  </p>
+
+  <h2>Share!</h2>
+  <p>If nothing else is option, please share this application with your friends!</p>
+  <p>
+    <div id="ya-share-donate"></div>
+    <script>
+      new Ya.share({
+        element: "ya-share-donate",
+        l10n: "en",
+        theme: "counter",
+        image: "http://skyninja.im/images/SkyNinja-128.png",
+        link: "http://skyninja.im",
+        title: "SkyNinja",
+        elementStyle: {
+          quickServices: ["facebook", "twitter", "vkontakte", "gplus", "moimir", "odnoklassniki"]
+        }
+      });
+    </script>
+  </p>
+</section>
 
     <!-- Footer. -->
 
@@ -58,7 +97,6 @@
           <h6>Share</h6>
           <p>Share this page with your friends.</p>
           <div id="ya-share"></div>
-          <script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script>
           <script>
             new Ya.share({
               element: "ya-share",
