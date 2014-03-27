@@ -33,24 +33,6 @@ SkyNinja (`/skˈaɪ ˈnɪn.dʒə/`) is a tool for exporting and importing [Skype
 * Publish **SkyNinja** project.
 * **Commit** each **`ApplicationRevision`** change.
 
-## Connector Specification
-
-### Input Connectors
-
-* `skypeid://username`
-* `skypedb://C:\Users\User\AppData\Roaming\Skype\user\main.db`
-
-### Output Connectors
-
-#### `plain`
-
-```
-.\Cli
-    -i skypeid://eigenein
-    -o plain://C:\Users\eigenein\Downloads\SkyNinja
-    -g year-month -g participants
-```
-
 ### Filters
 
 #### `--time-from` and `--time-to`
