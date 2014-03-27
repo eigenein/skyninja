@@ -34,6 +34,7 @@ namespace SkyNinja.Core.FileSystems.Usual
             // Get file path.
             string filePath = Path.Combine(path, group);
             filePath = pathDeduplicator.GetPath(filePath, extension);
+            Logger.Info("Opening file: {0} ...", filePath);
             // Create directory.
             DirectoryInfo directory = (new FileInfo(filePath)).Directory;
             if (directory != null && !directory.Exists)
