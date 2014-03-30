@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 using DocoptNet;
+
+using NLog;
 
 using SkyNinja.Core.Classes;
 using SkyNinja.Core.Exceptions;
@@ -13,6 +17,8 @@ namespace SkyNinja.Cli.Helpers
 {
     internal class FilterHelper
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
         private static readonly IDictionary<string, FilterFactory> FilterFactories =
             new Dictionary<string, FilterFactory>()
             {
@@ -38,18 +44,53 @@ namespace SkyNinja.Cli.Helpers
             this.arguments = arguments;
         }
 
+        /// <summary>
+        /// Create filter by arguments.
+        /// </summary>
         public Filter Create()
         {
             CompoundFilter filter = new CompoundFilter();
             foreach (KeyValuePair<string, ValueObject> argument in arguments)
             {
-                FilterFactory factory;
-                if (FilterFactories.TryGetValue(argument.Key, out factory))
+                if (argument.Value == null)
                 {
-                    filter.Add(factory(GetParameterName, argument.Value.ToString()));
+                    continue;
+                }
+                // Get filter factory.
+                FilterFactory factory;
+                if (!FilterFactories.TryGetValue(argument.Key, out factory))
+                {
+                    continue;
+                }
+                Logger.Trace("{0}: {1}", argument.Key, factory);
+                // Check argument type.
+                List<string> values = new List<string>();
+                if (!argument.Value.IsList)
+                {
+                    values.Add(argument.Value.ToString());
+                }
+                else
+                {
+                    values.AddRange(argument.Value
+                        .AsList
+                        .Cast<object>()
+                        .Select(value => value.ToString()));
+                }
+                // Add all.
+                foreach (string value in values)
+                {
+                    filter.Add(factory(GetParameterName, value));
                 }
             }
             return filter;
+        }
+
+        /// <summary>
+        /// Generate new parameter name.
+        /// </summary>
+        private string GetParameterName()
+        {
+            return String.Format("@p{0}", ++parameterCounter);
         }
 
         /// <summary>
@@ -80,14 +121,6 @@ namespace SkyNinja.Cli.Helpers
                 throw new InvalidArgumentInternalException(String.Format(
                     "Could not parse time: {0}.", value), e);
             }
-        }
-
-        /// <summary>
-        /// Generate new parameter name.
-        /// </summary>
-        private string GetParameterName()
-        {
-            return String.Format("@p{0}", ++parameterCounter);
         }
     }
 }

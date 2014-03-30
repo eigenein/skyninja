@@ -48,7 +48,7 @@ namespace SkyNinja.Core.Inputs.Skype
             {
                 throw new InternalException("Failed to open database.", e);
             }
-            Logger.Info("Opened.");
+            Logger.Debug("Opened.");
             // Add trace handler.
             connection.Trace += ConnectionTrace;
         }

@@ -35,7 +35,7 @@ namespace SkyNinja.Core.FileSystems.Zip
                 Logger.Warn("Removing existing file {0} ...", path);
                 File.Delete(path);
             }
-            Logger.Info("Creating ZIP archive on {0} ...", path);
+            Logger.Debug("Creating ZIP archive on {0} ...", path);
             archive = ZipFile.Open(path, ZipArchiveMode.Create, entryEncoding);
             await Tasks.EmptyTask;
         }

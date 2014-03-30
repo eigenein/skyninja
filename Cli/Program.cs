@@ -61,12 +61,13 @@ BTC Wallet: 1PPDYb4jgMM5J7XPy1D1ocggzgLUqiYGN3
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
             Console.CancelKeyPress += ConsoleCancelKeyPress;
 
+            Logger.Debug("Cli version {0}.", AssemblyVersion.Current);
+
             // Parse command-line string.
             IDictionary<string, ValueObject> arguments = new Docopt().Apply(
                 Usage, args, version: AssemblyVersion.Current, exit: true);
 
             // Print arguments for debugging.
-            Logger.Debug("Cli version {0}.", AssemblyVersion.Current);
             foreach (KeyValuePair<string, ValueObject> argument in arguments)
             {
                 Logger.Debug("{0}: {1}", argument.Key, argument.Value);
@@ -143,15 +144,15 @@ BTC Wallet: 1PPDYb4jgMM5J7XPy1D1ocggzgLUqiYGN3
             {
                 using (fileSystem)
                 {
-                    Logger.Info("Using file system: {0}.", fileSystem);
+                    Logger.Debug("Using file system: {0}.", fileSystem);
                     await fileSystem.Open();
                     using (input)
                     {
-                        Logger.Info("Using input: {0}.", input);
+                        Logger.Debug("Using input: {0}.", input);
                         await input.Open();
                         using (output)
                         {
-                            Logger.Info("Using output: {0}.", output);
+                            Logger.Debug("Using output: {0}.", output);
                             await output.Open();
                             await new Migrator(input, output, filter, grouper).Migrate(CancellationTokenSource.Token);
                         }

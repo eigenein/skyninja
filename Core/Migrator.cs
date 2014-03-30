@@ -19,7 +19,7 @@ namespace SkyNinja.Core
 
         public Migrator(Input input, Output output, Filter filter, Grouper grouper)
         {
-            Logger.Info(
+            Logger.Debug(
                 "Initializing migrator. Input: {0}. Output: {1}. Filter: {2}. Grouper: {3}.",
                 input, output, filter, grouper);
             this.input = input;
@@ -30,7 +30,7 @@ namespace SkyNinja.Core
 
         public async Task Migrate(CancellationToken cancellationToken)
         {
-            Logger.Info("Starting migration ...");
+            Logger.Debug("Starting migration ...");
             using (AsyncEnumerator<Conversation> conversationEnumerator =
                 await input.GetConversationsAsync())
             {
@@ -42,7 +42,7 @@ namespace SkyNinja.Core
                     cancellationToken.ThrowIfCancellationRequested();
                 }
             }
-            Logger.Info("Finished.");
+            Logger.Debug("Finished.");
         }
 
         private async Task MigrateConversation(

@@ -20,7 +20,7 @@ namespace SkyNinja.Core.Inputs.Skype
         public override Input CreateConnector(ParsedUri uri)
         {
             string skypeId = uri.Host;
-            Logger.Info("Trying Skype ID: {0} ...", skypeId);
+            Logger.Debug("Trying Skype ID: {0} ...", skypeId);
             string applicationDataPath = Environment.GetFolderPath(
                 Environment.SpecialFolder.ApplicationData);
             string databasePath = Path.Combine(
@@ -30,7 +30,7 @@ namespace SkyNinja.Core.Inputs.Skype
             {
                 throw new InvalidArgumentInternalException("Database file is not found for this Skype ID.");
             }
-            Logger.Info("Database file is found.");
+            Logger.Debug("Database file is found.");
             return new SkypeInput(databasePath);
         }
     }
