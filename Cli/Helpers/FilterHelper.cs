@@ -53,13 +53,9 @@ namespace SkyNinja.Cli.Helpers
             BinaryCompoundFilter filter = new AndFilter();
             foreach (KeyValuePair<string, ValueObject> argument in arguments)
             {
-                if (argument.Value == null)
-                {
-                    continue;
-                }
                 // Get filter factory.
                 FilterFactory factory;
-                if (!FilterFactories.TryGetValue(argument.Key, out factory))
+                if ((argument.Value == null) || !FilterFactories.TryGetValue(argument.Key, out factory))
                 {
                     continue;
                 }
@@ -78,12 +74,15 @@ namespace SkyNinja.Cli.Helpers
                         .Select(value => value.ToString()));
                 }
                 // Add all.
-                CompoundFilter innerFilter = new OrFilter();
-                foreach (string value in values)
+                if (values.Count != 0)
                 {
-                    innerFilter.Add(factory(GetParameterName, value));
+                    CompoundFilter innerFilter = new OrFilter();
+                    foreach (string value in values)
+                    {
+                        innerFilter.Add(factory(GetParameterName, value));
+                    }
+                    filter.Add(innerFilter);
                 }
-                filter.Add(innerFilter);
             }
             return filter;
         }
