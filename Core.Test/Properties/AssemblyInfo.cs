@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Core")]
-[assembly: AssemblyDescription("SkyNinja Core")]
+[assembly: AssemblyTitle("Core.Test")]
+[assembly: AssemblyDescription("SkyNinja Core Tests")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("SkyNinja")]
@@ -10,6 +10,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
-[assembly: Guid("C9EF5673-DB98-4B23-A96A-A4DAF4882003")]
+[assembly: Guid("D91A02BF-C684-4874-B4B1-F2B358D8E909")]
 [assembly: AssemblyVersion("0.1.0.0")]
 [assembly: AssemblyFileVersion("0.1.0.0")]
