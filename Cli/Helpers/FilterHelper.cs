@@ -9,20 +9,20 @@ using SkyNinja.Core.Exceptions;
 using SkyNinja.Core.Filters;
 using SkyNinja.Core.Helpers;
 
-namespace SkyNinja.Cli
+namespace SkyNinja.Cli.Helpers
 {
     internal class FilterHelper
     {
-        private static readonly IDictionary<string, Func<string, ValueObject, Filter>> FilterFactories =
-            new Dictionary<string, Func<string, ValueObject, Filter>>()
+        private static readonly IDictionary<string, FilterFactory> FilterFactories =
+            new Dictionary<string, FilterFactory>()
             {
                 {
-                    "--time-from", (parameterName, value) => 
-                    new FromDateTimeFilter(parameterName, GetDateTime(value))
+                    "--time-from", (getter, value) => 
+                        new FromDateTimeFilter(getter(), GetDateTime(value))
                 },
                 {
-                    "--time-to", (parameterName, value) =>
-                        new ToDateTimeFilter(parameterName, GetDateTime(value))
+                    "--time-to", (getter, value) =>
+                        new ToDateTimeFilter(getter(), GetDateTime(value))
                 }
             };
 
@@ -40,10 +40,10 @@ namespace SkyNinja.Cli
             CompoundFilter filter = new CompoundFilter();
             foreach (KeyValuePair<string, ValueObject> argument in arguments)
             {
-                Func<string, ValueObject, Filter> factory;
+                FilterFactory factory;
                 if (FilterFactories.TryGetValue(argument.Key, out factory))
                 {
-                    filter.Add(factory(GetParameterName(), argument.Value));
+                    filter.Add(factory(GetParameterName, argument.Value.ToString()));
                 }
             }
             return filter;
@@ -52,10 +52,8 @@ namespace SkyNinja.Cli
         /// <summary>
         /// Parse date/time argument.
         /// </summary>
-        private static int GetDateTime(ValueObject valueObject)
+        private static int GetDateTime(string value)
         {
-            string value = valueObject.ToString();
-
             try
             {
                 return Int32.Parse(value);

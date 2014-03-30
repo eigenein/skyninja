@@ -9,6 +9,7 @@ using DocoptNet;
 
 using NLog;
 
+using SkyNinja.Cli.Helpers;
 using SkyNinja.Core;
 using SkyNinja.Core.Classes;
 using SkyNinja.Core.Exceptions;
@@ -28,6 +29,7 @@ Usage:
     cli --version
     cli -i <uri> -o <uri> [-g <name>...] [-f <name>]
         [--time-from <time>] [--time-to <time>]
+        [--participants <names>...]
 
 Options:
       -h --help                Show this screen.
@@ -38,6 +40,7 @@ Options:
       -f --file-system <name>  Target file system [default: usual].
       --time-from <time>       Include only messages sent after the specified time.
       --time-to <time>         Include only messages sent before the specified time.
+      --participants <names>...  Include only messages sent by any of <names>.
 
 2014 (c) Pavel Perestoronin
 To email me, please contact contact@skyninja.im

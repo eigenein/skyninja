@@ -2,12 +2,10 @@
 
 using DocoptNet;
 
-using NLog;
-
 using SkyNinja.Core.Exceptions;
 using SkyNinja.Core.Helpers;
 
-namespace SkyNinja.Cli
+namespace SkyNinja.Cli.Helpers
 {
     internal static class ParsedUriHelper
     {

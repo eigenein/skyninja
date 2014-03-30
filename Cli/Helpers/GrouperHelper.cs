@@ -7,7 +7,7 @@ using SkyNinja.Core.Classes;
 using SkyNinja.Core.Exceptions;
 using SkyNinja.Core.Groupers;
 
-namespace SkyNinja.Cli
+namespace SkyNinja.Cli.Helpers
 {
     internal static class GrouperHelper
     {
