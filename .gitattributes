@@ -1,4 +1,4 @@
-* text=auto
+* text eol=lf
 
 *.application binary diff=astextplain
 *.deploy binary diff=astextplain
