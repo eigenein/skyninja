@@ -13,6 +13,19 @@ namespace SkyNinja.Cli
 {
     internal class FilterHelper
     {
+        private static readonly IDictionary<string, Func<string, ValueObject, Filter>> FilterFactories =
+            new Dictionary<string, Func<string, ValueObject, Filter>>()
+            {
+                {
+                    "--time-from", (parameterName, value) => 
+                    new FromDateTimeFilter(parameterName, GetDateTime(value))
+                },
+                {
+                    "--time-to", (parameterName, value) =>
+                        new ToDateTimeFilter(parameterName, GetDateTime(value))
+                }
+            };
+
         private readonly IDictionary<string, ValueObject> arguments;
 
         private int parameterCounter;
@@ -25,32 +38,27 @@ namespace SkyNinja.Cli
         public Filter Create()
         {
             CompoundFilter filter = new CompoundFilter();
-
-            if (arguments["--time-from"] != null)
+            foreach (KeyValuePair<string, ValueObject> argument in arguments)
             {
-                filter.Add(new FromDateTimeFilter(
-                    GetParameterName(), GetDateTimeArgument("--time-from")));
+                Func<string, ValueObject, Filter> factory;
+                if (FilterFactories.TryGetValue(argument.Key, out factory))
+                {
+                    filter.Add(factory(GetParameterName(), argument.Value));
+                }
             }
-
-            if (arguments["--time-to"] != null)
-            {
-                filter.Add(new ToDateTimeFilter(
-                    GetParameterName(), GetDateTimeArgument("--time-to")));
-            }
-
             return filter;
         }
 
         /// <summary>
         /// Parse date/time argument.
         /// </summary>
-        private int GetDateTimeArgument(string name)
+        private static int GetDateTime(ValueObject valueObject)
         {
-            string argument = arguments[name].ToString();
+            string value = valueObject.ToString();
 
             try
             {
-                return Int32.Parse(argument);
+                return Int32.Parse(value);
             }
             catch (FormatException)
             {
@@ -63,13 +71,13 @@ namespace SkyNinja.Cli
             try
             {
                 DateTime localTime = DateTime.ParseExact(
-                    argument, "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+                    value, "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture);
                 return DateTimeHelper.ToTimestamp(localTime.ToUniversalTime());
             }
             catch (FormatException e)
             {
                 throw new InvalidArgumentInternalException(String.Format(
-                    "Could not parse time: {0}.", argument), e);
+                    "Could not parse time: {0}.", value), e);
             }
         }
 
