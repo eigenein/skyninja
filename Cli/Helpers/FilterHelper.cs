@@ -23,6 +23,9 @@ namespace SkyNinja.Cli.Helpers
                 {
                     "--time-to", (getter, value) =>
                         new ToDateTimeFilter(getter(), GetDateTime(value))
+                },
+                {
+                    "--participants", ParticipantsFilter.Create
                 }
             };
 

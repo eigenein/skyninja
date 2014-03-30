@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace SkyNinja.Cli.Helpers
+namespace SkyNinja.Core.Filters
 {
     /// <summary>
     /// Get new parameter name.
     /// </summary>
-    internal delegate string ParameterNameGetter();
+    public delegate string ParameterNameGetter();
 }

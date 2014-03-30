@@ -94,7 +94,6 @@
     <Compile Include="Helpers\FilterFactory.cs" />
     <Compile Include="Helpers\FilterHelper.cs" />
     <Compile Include="Helpers\GrouperHelper.cs" />
-    <Compile Include="Helpers\ParameterNameGetter.cs" />
     <Compile Include="Helpers\ParsedUriHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

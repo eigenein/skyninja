@@ -1,6 +1,7 @@
 ﻿using System;
 
 using SkyNinja.Core.Classes;
+using SkyNinja.Core.Filters;
 
 namespace SkyNinja.Cli.Helpers
 {

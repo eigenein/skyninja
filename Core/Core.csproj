@@ -84,6 +84,8 @@
     <Compile Include="Filters\DateTimeFilter.cs" />
     <Compile Include="Filters\EmptyFilter.cs" />
     <Compile Include="Filters\FromDateTimeFilter.cs" />
+    <Compile Include="Filters\ParameterNameGetter.cs" />
+    <Compile Include="Filters\ParticipantsFilter.cs" />
     <Compile Include="Filters\ToDateTimeFilter.cs" />
     <Compile Include="Groupers\ChainGrouper.cs" />
     <Compile Include="Groupers\DayGrouper.cs" />
