@@ -7,7 +7,7 @@ using SkyNinja.Core.Classes;
 
 namespace SkyNinja.Core.Filters
 {
-    public class CompoundFilter : Filter
+    public class AndFilter : Filter
     {
         private readonly IList<Filter> innerFilters = new List<Filter>()
         {

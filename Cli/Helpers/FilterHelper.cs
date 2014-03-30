@@ -31,7 +31,8 @@ namespace SkyNinja.Cli.Helpers
                         new ToDateTimeFilter(getter(), GetDateTime(value))
                 },
                 {
-                    "--participants", ParticipantsFilter.Create
+                    "--author", (getter, value) =>
+                        new AuthorFilter(getter(), value)
                 }
             };
 
@@ -49,7 +50,7 @@ namespace SkyNinja.Cli.Helpers
         /// </summary>
         public Filter Create()
         {
-            CompoundFilter filter = new CompoundFilter();
+            AndFilter filter = new AndFilter();
             foreach (KeyValuePair<string, ValueObject> argument in arguments)
             {
                 if (argument.Value == null)

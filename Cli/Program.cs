@@ -29,18 +29,18 @@ Usage:
     cli --version
     cli -i <uri> -o <uri> [-g <name>...] [-f <name>]
         [--time-from <time>] [--time-to <time>]
-        [--participants <names>...]
+        [--author <names>...]
 
 Options:
-      -h --help                  Show this screen.
-      --version                  Show version.
-      -i --input <uri>           Input URI.
-      -o --output <uri>          Output URI.
-      -g --grouper <name>...     Groupers [default: participants].
-      -f --file-system <name>    Target file system [default: usual].
-      --time-from <time>         Include only messages sent after the specified time.
-      --time-to <time>           Include only messages sent before the specified time.
-      --participants <names>...  Include only messages sent by any of <names>.
+      -h --help                Show this screen.
+      --version                Show version.
+      -i --input <uri>         Input URI.
+      -o --output <uri>        Output URI.
+      -g --grouper <name>...   Groupers [default: participants].
+      -f --file-system <name>  Target file system [default: usual].
+      --time-from <time>       Include only messages sent after the specified time.
+      --time-to <time>         Include only messages sent before the specified time.
+      --author <names>...      Include only messages sent by any of <names>.
 
 2014 (c) Pavel Perestoronin
 To email me, please contact contact@skyninja.im

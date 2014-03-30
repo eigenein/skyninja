@@ -80,12 +80,12 @@
     <Compile Include="FileSystems\Usual\UsualFileSystemFactory.cs" />
     <Compile Include="FileSystems\Zip\ZipFileSystem.cs" />
     <Compile Include="FileSystems\Zip\ZipFileSystemFactory.cs" />
-    <Compile Include="Filters\CompoundFilter.cs" />
+    <Compile Include="Filters\AndFilter.cs" />
     <Compile Include="Filters\DateTimeFilter.cs" />
     <Compile Include="Filters\EmptyFilter.cs" />
     <Compile Include="Filters\FromDateTimeFilter.cs" />
     <Compile Include="Filters\ParameterNameGetter.cs" />
-    <Compile Include="Filters\ParticipantsFilter.cs" />
+    <Compile Include="Filters\AuthorFilter.cs" />
     <Compile Include="Filters\ToDateTimeFilter.cs" />
     <Compile Include="Groupers\ChainGrouper.cs" />
     <Compile Include="Groupers\DayGrouper.cs" />
