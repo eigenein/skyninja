@@ -8,20 +8,9 @@ namespace SkyNinja.Core.Classes
     {
         private readonly List<string> parts = new List<string>();
 
-        public Group()
+        public Group(params string[] parts)
         {
-            // Do nothing.
-        }
-
-        public Group(string part)
-        {
-            this.parts.Add(part);
-        }
-
-        public Group(string part1, string part2)
-        {
-            this.parts.Add(part1);
-            this.parts.Add(part2);
+            this.parts.AddRange(parts);
         }
 
         /// <summary>
