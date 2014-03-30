@@ -14,9 +14,9 @@ namespace SkyNinja.Core.Classes
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        private string currentGroup;
+        private Group currentGroup;
 
-        public string CurrentGroup
+        public Group CurrentGroup
         {
             get
             {
@@ -24,7 +24,7 @@ namespace SkyNinja.Core.Classes
             }
         }
 
-        public virtual void BeginGroup(string group)
+        public virtual void BeginGroup(Group group)
         {
             if (currentGroup != null)
             {

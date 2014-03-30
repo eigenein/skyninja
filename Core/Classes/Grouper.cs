@@ -11,7 +11,7 @@ namespace SkyNinja.Core.Classes
         /// <summary>
         /// Get group for the message.
         /// </summary>
-        public abstract Task<string> GetGroup(
+        public abstract Task<Group> GetGroup(
             Input input, 
             Conversation conversation, 
             Message message);

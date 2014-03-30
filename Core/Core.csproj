@@ -66,6 +66,7 @@
     <Compile Include="Classes\Factories\OutputFactory.cs" />
     <Compile Include="Classes\FileSystem.cs" />
     <Compile Include="Classes\Filter.cs" />
+    <Compile Include="Classes\Group.cs" />
     <Compile Include="Classes\Grouper.cs" />
     <Compile Include="Classes\Message.cs" />
     <Compile Include="Enums\ConnectorType.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Helpers\DateTimeHelper.cs" />
     <Compile Include="Helpers\ExitCodes.cs" />
     <Compile Include="Helpers\ParsedUri.cs" />
+    <Compile Include="Helpers\PathCleaner.cs" />
     <Compile Include="Helpers\PathDeduplicator.cs" />
     <Compile Include="Helpers\Tasks.cs" />
     <Compile Include="Inputs\DataReaderAsyncEnumerator.cs" />

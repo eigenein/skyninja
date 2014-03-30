@@ -10,7 +10,7 @@ namespace SkyNinja.Core.Groupers
     {
         private readonly IDictionary<int, string> cache = new Dictionary<int, string>();
 
-        public override async Task<string> GetGroup(Input input, Conversation conversation, Message message)
+        public override async Task<Group> GetGroup(Input input, Conversation conversation, Message message)
         {
             string group;
             if (!cache.TryGetValue(conversation.Id, out group))
@@ -18,7 +18,7 @@ namespace SkyNinja.Core.Groupers
                 group = String.Join(" ", await input.GetConversationParticipantsAsync(conversation.Id));
                 cache.Add(conversation.Id, group);
             }
-            return group;
+            return new Group(group);
         }
     }
 }

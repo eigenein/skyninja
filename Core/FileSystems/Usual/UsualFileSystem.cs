@@ -29,10 +29,10 @@ namespace SkyNinja.Core.FileSystems.Usual
             await Tasks.EmptyTask;
         }
 
-        public override StreamWriter OpenWriter(string group, string extension)
+        public override StreamWriter OpenWriter(Group group, string extension)
         {
             // Get file path.
-            string filePath = Path.Combine(path, group);
+            string filePath = Path.Combine(path, PathCleaner.Combine(group));
             filePath = pathDeduplicator.GetPath(filePath, extension);
             Logger.Debug("Opening file: {0} ...", filePath);
             // Create directory.

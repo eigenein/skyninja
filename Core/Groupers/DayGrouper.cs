@@ -8,10 +8,12 @@ namespace SkyNinja.Core.Groupers
 {
     internal class DayGrouper : Grouper
     {
-        public override Task<string> GetGroup(
+        public override Task<Group> GetGroup(
             Input input, Conversation conversation, Message message)
         {
-            return Task.FromResult(message.Timestamp.Day.ToString(CultureInfo.InvariantCulture));
+            DateTime timestamp = message.Timestamp.ToLocalTime();
+            return Task.FromResult(new Group(
+                timestamp.Day.ToString(CultureInfo.InvariantCulture)));
         }
     }
 }

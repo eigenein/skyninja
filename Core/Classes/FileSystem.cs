@@ -8,7 +8,7 @@ namespace SkyNinja.Core.Classes
     {
         public abstract Task Open();
 
-        public abstract StreamWriter OpenWriter(string group, string extension);
+        public abstract StreamWriter OpenWriter(Group group, string extension);
 
         public abstract void Close();
 

@@ -23,15 +23,15 @@ namespace SkyNinja.Core.Groupers
             innerGroupers.Add(innerGrouper);
         }
 
-        public override async Task<string> GetGroup(
+        public override async Task<Group> GetGroup(
             Input input, Conversation conversation, Message message)
         {
-            ICollection<string> paths = new List<string>();
+            Group group = new Group();
             foreach (Grouper grouper in innerGroupers)
             {
-                paths.Add(await grouper.GetGroup(input, conversation, message));
+                group.Add(await grouper.GetGroup(input, conversation, message));
             }
-            return Path.Combine(paths.ToArray());
+            return group;
         }
 
         public override string ToString()

@@ -41,7 +41,7 @@ namespace SkyNinja.Core.Outputs.PlainText
             await Tasks.EmptyTask;
         }
 
-        public override void BeginGroup(string group)
+        public override void BeginGroup(Group group)
         {
             base.BeginGroup(group);
             currentWriter = fileSystem.OpenWriter(group, ".txt");

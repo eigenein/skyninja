@@ -40,9 +40,9 @@ namespace SkyNinja.Core.FileSystems.Zip
             await Tasks.EmptyTask;
         }
 
-        public override StreamWriter OpenWriter(string group, string extension)
+        public override StreamWriter OpenWriter(Group group, string extension)
         {
-            string entryName = pathDeduplicator.GetPath(group, extension);
+            string entryName = pathDeduplicator.GetPath(PathCleaner.Combine(group), extension);
             Logger.Debug("Creating entry {0} ...", entryName);
             ZipArchiveEntry entry = archive.CreateEntry(entryName);
             Stream stream = entry.Open();
