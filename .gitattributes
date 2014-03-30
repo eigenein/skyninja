@@ -2,3 +2,6 @@
 
 *.application binary diff=astextplain
 *.deploy binary diff=astextplain
+*.png binary
+*.ico binary
+*.exe binary
