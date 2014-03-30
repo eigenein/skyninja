@@ -6,12 +6,21 @@ using SkyNinja.Core.Classes;
 
 namespace SkyNinja.Core.Filters
 {
-    // Passes all messages.
-    public class EmptyFilter : Filter
+    /// <summary>
+    /// Yields constant.
+    /// </summary>
+    public class ConstantFilter : Filter
     {
+        private readonly string value;
+
+        public ConstantFilter(string value)
+        {
+            this.value = value;
+        }
+        
         public override string GetWhereExpression()
         {
-            return "1";
+            return value;
         }
 
         public override IEnumerable<SQLiteParameter> GetWhereParameters()

@@ -81,9 +81,12 @@
     <Compile Include="FileSystems\Zip\ZipFileSystem.cs" />
     <Compile Include="FileSystems\Zip\ZipFileSystemFactory.cs" />
     <Compile Include="Filters\AndFilter.cs" />
+    <Compile Include="Filters\BinaryCompoundFilter.cs" />
+    <Compile Include="Filters\CompoundFilter.cs" />
     <Compile Include="Filters\DateTimeFilter.cs" />
-    <Compile Include="Filters\EmptyFilter.cs" />
+    <Compile Include="Filters\ConstantFilter.cs" />
     <Compile Include="Filters\FromDateTimeFilter.cs" />
+    <Compile Include="Filters\OrFilter.cs" />
     <Compile Include="Filters\ParameterNameGetter.cs" />
     <Compile Include="Filters\AuthorFilter.cs" />
     <Compile Include="Filters\ToDateTimeFilter.cs" />
