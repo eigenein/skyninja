@@ -6,11 +6,6 @@ namespace SkyNinja.Core.Classes
 {
     public class Group
     {
-        public override int GetHashCode()
-        {
-            return (parts != null ? parts.GetHashCode() : 0);
-        }
-
         private readonly List<string> parts = new List<string>();
 
         public Group()
@@ -64,11 +59,6 @@ namespace SkyNinja.Core.Classes
         public bool Equals(Group other)
         {
             return other != null && parts.SequenceEqual(other.parts);
-        }
-
-        public override bool Equals(object other)
-        {
-            return Equals((Group)other);
         }
     }
 }
