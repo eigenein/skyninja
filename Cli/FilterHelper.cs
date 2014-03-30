@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 using DocoptNet;
 
 using SkyNinja.Core.Classes;
+using SkyNinja.Core.Exceptions;
 using SkyNinja.Core.Filters;
+using SkyNinja.Core.Helpers;
 
 namespace SkyNinja.Cli
 {
@@ -38,11 +41,41 @@ namespace SkyNinja.Cli
             return filter;
         }
 
+        /// <summary>
+        /// Parse date/time argument.
+        /// </summary>
         private int GetDateTimeArgument(string name)
         {
-            return DateTimeFilter.ParseArgument(arguments[name].ToString());
+            string argument = arguments[name].ToString();
+
+            try
+            {
+                return Int32.Parse(argument);
+            }
+            catch (FormatException)
+            {
+                // Do nothing.
+            }
+            catch (OverflowException)
+            {
+                // Do nothing.
+            }
+            try
+            {
+                DateTime localTime = DateTime.ParseExact(
+                    argument, "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+                return DateTimeHelper.ToTimestamp(localTime.ToUniversalTime());
+            }
+            catch (FormatException e)
+            {
+                throw new InvalidArgumentInternalException(String.Format(
+                    "Could not parse time: {0}.", argument), e);
+            }
         }
 
+        /// <summary>
+        /// Generate new parameter name.
+        /// </summary>
         private string GetParameterName()
         {
             return String.Format("@p{0}", ++parameterCounter);
