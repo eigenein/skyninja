@@ -43,7 +43,7 @@ Options:
       --author <names>...      Include only messages sent by any of <names>.
 
 2014 (c) Pavel Perestoronin
-To email me, please contact contact@skyninja.im
+To email me, please contact eigenein@gmail.com
 
 If you like SkyNinja and want to support it, you can make a donation:
 http://skyninja.im/donate
