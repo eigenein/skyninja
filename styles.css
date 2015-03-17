@@ -125,6 +125,7 @@ a.button, input[type=submit].button {
   display: inline-block;
   line-height: 1;
   border: none;
+  cursor: pointer;
 }
 a.button:hover, input[type=submit].button:hover {
   -webkit-box-shadow: inset 0 -3px 0 0 #669900;
