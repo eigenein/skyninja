@@ -4,11 +4,6 @@ SkyNinja (`/skˈaɪ ˈnɪn.dʒə/`) is a tool for exporting and importing [Skype
 
 *Though the tool is not updated for a long time please feel free to contact me should you need any missing feature – I'll try to add it for you if I have time.*
 
-## Advantages over Skype Historian
-
-* Does not require running and even installed Skype.
-* Dramatically faster.
-
 ## Features
 
 * Exporting of chat messages.
